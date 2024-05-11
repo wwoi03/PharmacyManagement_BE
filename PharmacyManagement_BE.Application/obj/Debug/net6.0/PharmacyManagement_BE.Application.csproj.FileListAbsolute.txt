@@ -1,0 +1,12 @@
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Application.deps.json
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Application.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Application.pdb
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.csproj.AssemblyReference.cache
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.AssemblyInfoInputs.cache
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.AssemblyInfo.cs
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.csproj.CoreCompileInputs.cache
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\refint\PharmacyManagement_BE.Application.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.pdb
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\ref\PharmacyManagement_BE.Application.dll

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "RDBcnFQVA9ypjz2v4OXg+RnqRz1okW3TDTuROBEVjl8=",
+  "Source": "PharmacyManagement_BE.API",
+  "BasePath": "_content/PharmacyManagement_BE.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
