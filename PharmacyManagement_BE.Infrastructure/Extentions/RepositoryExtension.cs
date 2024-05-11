@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PharmacyManagement_BE.Infrastructure.Respositories.Implementations;
+using PharmacyManagement_BE.Infrastructure.Respositories.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
     {
         public static void AddRepositoryExtension(this IServiceCollection services)
         {
-            //services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProductService, ProductService>();
         }
     }
 }
