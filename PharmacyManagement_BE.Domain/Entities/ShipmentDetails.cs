@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Domain.Entities
 {
-    public class ShipmentDetail : BaseEntity<Guid>
+    public class ShipmentDetails : BaseEntity<Guid>
     {
         public Guid ShipmentId { get; set; }
         public Shipment Shipment { get; set; } = null!;
