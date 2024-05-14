@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {}
+    "C:\\Users\\tuand\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj",
+      "projectUniqueName": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj",
       "projectName": "PharmacyManagement_BE.Domain",
-      "projectPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\obj\\",
+      "projectPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj",
+      "packagesPath": "C:\\Users\\tuand\\.nuget\\packages\\",
+      "outputPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\tuand\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -51,8 +51,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -61,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

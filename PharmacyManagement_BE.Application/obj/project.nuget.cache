@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "YG6NKIEXgBnVZnL5x2wiAeiY+DIXrdE3qv7f0ryeb5DLdnuLi1ywq/qsHcBssRAju37ox5vf3gmclbcwibo/dQ==",
+  "dgSpecHash": "NSoEH2fU13cJZoNNuv9+zzwLkAiqXTpmCZFPiUXCLHIHKBUmt5KIz9wpvRJvhAGRDGIGsZ+dRV9oI72luiKvtA==",
   "success": true,
-  "projectFilePath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
+  "projectFilePath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\admin\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
-    "C:\\Users\\admin\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
-    "C:\\Users\\admin\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+    "C:\\Users\\tuand\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
+    "C:\\Users\\tuand\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\tuand\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

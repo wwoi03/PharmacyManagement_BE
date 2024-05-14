@@ -9,40 +9,28 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
         },
         "compile": {
-          "lib/net6.0/MediatR.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/MediatR.dll": {}
         },
         "runtime": {
-          "lib/net6.0/MediatR.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/MediatR.dll": {}
         }
       },
       "MediatR.Contracts/2.0.1": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/MediatR.Contracts.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/MediatR.Contracts.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/MediatR.Contracts.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/MediatR.Contracts.dll": {}
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
@@ -120,19 +108,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {}
+    "C:\\Users\\tuand\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
+      "projectUniqueName": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
       "projectName": "PharmacyManagement_BE.Application",
-      "projectPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\obj\\",
+      "projectPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
+      "packagesPath": "C:\\Users\\tuand\\.nuget\\packages\\",
+      "outputPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\tuand\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -169,8 +157,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -179,7 +166,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
