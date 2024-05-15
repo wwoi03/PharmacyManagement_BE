@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PharmacyManagement_BE.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
         }
 
         #region DbSet
-        //public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Users { get; set; }
         #endregion
     }
 }
