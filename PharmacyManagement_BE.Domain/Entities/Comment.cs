@@ -1,4 +1,5 @@
 ﻿using PharmacyManagement_BE.Domain.Entities.Bases;
+using PharmacyManagement_BE.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,6 +21,6 @@ namespace PharmacyManagement_BE.Domain.Entities
         public string CommentText { get; set; } = string.Empty;
         public Guid ReplayCommentId { get; set; }
         public DateTime CommentDate { get; set; }
-        public string CommentType { get; set; } = string.Empty;
+        public CommentType CommentType { get; set; }
     }
 }

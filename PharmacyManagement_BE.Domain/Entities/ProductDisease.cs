@@ -11,9 +11,9 @@ namespace PharmacyManagement_BE.Domain.Entities
     {
         [Key]
         public Guid ProductId { get; set; }
-        public Product Product { get; set; }
+        public Product Product { get; set; } = null!;
         [Key]
-        public Guid SymptomId { get; set; }
-        public Symptom Symptom { get; set; }
+        public Guid DiseaseId { get; set; }
+        public Disease Disease { get; set; } = null!;
     }
 }

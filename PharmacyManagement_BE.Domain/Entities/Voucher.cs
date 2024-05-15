@@ -1,4 +1,5 @@
 ﻿using PharmacyManagement_BE.Domain.Entities.Bases;
+using PharmacyManagement_BE.Domain.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Domain.Entities
 {
-    internal class Voucher : BaseEntity<Guid>
+    public class Voucher : BaseEntity<Guid>
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public double DiscountValue { get; set; }
-        public string DiscountType { get; set; }
+        public decimal DiscountValue { get; set; }
+        public VoucherType DiscountType { get; set; }
         public int Quantity { get; set; }
     }
 }
