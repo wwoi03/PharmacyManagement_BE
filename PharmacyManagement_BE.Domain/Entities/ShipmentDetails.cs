@@ -21,7 +21,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public int Quantity { get; set; }
         [Range(1, int.MaxValue)]
         public decimal SoldPrice { get; set; }
-        public string AdditionalInfo { get; set; } = string.Empty;
-        public string Note { get; set; } = string.Empty;
+        public string? AdditionalInfo { get; set; }
+        public string? Note { get; set; }
     }
 }

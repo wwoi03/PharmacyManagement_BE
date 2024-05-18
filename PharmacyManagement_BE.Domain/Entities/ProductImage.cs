@@ -12,6 +12,6 @@ namespace PharmacyManagement_BE.Domain.Entities
     {
         public Guid ProductId { get; set; }
         public Product Product { get; set; } = null!;
-        public string Image { get; set; } = string.Empty;
+        public string? Image { get; set; }
     }
 }

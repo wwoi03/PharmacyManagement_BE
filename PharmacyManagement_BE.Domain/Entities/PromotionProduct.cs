@@ -13,7 +13,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public Product Product { get; set; } = null!;
         public Guid PromotionId { get; set; }
         public Promotion Promotion { get; set; } = null!;
-        public string AdditionalInfo { get; set; } = string.Empty;
+        public string? AdditionalInfo { get; set; }
         public int Quantity { get; set; }
     }
 }

@@ -10,8 +10,8 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class Category : BaseEntity<Guid>
     {
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; } 
         public Guid ParentCategoryId { get; set; }
-        public Category ParentCategory { get; set; }
+        public Category ParentCategory { get; set; } = null!;
     }
 }

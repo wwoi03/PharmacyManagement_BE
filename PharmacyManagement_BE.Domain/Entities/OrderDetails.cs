@@ -21,5 +21,6 @@ namespace PharmacyManagement_BE.Domain.Entities
         public int Quantity { get; set; }
         public decimal PricePerUnit { get; set; }
         public decimal TotalPrice { get; set; }
+        public string? Status { get; set; }
     }
 }

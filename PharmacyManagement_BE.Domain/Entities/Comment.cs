@@ -18,7 +18,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public Guid ProductId { get; set; }
         public Product Product { get; set; } = null!;
         public int Rating { get; set; }
-        public string CommentText { get; set; } = string.Empty;
+        public string? CommentText { get; set; }
         public Guid ReplayCommentId { get; set; }
         public DateTime CommentDate { get; set; }
         public CommentType CommentType { get; set; }

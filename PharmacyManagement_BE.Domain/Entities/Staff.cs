@@ -9,10 +9,10 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class Staff : IdentityUser<Guid>
     {
-        public string FirstName { get; set; } = string.Empty;
-        public string Gender { get; set; } = string.Empty;
+        public string? FirstName { get; set; } 
+        public string? Gender { get; set; } 
         public DateTime Birthday { get; set; }
-        public string Image { get; set; } = string.Empty;
+        public string? Image { get; set; } 
         public Guid BranchId { get; set; }
         public Branch Branch { get; set; } = null!;
     }

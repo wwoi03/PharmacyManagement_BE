@@ -15,7 +15,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         [Key]
         public Guid OrderDetailsId { get; set; }
         public OrderDetails OrderDetails { get; set; } = null!;
-        public string AppliedDate { get; set; } = string.Empty;
+        public string? AppliedDate { get; set; }
         public double DiscountApplied { get; set; }
     }
 }
