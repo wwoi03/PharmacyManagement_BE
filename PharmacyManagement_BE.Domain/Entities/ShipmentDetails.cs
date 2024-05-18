@@ -17,9 +17,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public DateTime ImportDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public decimal ImportPrice { get; set; }
-        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
-        [Range(1, int.MaxValue)]
         public decimal SoldPrice { get; set; }
         public string? AdditionalInfo { get; set; }
         public string? Note { get; set; }
