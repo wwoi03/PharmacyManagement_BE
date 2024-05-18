@@ -16,4 +16,8 @@
     <Folder Include="Queries\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PharmacyManagement_BE.Infrastructure\PharmacyManagement_BE.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
