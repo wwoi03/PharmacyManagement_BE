@@ -12,6 +12,5 @@ namespace PharmacyManagement_BE.Domain.Entities
     {
         public string? Name { get; set; } 
         public Guid ParentCategoryId { get; set; }
-        public Category ParentCategory { get; set; } = null!;
     }
 }

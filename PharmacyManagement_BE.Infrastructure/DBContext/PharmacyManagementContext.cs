@@ -10,9 +10,22 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
 {
     public class PharmacyManagementContext : DbContext
     {
+        public PharmacyManagementContext()
+        {
+
+        }
+
         public PharmacyManagementContext(DbContextOptions<PharmacyManagementContext> options) : base(options)
         {
 
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,10 +46,10 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
                 .HasKey(o => new { o.OrderId, o.VoucherId });
             modelBuilder.Entity<PromotionHistory>()
                 .HasKey(o => new { o.PromotionId, o.OrderDetailsId });
-            modelBuilder.Entity<PromotionProgram>()
-                .HasKey(o => new { o.PromotionProductId, o.ProductId });
             modelBuilder.Entity<OrderDetails>()
                .HasKey(o => new { o.OrderId, o.ShipmentDetailsId, o.UnitId });
+            modelBuilder.Entity<ProductUnit>()
+               .HasKey(o => new { o.ProductId, o.UnitId });
         }
 
         #region DbSet
@@ -49,7 +62,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
         public DbSet<DiseaseSymptom> DiseaseSymptoms { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetails> OrderDetailss { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductDisease> ProductDiseases { get; set; }
@@ -63,7 +76,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
         public DbSet<PromotionProgram> PromotionPrograms { get; set; }
         public DbSet<ReceiverInformation> ReceiverInformations { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
-        public DbSet<ShipmentDetails> ShipmentDetailss { get; set; }
+        public DbSet<ShipmentDetails> ShipmentDetails { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Symptom> Symptoms { get; set; }

@@ -2134,6 +2134,7 @@
     "net6.0": [
       "MediatR >= 12.2.0",
       "Microsoft.EntityFrameworkCore >= 6.0.19",
+      "Microsoft.EntityFrameworkCore.Design >= 6.0.19",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.19",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.19",
       "PharmacyManagement_BE.Domain >= 1.0.0"
@@ -2187,6 +2188,12 @@
             "version": "[12.2.0, )"
           },
           "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[6.0.19, )"
+          },
+          "Microsoft.EntityFrameworkCore.Design": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
             "target": "Package",
             "version": "[6.0.19, )"
           },
