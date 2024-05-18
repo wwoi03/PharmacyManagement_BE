@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PharmacyManagement_BE.Application\PharmacyManagement_BE.Application.csproj" />
-    <ProjectReference Include="..\PharmacyManagement_BE.Infrastructure\PharmacyManagement_BE.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

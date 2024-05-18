@@ -10,23 +10,23 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class Product : BaseEntity<Guid>
     {
-        public string Name { get; set; } = string.Empty;
-        public string CodeMedicine { get; set; } = string.Empty;
-        public string Specifications { get; set; } = string.Empty;
-        public string ShortDescription { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string Uses { get; set; } = string.Empty;
-        public string HowToUse { get; set; } = string.Empty;
-        public string SideEffects { get; set; } = string.Empty;
-        public string Warning { get; set; } = string.Empty;
-        public string Preserve { get; set; } = string.Empty;
-        public string Dosage { get; set; } = string.Empty;
-        public string Contraindication { get; set; } = string.Empty;
-        public string View { get; set; } = string.Empty;
-        public string DosageForms { get; set; } = string.Empty;
-        public string RegistrationNumber { get; set; } = string.Empty;
-        public string BrandOrigin { get; set; } = string.Empty;
-        public string AgeOfUse { get; set; } = string.Empty;
+        public string? Name { get; set; } 
+        public string? CodeMedicine { get; set; } 
+        public string? Specifications { get; set; } 
+        public string? ShortDescription { get; set; } 
+        public string? Description { get; set; } 
+        public string? Uses { get; set; } 
+        public string? HowToUse { get; set; } 
+        public string? SideEffects { get; set; } 
+        public string? Warning { get; set; } 
+        public string? Preserve { get; set; } 
+        public string? Dosage { get; set; } 
+        public string? Contraindication { get; set; } 
+        public string? View { get; set; } 
+        public string? DosageForms { get; set; } 
+        public string? RegistrationNumber { get; set; } 
+        public string? BrandOrigin { get; set; } 
+        public string? AgeOfUse { get; set; } 
         public Guid CategoryId { get; set; }
         public Category Category { get; set; } = null!;
     }

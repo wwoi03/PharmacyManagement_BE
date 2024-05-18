@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PharmacyManagement_BE.Infrastructure.Common.Types
+namespace PharmacyManagement_BE.Domain.Types
 {
     public enum VoucherType
     {

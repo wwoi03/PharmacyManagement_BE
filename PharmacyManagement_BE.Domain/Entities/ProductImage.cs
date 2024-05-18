@@ -11,7 +11,7 @@ namespace PharmacyManagement_BE.Domain.Entities
     public class ProductImage : BaseEntity<Guid>
     {
         public Guid ProductId { get; set; }
-        public Product Product { get; set; }
-        public string Image { get; set; }
+        public Product Product { get; set; } = null!;
+        public string? Image { get; set; }
     }
 }

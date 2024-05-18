@@ -11,8 +11,8 @@ namespace PharmacyManagement_BE.Domain.Entities
     public class Shipment : BaseEntity<Guid>
     {
         public DateTime ImportDate { get; set; }
-        public string Note { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
+        public string? Note { get; set; } 
+        public string? Status { get; set; } 
         public Guid SupplierId { get; set; }
         public Supplier Supplier { get; set; } = null!;
     }

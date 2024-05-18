@@ -10,7 +10,7 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class PaymentMethod : BaseEntity<Guid>
     {
-        public string Name { get; set; } = string.Empty;
-        public string Provider { get; set; } = string.Empty;
+        public string? Name { get; set; } 
+        public string? Provider { get; set; } 
     }
 }

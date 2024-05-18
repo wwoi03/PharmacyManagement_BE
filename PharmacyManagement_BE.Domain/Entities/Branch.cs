@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Domain.Entities
 {
-    internal class Branch : BaseEntity<Guid>
+    public class Branch : BaseEntity<Guid>
     {
-        public string Name { get; set; }
-        public string ProvinceOrCity { get; set; }
-        public string District { get; set; }
-        public string Ward { get; set; }
-        public string AddressDetails { get; set; }
-        public string Phone { get; set; }
+        public string? Name { get; set; }
+        public string? ProvinceOrCity { get; set; }
+        public string? District { get; set; }
+        public string? Ward { get; set; }
+        public string? AddressDetails { get; set; }
+        public string? Phone { get; set; }
         public Guid StaffId { get; set; }
-        public Staff Staff { get; set; } = null;
+        public Staff Staff { get; set; } = null!;
     }
 }
