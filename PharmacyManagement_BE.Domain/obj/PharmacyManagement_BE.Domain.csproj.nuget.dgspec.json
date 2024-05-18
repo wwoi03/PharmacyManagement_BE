@@ -42,11 +42,11 @@
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[6.0.29, )"
+              "version": "[6.0.19, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.29, )"
+              "version": "[6.0.19, )"
             }
           },
           "imports": [
