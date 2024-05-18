@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
-    internal interface IProductService
+    public interface IProductService : IRepositoryService<Product>
     {
-        Task<ResponseAPI<string>> Create(Product product);
-        Task<ResponseAPI<string>> Update(Product product);
-        Task<ResponseAPI<string>> Delete(Guid id);
+
     }
 }
