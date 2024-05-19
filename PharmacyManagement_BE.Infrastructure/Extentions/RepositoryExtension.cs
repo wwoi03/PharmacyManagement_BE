@@ -16,6 +16,37 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
         {
             services.AddTransient<IPMEntities, PMEntities>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IBranchService, BranchService>();
+            services.AddTransient<ICartService, CartService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IDiseaseService, DiseaseService>();
+            services.AddTransient<IDiseaseSymptomService, DiseaseSymptomService>();
+            services.AddTransient<IIngredientService, IngredientService>();
+            services.AddTransient<IOrderDetailsService, OrderDetailsService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IPaymentMethodService, PaymentMethodService>();
+            services.AddTransient<IProductDiseaseService, ProductDiseaseService>();
+            services.AddTransient<IProductImageService, ProductImageService>();
+            services.AddTransient<IBranchService, BranchService>();
+            services.AddTransient<IProductIngredientService, ProductIngredientService>();
+            services.AddTransient<IProductSupportService, ProductSupportService>();
+            services.AddTransient<IProductUnitService, ProductUnitService>();
+            services.AddTransient<IPromotionHistoryService, PromotionHistoryService>();
+            services.AddTransient<IPromotionProductService, PromotionProductService>();
+            services.AddTransient<IPromotionProgramService, PromotionProgramService>();
+            services.AddTransient<IPromotionService, PromotionService>();
+            services.AddTransient<IReceiverInformationService, ReceiverInformationService>();
+            services.AddTransient<IShipmentDetailsService, ShipmentDetailsService>();
+            services.AddTransient<IShipmentService, ShipmentService>();
+            services.AddTransient<IStaffService, StaffService>();
+            services.AddTransient<ISupplierService, SupplierService>();
+            services.AddTransient<ISupportService, SupportService>();
+            services.AddTransient<ISymptomService, SymptomService>();
+            services.AddTransient<IUnitService, UnitService>();
+            services.AddTransient<IVoucherHistoryService, VoucherHistoryService>();
+            services.AddTransient<IVoucherService, VoucherService>();
         }
     }
 }

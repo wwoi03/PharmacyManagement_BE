@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
 {
@@ -11,7 +12,6 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
-
         public ProductController(IMediator mediator)
         {
             _mediator = mediator;
