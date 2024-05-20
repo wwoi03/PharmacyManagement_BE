@@ -21,9 +21,16 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Cart.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(DeleteCartCommandRequest request)
         {
-            var result = await _mediator.Send(request);
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
-            return Ok(result);
         }
     }
 }
