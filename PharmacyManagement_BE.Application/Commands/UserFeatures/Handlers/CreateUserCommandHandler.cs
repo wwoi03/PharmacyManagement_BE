@@ -35,7 +35,7 @@ namespace PharmacyManagement_BE.Application.Commands.UserFeatures.Handlers
                     return new ResponseErrorAPI<RegisterCommandResponse>(validation.Message);
 
                 // B2: Kiểm tra người dùng tồn tại
-                var userExists = _entities.CustomerService.GetCustomerByUsername(request.UserName);
+                var userExists = await _entities.CustomerService.GetCustomerByUsername(request.UserName);
 
                 if (userExists == null)
                     return new ResponseErrorAPI<RegisterCommandResponse>("Người dùng đã tồn tại.");
