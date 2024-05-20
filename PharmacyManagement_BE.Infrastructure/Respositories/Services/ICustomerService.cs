@@ -11,5 +11,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface ICustomerService : IRepositoryService<Customer>
     {
 
+
+
     }
 }
