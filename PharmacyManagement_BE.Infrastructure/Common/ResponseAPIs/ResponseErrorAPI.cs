@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
 {
-    internal class ResponseErrorAPI<T> : ResponseAPI<T>
+    public class ResponseErrorAPI<T> : ResponseAPI<T>
     {
         public ResponseErrorAPI()
         {

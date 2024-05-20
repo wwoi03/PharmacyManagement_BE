@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
 {
-    internal class ResponseSuccessAPI<T> : ResponseAPI<T>
+    public class ResponseSuccessAPI<T> : ResponseAPI<T>
     {
         public ResponseSuccessAPI()
         {

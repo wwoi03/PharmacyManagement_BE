@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PharmacyManagement_BE.Application.Extentions;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Extentions;
 
@@ -20,6 +21,9 @@ builder.Services.AddRepositoryExtension();
 
 // MediaR
 builder.Services.AddMediaRExtention();
+
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(AutoMapperProfileExtention).Assembly);
 
 var app = builder.Build();
 
