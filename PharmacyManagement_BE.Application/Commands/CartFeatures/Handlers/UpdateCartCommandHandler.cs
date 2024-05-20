@@ -1,28 +1,25 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc.Filters;
 using PharmacyManagement_BE.Application.Commands.CartFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.CartFeatures.Handlers
 {
-    public class DeleteCartCommandHandler : IRequestHandler<DeleteCartCommandRequest, ResponseAPI<string>>
+    public class UpdateCartCommandHandler : IRequestHandler<UpdateCartCommandRequest, ResponseAPI<string>>
     {
         private readonly IPMEntities _entities;
 
-
-        public DeleteCartCommandHandler(IPMEntities entities)
+        public UpdateCartCommandHandler(IPMEntities entities)
         {
             this._entities = entities;
         }
 
-        public async Task<ResponseAPI<string>> Handle(DeleteCartCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<string>> Handle(UpdateCartCommandRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -32,21 +29,22 @@ namespace PharmacyManagement_BE.Application.Commands.CartFeatures.Handlers
                 if (cart == null)
                     return new ResponseErrorAPI<string>("Giỏ hàng không tồn tại.");
 
-                // B2: Xóa sản phẩm trong giỏ hàng
-                var status = _entities.CartService.Delete(cart);
+                //B2: Cập nhật sản phẩm
+                var status = _entities.CartService.Update(cart);
 
                 // Kiểm tra trạng thái xóa sản phẩm
                 if (status == false)
                     return new ResponseErrorAPI<string>("Lỗi hệ thống, vui lòng thử lại sau.");
 
-                // B3: lưu trạng thái database
+                //B3: Lưu vào database
                 _entities.SaveChange();
-                return new ResponseSuccessAPI<string>("Xóa sản phẩm thành công.");
+                return new ResponseSuccessAPI<string>("Cập nhật thành công");
+
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 return new ResponseErrorAPI<string>("Lỗi hệ thống, vui lòng thử lại sau.");
             }
+
         }
     }
 }

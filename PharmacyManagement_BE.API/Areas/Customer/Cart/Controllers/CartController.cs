@@ -25,5 +25,13 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Cart.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateCartCommandRequest request)
+        {
+            var result = await _mediator.Send(request);
+
+            return Ok(result);
+        }
     }
 }
