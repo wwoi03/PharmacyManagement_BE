@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Domain.Entities;
 using System;
@@ -13,7 +14,11 @@ namespace PharmacyManagement_BE.Application.Extentions
     {
         public AutoMapperProfileExtention()
         {
-            CreateMap<Product, ViewAllProductQueryResponse>();
+            CreateMap<Product, AllProductQueryResponse>();
+            CreateMap<Customer, RegisterCommandResponse>()
+                .ForMember(destination => destination.FullName, options => options.MapFrom(source => source.UserName));
+            CreateMap<CreateUserCommandRequest, Customer>()
+                .ForMember(destination => destination.PasswordHash, options => options.MapFrom(source => source.Password));
         }
     }
 }

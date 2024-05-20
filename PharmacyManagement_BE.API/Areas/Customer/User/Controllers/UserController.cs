@@ -1,25 +1,24 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PharmacyManagement_BE.Application.Commands.CartFeatures.Requests;
-using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 
-namespace PharmacyManagement_BE.API.Areas.Customer.Cart.Controllers
+namespace PharmacyManagement_BE.API.Areas.Customer.User.Controllers
 {
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Customer")]
-    public class CartController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public CartController(IMediator mediator)
+        public UserController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteCartCommandRequest request)
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateUserCommandRequest request)
         {
             try
             {

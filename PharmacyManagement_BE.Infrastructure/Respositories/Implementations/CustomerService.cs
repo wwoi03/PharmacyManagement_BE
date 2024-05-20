@@ -12,9 +12,16 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class CustomerService : RepositoryService<Customer>, ICustomerService
     {
+        private readonly PharmacyManagementContext _context;
+
         public CustomerService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<Customer?> GetCustomerByUsername(string username)
+        {
+            return _context.Customers.FirstOrDefault(u => u.UserName == username);
         }
     }
 }

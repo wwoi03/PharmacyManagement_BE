@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.DTOs.Responses
 {
-    public class ViewAllProductQueryResponse
+    public class RegisterCommandResponse
     {
+        public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Token { get; set; }
     }
 }
