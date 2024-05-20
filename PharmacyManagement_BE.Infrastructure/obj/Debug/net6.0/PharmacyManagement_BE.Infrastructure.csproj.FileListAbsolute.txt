@@ -15,3 +15,20 @@ C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_B
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\ref\PharmacyManagement_BE.Infrastructure.dll
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\PharmacyManagement_BE.Infrastructure.runtimeconfig.json
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.genruntimeconfig.cache
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\PharmacyManagement_BE.Infrastructure.deps.json
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\PharmacyManagement_BE.Infrastructure.runtimeconfig.json
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\PharmacyManagement_BE.Infrastructure.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\PharmacyManagement_BE.Infrastructure.pdb
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\PharmacyManagement_BE.Domain.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\PharmacyManagement_BE.Domain.pdb
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.csproj.AssemblyReference.cache
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.AssemblyInfoInputs.cache
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.AssemblyInfo.cs
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.csproj.CoreCompileInputs.cache
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.csproj.CopyComplete
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\refint\PharmacyManagement_BE.Infrastructure.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.pdb
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.genruntimeconfig.cache
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\ref\PharmacyManagement_BE.Infrastructure.dll

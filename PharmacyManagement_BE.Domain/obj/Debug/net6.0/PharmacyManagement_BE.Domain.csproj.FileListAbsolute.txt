@@ -10,3 +10,15 @@ C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_B
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\refint\PharmacyManagement_BE.Domain.dll
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\PharmacyManagement_BE.Domain.pdb
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\ref\PharmacyManagement_BE.Domain.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\bin\Debug\net6.0\PharmacyManagement_BE.Domain.deps.json
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\bin\Debug\net6.0\PharmacyManagement_BE.Domain.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\bin\Debug\net6.0\PharmacyManagement_BE.Domain.pdb
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\PharmacyManagement_BE.Domain.csproj.AssemblyReference.cache
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\PharmacyManagement_BE.Domain.GeneratedMSBuildEditorConfig.editorconfig
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\PharmacyManagement_BE.Domain.AssemblyInfoInputs.cache
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\PharmacyManagement_BE.Domain.AssemblyInfo.cs
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\PharmacyManagement_BE.Domain.csproj.CoreCompileInputs.cache
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\PharmacyManagement_BE.Domain.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\refint\PharmacyManagement_BE.Domain.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\PharmacyManagement_BE.Domain.pdb
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Domain\obj\Debug\net6.0\ref\PharmacyManagement_BE.Domain.dll
