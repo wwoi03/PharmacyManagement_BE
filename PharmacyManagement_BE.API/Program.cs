@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Application.Extentions;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Extentions;
+using PharmacyManagement_BE.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
