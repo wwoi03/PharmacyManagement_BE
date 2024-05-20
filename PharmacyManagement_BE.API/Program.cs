@@ -20,7 +20,7 @@ builder.Services.AddDbContext<PharmacyManagementContext>(option => option.UseSql
 builder.Services.AddRepositoryExtension();
 
 // MediaR
-builder.Services.AddMediaRExtention();
+builder.Services.AddMediatRExtention();
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfileExtention).Assembly);

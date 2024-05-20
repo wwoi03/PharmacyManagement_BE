@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.Extentions
 {
-    public static class MediaRExtention
+    public static class MediatRExtention
     {
-        public static IServiceCollection AddMediaRExtention(this IServiceCollection services)
+        /*public static IServiceCollection AddMediatRExtention(this IServiceCollection services)
         {
-            services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(MediaRExtention).Assembly));
+            services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(MediatRExtention).Assembly));
 
             return services;
-        }
+        }*/
     }
 }

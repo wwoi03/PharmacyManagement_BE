@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.DTOs.Requests
 {
-    public class GetAllProductQueryRequest : IRequest<ResponseAPI<ViewAllProductQueryResponse>>
+    public class GetAllProductQueryRequest : IRequest<ResponseAPI<AllProductQueryResponse>>
     {
 
     }

@@ -10,6 +10,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface ICustomerService : IRepositoryService<Customer>
     {
-
+        Task<Customer> GetCustomerByUsername(string username);
     }
 }

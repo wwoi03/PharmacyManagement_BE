@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.ProductFeatures.Handlers
 {
-    internal class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, ResponseAPI<ViewAllProductQueryResponse>>
+    internal class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, ResponseAPI<AllProductQueryResponse>>
     {
         private readonly IPMEntities _entities;
 
@@ -20,7 +20,7 @@ namespace PharmacyManagement_BE.Application.Queries.ProductFeatures.Handlers
             this._entities = entities;
         }
 
-        public async Task<ResponseAPI<ViewAllProductQueryResponse>> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<AllProductQueryResponse>> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
             var products = await _entities.ProductService.GetAll();
 

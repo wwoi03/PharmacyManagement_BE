@@ -16,7 +16,6 @@ namespace PharmacyManagement_BE.Application.Commands.CartFeatures.Handlers
     {
         private readonly IPMEntities _entities;
 
-
         public DeleteCartCommandHandler(IPMEntities entities)
         {
             this._entities = entities;
