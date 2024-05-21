@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.UserFeatures.Requests
 {
-    public class CreateUserCommandRequest : IRequest<ResponseAPI<RegisterCommandResponse>>
+    public class CreateUserCommandRequest : IRequest<ResponseAPI<SignUpCommandResponse>>
     {
         public string UserName { get; set; }
         public string Password { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.DTOs.Responses
 {
-    public class RegisterCommandResponse
+    public class SignInResponse
     {
         public string FullName { get; set; }
         public string PhoneNumber { get; set; }

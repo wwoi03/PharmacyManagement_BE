@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,18 +10,12 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.DBContext
 {
-    public class PharmacyManagementContext : DbContext
+    public class PharmacyManagementContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
-        public PharmacyManagementContext()
-        {
+        public PharmacyManagementContext() { }
 
-        }
-
-        public PharmacyManagementContext(DbContextOptions<PharmacyManagementContext> options) : base(options)
-        {
-
-        }
-
+        public PharmacyManagementContext(DbContextOptions<PharmacyManagementContext> options) : base(options) { }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -30,6 +26,8 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<ProductSupport>()
                 .HasKey(o => new { o.ProductId, o.SupportId });
             modelBuilder.Entity<ProductDisease>()

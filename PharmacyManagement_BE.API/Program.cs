@@ -1,7 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using PharmacyManagement_BE.API.Configs;
 using PharmacyManagement_BE.Application.Extentions;
+using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Extentions;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,19 +16,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Swagger Config
+builder.Services.AddSwaggerSetup();
 
 // Conn database 
 builder.Services.AddDbContext<PharmacyManagementContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
+// Identity Config
+builder.Services.AddIdentityConfig(builder.Configuration);
 
-// Respositories
+// Respositories Extention
 builder.Services.AddRepositoryExtension();
 
-// MediaR
+// MediaR Extention
 builder.Services.AddMediatRExtention();
 
-// AutoMapper
+// AutoMapper Extention
 builder.Services.AddAutoMapper(typeof(AutoMapperProfileExtention).Assembly);
 
 var app = builder.Build();
@@ -34,6 +44,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

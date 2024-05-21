@@ -35,6 +35,6 @@ namespace PharmacyManagement_BE.Domain.Entities
         public Guid PaymentMethodId { get; set; }
         public PaymentMethod PaymentMethod { get; set; } = null!;
         public Guid StaffId { get; set; }
-        public Staff Staff { get; set; } = null!;
+        public Guid BranchId { get; set; }
     }
 }

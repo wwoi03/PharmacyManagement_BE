@@ -15,10 +15,10 @@ namespace PharmacyManagement_BE.Application.Extentions
         public AutoMapperProfileExtention()
         {
             CreateMap<Product, AllProductQueryResponse>();
-            CreateMap<Customer, RegisterCommandResponse>()
-                .ForMember(destination => destination.FullName, options => options.MapFrom(source => source.UserName));
             CreateMap<CreateUserCommandRequest, Customer>()
-                .ForMember(destination => destination.PasswordHash, options => options.MapFrom(source => source.Password));
+                .ForMember(destination => destination.FullName, options => options.MapFrom(source => source.UserName));
+            CreateMap<Customer, SignUpCommandResponse>();
+            CreateMap<Customer, SignInResponse>();
         }
     }
 }
