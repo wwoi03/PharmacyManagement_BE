@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Commands\ProductFeatures\" />
-    <Folder Include="Features\UserFeatures\Handler\" />
   </ItemGroup>
 
   <ItemGroup>

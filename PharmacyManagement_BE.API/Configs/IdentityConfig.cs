@@ -11,12 +11,14 @@ namespace PharmacyManagement_BE.API.Configs
     {
         public static IServiceCollection AddIdentityConfig(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddIdentity<Customer, IdentityRole>().AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
-            //services.AddIdentity<Staff, IdentityRole>().AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>().AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
 
             // Setup Authentication JWT 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {

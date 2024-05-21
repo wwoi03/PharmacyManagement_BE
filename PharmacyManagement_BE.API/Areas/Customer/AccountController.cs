@@ -1,24 +1,24 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
+using PharmacyManagement_BE.Application.DTOs.Requests;
 
-namespace PharmacyManagement_BE.API.Areas.Customer.User.Controllers
+namespace PharmacyManagement_BE.API.Areas.Customer
 {
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Customer")]
-    public class UserController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public UserController(IMediator mediator)
+        public AccountController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost("SignUp")]
-        public async Task<IActionResult> Create(CreateUserCommandRequest request)
+        [HttpPost("SignIn")]
+        public async Task<IActionResult> Login(SignInRequest request)
         {
             try
             {
