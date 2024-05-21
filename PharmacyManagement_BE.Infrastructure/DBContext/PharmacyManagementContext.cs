@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.DBContext
 {
-    public class PharmacyManagementContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+    public class PharmacyManagementContext : IdentityDbContext<IdentityUser>
     {
         public PharmacyManagementContext() { }
 

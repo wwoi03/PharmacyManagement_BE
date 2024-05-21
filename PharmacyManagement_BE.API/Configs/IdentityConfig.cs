@@ -13,7 +13,7 @@ namespace PharmacyManagement_BE.API.Configs
         {
             //services.AddIdentity<Customer, IdentityRole>().AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
             //services.AddIdentity<Staff, IdentityRole>().AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
 
             // Setup Authentication JWT 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
