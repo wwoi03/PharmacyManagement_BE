@@ -23,5 +23,10 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         {
             return _context.Customers.FirstOrDefault(u => u.UserName == username);
         }
+
+        public async Task<Customer?> Login(string username, string password)
+        {
+            return _context.Customers.FirstOrDefault(u => u.UserName == username && u.PasswordHash == password);
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace PharmacyManagement_BE.API.Areas.Customer.User.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("SignUp")]
         public async Task<IActionResult> Create(CreateUserCommandRequest request)
         {
             try
