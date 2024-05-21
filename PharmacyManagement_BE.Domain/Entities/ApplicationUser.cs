@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Domain.Entities
 {
-    public class ApplicationUser 
+    public class ApplicationUser : IdentityUser<Guid>
     {
+        public string? FullName { get; set; }
+        public string? Gender { get; set; }
+        public DateTime Birthday { get; set; }
+        public string? Image { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 }

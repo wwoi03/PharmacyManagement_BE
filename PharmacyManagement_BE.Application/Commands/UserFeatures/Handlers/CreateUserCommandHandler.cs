@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Domain.Entities;
@@ -18,7 +20,9 @@ namespace PharmacyManagement_BE.Application.Commands.UserFeatures.Handlers
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public CreateUserCommandHandler(IPMEntities entities, IMapper mapper)
+        public CreateUserCommandHandler(
+            IPMEntities entities, 
+            IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;
@@ -35,9 +39,10 @@ namespace PharmacyManagement_BE.Application.Commands.UserFeatures.Handlers
                     return new ResponseErrorAPI<RegisterCommandResponse>(validation.Message);
 
                 // B2: Kiểm tra người dùng tồn tại
+                //var userExists = await _userManager.FindByNameAsync(request.UserName);
                 var userExists = await _entities.CustomerService.GetCustomerByUsername(request.UserName);
 
-                if (userExists == null)
+                if (userExists != null)
                     return new ResponseErrorAPI<RegisterCommandResponse>("Người dùng đã tồn tại.");
 
                 // B3: Thêm người dùng mới
