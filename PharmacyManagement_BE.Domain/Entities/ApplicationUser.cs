@@ -14,5 +14,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public DateTime Birthday { get; set; }
         public string? Image { get; set; }
         public string Status { get; set; } = string.Empty;
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }
