@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.DTOs.Requests;
 
-namespace PharmacyManagement_BE.API.Areas.Customer
+namespace PharmacyManagement_BE.API.Areas.Customer.Account.Controllers
 {
     [Route("api/[area]/[controller]")]
     [ApiController]
@@ -18,7 +18,7 @@ namespace PharmacyManagement_BE.API.Areas.Customer
         }
 
         [HttpPost("SignIn")]
-        public async Task<IActionResult> Login(SignInRequest request)
+        public async Task<IActionResult> SignIn(SignInRequest request)
         {
             try
             {

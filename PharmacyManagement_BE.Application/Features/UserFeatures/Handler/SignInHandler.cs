@@ -54,11 +54,20 @@ namespace PharmacyManagement_BE.Application.Features.UserFeatures.Handler
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            // B4: Tạo token
+            // B4: Lấy danh sách role của người dùng
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            // B5: thêm role vào claim
+            foreach (var role in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
+            }
+
+            // B6: Tạo token
             var accessToken = Auth.GetToken(authClaims, _configuration);
             var token = new JwtSecurityTokenHandler().WriteToken(accessToken);
 
-            // B5: Response
+            // B7: Response
             var response = _mapper.Map<SignInResponse>(user);
             response.Token = token;
 

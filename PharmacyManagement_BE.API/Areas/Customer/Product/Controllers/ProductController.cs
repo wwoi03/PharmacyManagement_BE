@@ -34,5 +34,20 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("GetProductById")]
+        [Authorize(Roles = ProductRole.PM_PRODUCT_DETAILS)]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            try
+            {
+                //var result = await _mediator.Send(new GetAllProductQueryRequest());
+                return Ok("Thành công");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
