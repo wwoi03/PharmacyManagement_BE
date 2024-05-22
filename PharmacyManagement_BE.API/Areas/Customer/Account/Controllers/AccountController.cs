@@ -19,8 +19,7 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Account.Controllers
 
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignIn(SignInRequest request)
-        {
-            try
+        {try
             {
                 var result = await _mediator.Send(request);
                 return Ok(result);
@@ -29,6 +28,7 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Account.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            
         }
     }
 }
