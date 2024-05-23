@@ -7,6 +7,7 @@ using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.Securitys;
+using PharmacyManagement_BE.Infrastructure.Respositories.Services;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -24,13 +25,15 @@ namespace PharmacyManagement_BE.Application.Features.UserFeatures.Handlers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
-        public SignInHandler(IPMEntities entities, UserManager<ApplicationUser> userManager, IMapper mapper, IConfiguration configuration)
+        public SignInHandler(IPMEntities entities, UserManager<ApplicationUser> userManager, IMapper mapper, IConfiguration configuration, ITokenService tokenService)
         {
             this._entities = entities;
             this._configuration = configuration;
             this._mapper = mapper;
             this._userManager = userManager;
+            this._tokenService = tokenService;
         }
 
         public async Task<ResponseAPI<SignInResponse>> Handle(SignInRequest request, CancellationToken cancellationToken)
@@ -50,11 +53,7 @@ namespace PharmacyManagement_BE.Application.Features.UserFeatures.Handlers
                     return new ResponseErrorAPI<SignInResponse>("Thông tin tài khoản hoặc mật khẩu không chính xác.");
 
                 // B3: tạo claim
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
+                var authClaims = await _tokenService.CreateAuthClaim(user);
 
                 // B4: Lấy danh sách role của người dùng
                 var userRoles = await _userManager.GetRolesAsync(user);
@@ -66,11 +65,11 @@ namespace PharmacyManagement_BE.Application.Features.UserFeatures.Handlers
                 }
 
                 // B6: Tạo token
-                var accessToken = Auth.GetToken(authClaims, _configuration);
+                var accessToken = await _tokenService.GetToken(authClaims);
                 var token = new JwtSecurityTokenHandler().WriteToken(accessToken);
 
                 // B7: Tạo refesh token Cập nhật RefeshToken vào Database
-                var refreshToken = Auth.GenerateRefreshToken();
+                var refreshToken = await _tokenService.GenerateRefreshToken();
                 var expired = _configuration["JWT:RefreshTokenValidityInDays"] ?? "";
                 user.RefreshToken = refreshToken;
                 user.RefreshTokenExpiryTime = DateTime.Now.AddDays(Convert.ToInt32(expired));
