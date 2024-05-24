@@ -55,14 +55,14 @@ namespace PharmacyManagement_BE.Application.Features.UserFeatures.Handlers
                 // B3: tạo claim
                 var authClaims = await _tokenService.CreateAuthClaim(user);
 
-                // B4: Lấy danh sách role của người dùng
+                /*// B4: Lấy danh sách role của người dùng
                 var userRoles = await _userManager.GetRolesAsync(user);
 
                 // B5: thêm role vào claim
                 foreach (var role in userRoles)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
-                }
+                }*/
 
                 // B6: Tạo token
                 var accessToken = await _tokenService.GetToken(authClaims);

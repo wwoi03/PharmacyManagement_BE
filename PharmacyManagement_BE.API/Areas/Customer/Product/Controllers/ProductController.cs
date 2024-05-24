@@ -36,7 +36,7 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
         }
 
         [HttpPost("GetProductById")]
-        [Authorize(Roles = ProductRole.PM_PRODUCT_DETAILS)]
+        [Authorize()]
         public async Task<IActionResult> Get(Guid id)
         {
             try

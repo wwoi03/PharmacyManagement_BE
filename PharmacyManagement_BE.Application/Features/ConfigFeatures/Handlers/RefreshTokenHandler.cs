@@ -75,14 +75,14 @@ namespace PharmacyManagement_BE.Application.Features.ConfigFeatures.Handlers
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     };
 
-                    // Lấy danh sách role của người dùng
+                    /*// Lấy danh sách role của người dùng
                     var userRoles = await _userManager.GetRolesAsync(user);
 
                     // thêm role vào claim
                     foreach (var role in userRoles)
                     {
                         authClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
-                    }
+                    }*/
 
                     // Tạo token
                     var accessToken = await _tokenService.GetToken(authClaims);

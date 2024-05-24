@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,6 +16,15 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class TokenService : ITokenService
     {
+        /*private readonly IConfiguration _configuration;
+        private readonly IConnectionMultiplexer _redis;
+
+        public TokenService(IConfiguration configuration, IConnectionMultiplexer redis)
+        {
+            this._configuration = configuration;
+            this._redis = redis;
+        }*/
+
         private readonly IConfiguration _configuration;
 
         public TokenService(IConfiguration configuration)
@@ -72,5 +82,21 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
             return token;
         }
+
+        /*public async Task<bool> IsBlacklistedAsync(string token)
+        {
+            var db = _redis.GetDatabase();
+            var value = await db.StringGetAsync(token);
+            return value == "blacklisted";
+        }
+
+        public async Task AddToBlacklistAsync(string token, DateTime expiry)
+        {
+            var db = _redis.GetDatabase();
+            var expiryTime = expiry - DateTime.UtcNow;
+
+            // Lưu token vào Redis với thời gian hết hạn tương ứng
+            await db.StringSetAsync(token, "blacklisted", expiryTime);
+        }*/
     }
 }
