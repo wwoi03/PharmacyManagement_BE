@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Domain.Entities
 {
-    public class Order : BaseEntity<Guid>
+    public class Order : BaseEntity<Guid?>
     {
-        public Guid CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
         public Customer Customer { get; set; } = null!;
         public string? OrdererName { get; set; }
         public string? ReceiverName { get; set; } 
@@ -32,9 +32,9 @@ namespace PharmacyManagement_BE.Domain.Entities
         public string? PaymentStatus { get; set; } 
         public string? AccountNumber { get; set; } 
         public string? BankName { get; set; }
-        public Guid PaymentMethodId { get; set; }
+        public Guid? PaymentMethodId { get; set; }
         public PaymentMethod PaymentMethod { get; set; } = null!;
-        public Guid StaffId { get; set; }
-        public Guid BranchId { get; set; }
+        public Guid? StaffId { get; set; }
+        public Guid? BranchId { get; set; }
     }
 }

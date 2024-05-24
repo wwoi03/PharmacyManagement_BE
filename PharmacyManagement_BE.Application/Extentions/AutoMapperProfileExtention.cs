@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Domain.Entities;
@@ -15,10 +18,20 @@ namespace PharmacyManagement_BE.Application.Extentions
         public AutoMapperProfileExtention()
         {
             CreateMap<Product, AllProductQueryResponse>();
+
             CreateMap<CreateUserCommandRequest, Customer>()
-                .ForMember(destination => destination.FullName, options => options.MapFrom(source => source.UserName));
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.UserName));
             CreateMap<Customer, SignUpCommandResponse>();
+
             CreateMap<Customer, SignInResponse>();
+
+            CreateMap<IdentityRole<Guid>, RoleResponse>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NormalizedName));
+
+            CreateMap<CreateRoleCommandRequest, IdentityRole<Guid>>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(opt => opt.Name.ToUpper()));
+
+            CreateMap<CreateStaffCommandRequest, Staff>();
         }
     }
 }

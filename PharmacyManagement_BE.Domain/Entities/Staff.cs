@@ -10,7 +10,6 @@ namespace PharmacyManagement_BE.Domain.Entities
     public class Staff : ApplicationUser
     {
         public string? Address { get; set; }
-        public Guid BranchId { get; set; }
-        public Branch Branch { get; set; } = null!;
+        public Guid? BranchId { get; set; }
     }
 }

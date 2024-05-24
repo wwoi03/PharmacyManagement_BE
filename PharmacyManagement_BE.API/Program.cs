@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -32,9 +32,6 @@ builder.Services.AddIdentityConfig(builder.Configuration);
 
 // Respositories Extention
 builder.Services.AddRepositoryExtension();
-
-// PMAuthorizeActionFilter
-//builder.Services.AddScoped<PMAuthorizeActionFilter>();
 
 // MediaR Extention
 builder.Services.AddMediatRExtention();

@@ -10,9 +10,9 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class ShipmentDetails : BaseEntity<Guid>
     {
-        public Guid ShipmentId { get; set; }
+        public Guid? ShipmentId { get; set; }
         public Shipment Shipment { get; set; } = null!;
-        public Guid ProductId { get; set; }
+        public Guid? ProductId { get; set; }
         public Product Product { get; set; } = null!;
         public DateTime ImportDate { get; set; }
         public DateTime ExpirationDate { get; set; }
