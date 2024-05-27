@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PharmacyManagement_BE.Application.Commands.AuthFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Customer
@@ -18,10 +17,10 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Customer
             _mediator = mediator;
         }
 
-        [HttpPost("RevokeToken")]
+        /*[HttpPost("RevokeToken")]
         public async Task<IActionResult> RevokeToken(RevokeTokenRequest request)
         {
             return Ok();
-        }
+        }*/
     }
 }

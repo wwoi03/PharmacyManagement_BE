@@ -14,8 +14,4 @@
     <ProjectReference Include="..\PharmacyManagement_BE.Application\PharmacyManagement_BE.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Account\Controllers\" />
-  </ItemGroup>
-
 </Project>
