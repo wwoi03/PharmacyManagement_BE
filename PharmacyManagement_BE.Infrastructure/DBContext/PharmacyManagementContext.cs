@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PharmacyManagement_BE.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,20 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
 {
     public class PharmacyManagementContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
+        private readonly IConfiguration _configuration;
+
         public PharmacyManagementContext() { }
 
-        public PharmacyManagementContext(DbContextOptions<PharmacyManagementContext> options) : base(options) { }
-        
+        public PharmacyManagementContext(DbContextOptions<PharmacyManagementContext> options, IConfiguration configuration) : base(options)
+        {
+            this._configuration = configuration;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ConnectionString"));
             }
         }
 
