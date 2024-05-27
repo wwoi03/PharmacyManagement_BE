@@ -101,5 +101,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("Search")]
+        public async Task<IActionResult> Search(SearchStaffQueryRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
