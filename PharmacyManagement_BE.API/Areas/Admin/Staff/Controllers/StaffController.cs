@@ -18,8 +18,22 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
             this._mediator = mediator;
         }
 
-        [HttpGet("Staffs")]
-        public async Task<IActionResult> Get(DeleteStaffCommandRequest request)
+        [HttpGet("GetStaffs")]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetStaffsQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("GetStaffsByBranch")]
+        public async Task<IActionResult> GetStaffsByBranch(GetStaffsByBranchQueryRequest request)
         {
             try
             {
@@ -32,7 +46,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
             }
         }
 
-        [HttpPost("GetStaff")]
+        [HttpPost("Details")]
         public async Task<IActionResult> Details(GetStaffByIdQueryRequest request)
         {
             try

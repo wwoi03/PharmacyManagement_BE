@@ -12,9 +12,16 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class StaffService : RepositoryService<Staff>, IStaffService
     {
+        private readonly PharmacyManagementContext _context;
+
         public StaffService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<List<Staff>> GetStaffsByBranch(Guid branchId)
+        {
+            return _context.Staffs.Where(s => s.BranchId == branchId).ToList();
         }
     }
 }
