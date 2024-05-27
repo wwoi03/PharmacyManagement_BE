@@ -12,9 +12,16 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class ShipmentService : RepositoryService<Shipment>, IShipmentService
     {
+        private readonly PharmacyManagementContext _context;
+
         public ShipmentService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<List<Shipment>> GetAllShipmentByStaffId(Guid id)
+        {
+            return _context.Shipments.Where(x => x.StaffId == id).ToList();
         }
     }
 }

@@ -12,9 +12,16 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class OrderService : RepositoryService<Order>, IOrderService
     {
+        private readonly PharmacyManagementContext _context;
+
         public OrderService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<List<Order>> GetAllOrderByStaffId(Guid id)
+        {
+            return _context.Orders.Where(x => x.StaffId == id).ToList();
         }
     }
 }

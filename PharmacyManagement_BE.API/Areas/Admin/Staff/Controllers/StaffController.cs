@@ -44,5 +44,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteStaffCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
