@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
@@ -36,6 +37,8 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<UpdateStaffCommandRequest, Staff>();
 
             CreateMap<Staff, Staff>();
+
+            CreateMap<CreateDiseaseCommandRequest, Disease>();
         }
     }
 }

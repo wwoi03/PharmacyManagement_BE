@@ -27,7 +27,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ConnectionString"));
-                optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
             }
         }
 

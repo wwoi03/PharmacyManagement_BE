@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj": {}
+    "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj": {}
   },
   "projects": {
-    "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj": {
+    "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
+        "projectUniqueName": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
         "projectName": "PharmacyManagement_BE.Application",
-        "projectPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
-        "packagesPath": "C:\\Users\\tuand\\.nuget\\packages\\",
-        "outputPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\obj\\",
+        "projectPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tuand\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj": {
-                "projectPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj"
+              "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj": {
+                "projectPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj"
               }
             }
           }
@@ -49,7 +49,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -58,21 +59,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj": {
+    "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj",
+        "projectUniqueName": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj",
         "projectName": "PharmacyManagement_BE.Domain",
-        "projectPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj",
-        "packagesPath": "C:\\Users\\tuand\\.nuget\\packages\\",
-        "outputPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\obj\\",
+        "projectPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tuand\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -113,7 +114,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -122,21 +124,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj": {
+    "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj",
+        "projectUniqueName": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj",
         "projectName": "PharmacyManagement_BE.Infrastructure",
-        "projectPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\tuand\\.nuget\\packages\\",
-        "outputPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\obj\\",
+        "projectPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tuand\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -150,8 +152,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj": {
-                "projectPath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj"
+              "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj": {
+                "projectPath": "H:\\HK3nam3\\Khóa luận tốt nghiệp\\PharmacyManagement_BE\\PharmacyManagement_BE.Domain\\PharmacyManagement_BE.Domain.csproj"
               }
             }
           }
@@ -205,7 +207,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -214,7 +217,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

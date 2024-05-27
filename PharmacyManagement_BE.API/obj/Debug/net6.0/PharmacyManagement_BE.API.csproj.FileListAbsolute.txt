@@ -156,3 +156,5 @@ H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_
 H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.API\obj\Debug\net6.0\ref\PharmacyManagement_BE.API.dll
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.API\bin\Debug\net6.0\Pipelines.Sockets.Unofficial.dll
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.API\bin\Debug\net6.0\StackExchange.Redis.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.API\bin\Debug\net6.0\Pipelines.Sockets.Unofficial.dll
+H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.API\bin\Debug\net6.0\StackExchange.Redis.dll
