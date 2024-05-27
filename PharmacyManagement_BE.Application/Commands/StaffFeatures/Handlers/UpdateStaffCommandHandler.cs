@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
 {
-    internal class CreateStaffCommandHandler : IRequestHandler<CreateStaffCommandRequest, ResponseAPI<string>>
+    internal class UpdateStaffCommandHandler : IRequestHandler<UpdateStaffCommandRequest, ResponseAPI<string>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
 
-        public CreateStaffCommandHandler(IPMEntities entities, IMapper mapper, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+        public UpdateStaffCommandHandler(IPMEntities entities, IMapper mapper, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
         {
             this._entities = entities;
             this._mapper = mapper;
@@ -29,7 +29,7 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
             this._roleManager = roleManager;
         }
 
-        public async Task<ResponseAPI<string>> Handle(CreateStaffCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<string>> Handle(UpdateStaffCommandRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -39,10 +39,16 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 if (!validation.IsSuccessed)
                     return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, validation.Message);
 
-                // Kiểm tra tên đăng nhập tồn tại
-                var userExists = await _userManager.FindByNameAsync(request.UserName);
+                // Kiểm tra nhân viên tồn tại
+                var userExists = await _userManager.FindByIdAsync(request.Id.ToString());
 
-                if (userExists != null)
+                if (userExists == null)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Nhân viên không tồn tại.");
+
+                // Kiểm tra tên đăng nhập tồn tại
+                var usernameExists = await _userManager.FindByNameAsync(request.UserName);
+
+                if (usernameExists != null && userExists.Id != request.Id)
                     return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Tên đăng nhập đã tồn tại");
 
                 // Kiểm tra quyền hợp lệ
@@ -59,17 +65,38 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 if (branchExists == null)
                     return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Chi nhánh không tồn tại.");
 
-                // Tạo tài khoản
-                var staff = _mapper.Map<Staff>(request);
-                var result = await _userManager.CreateAsync(staff, request.Password);
+                // Cập nhật tài khoản
+                var staff = (Staff)await _userManager.FindByIdAsync(request.Id.ToString());
+                staff.FullName = request.FullName;
+                staff.UserName = request.UserName;
+                staff.PhoneNumber = request.PhoneNumber;
+                staff.Email = request.Email;
+                staff.Gender = request.Gender;
+                staff.Birthday = request.Birthday ;
+                staff.Address = request.Address ;
+                staff.Image = request.Image ;
+                staff.BranchId = request.BranchId;
+
+                var result = await _userManager.UpdateAsync(staff);
 
                 if (!result.Succeeded)
                     return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, result.Errors.First().Description);
 
-                // Thêm role cho tài khoản
-                await _userManager.AddToRolesAsync(staff, request.Roles);
+                // cập nhật mật khẩu
+                if (!(await _userManager.CheckPasswordAsync(staff, request.Password)))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(staff);
+                    var passwordChangeResult = await _userManager.ResetPasswordAsync(staff, token, request.Password);
+                }
 
-                return new ResponseErrorAPI<string>(StatusCodes.Status200OK, "Thêm mới nhân viên thành công.");
+                // Thêm role mới và xóa role cũ cho tài khoản
+                var currentRoles = await _userManager.GetRolesAsync(staff);
+                var rolesToAdd = request.Roles.Except(currentRoles).ToList();
+                var rolesToRemove = currentRoles.Except(request.Roles).ToList();
+                await _userManager.RemoveFromRolesAsync(staff, rolesToRemove);
+                await _userManager.AddToRolesAsync(staff, rolesToAdd);
+
+                return new ResponseErrorAPI<string>(StatusCodes.Status200OK, "Chỉnh sửa nhân viên thành công.");
             }
             catch (Exception ex)
             {

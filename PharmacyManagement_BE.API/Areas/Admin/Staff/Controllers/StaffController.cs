@@ -17,8 +17,22 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
             this._mediator = mediator;
         }
 
-        [HttpPost("CreateStaff")]
+        [HttpPost]
         public async Task<IActionResult> Create(CreateStaffCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateStaffCommandRequest request)
         {
             try
             {

@@ -32,6 +32,10 @@ namespace PharmacyManagement_BE.Application.Extentions
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(opt => opt.Name.ToUpper()));
 
             CreateMap<CreateStaffCommandRequest, Staff>();
+
+            CreateMap<UpdateStaffCommandRequest, Staff>();
+
+            CreateMap<Staff, Staff>();
         }
     }
 }
