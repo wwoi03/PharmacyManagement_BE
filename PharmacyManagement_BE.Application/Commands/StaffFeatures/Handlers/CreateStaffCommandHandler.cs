@@ -37,7 +37,7 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<string>(validation.Message);
+                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, validation.Message);
 
                 // Kiểm tra tên đăng nhập tồn tại
                 var userExists = await _userManager.FindByNameAsync(request.UserName);
@@ -46,24 +46,29 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                     return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Tên đăng nhập đã tồn tại");
 
                 // Kiểm tra quyền hợp lệ
-                foreach (var roleId in request.Roles)
+                foreach (var roleName in request.Roles)
                 {
-                    var role = await _roleManager.FindByIdAsync(roleId.ToString());
+                    var role = await _roleManager.FindByNameAsync(roleName);
                     if (role == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, $"Vai trò với ID {roleId} không tồn tại.");
+                        return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, $"Vai trò với ID {roleName} không tồn tại.");
                 }
+
+                // Kiểm tra chi nhánh
+                var branchExists = await _entities.BranchService.GetById(request.BranchId);
+
+                if (branchExists == null)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Chi nhánh không tồn tại.");
 
                 // Tạo tài khoản
                 var staff = _mapper.Map<Staff>(request);
-                staff.BranchId = request.BranchId;
                 var result = await _userManager.CreateAsync(staff, request.Password);
 
                 if (!result.Succeeded)
                     return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, result.Errors.First().Description);
 
                 // Thêm role cho tài khoản
-                foreach (var roleId in request.Roles)
-                    await _userManager.AddToRoleAsync(staff, roleId.ToString());
+                foreach (var roleName in request.Roles)
+                    await _userManager.AddToRoleAsync(staff, roleName);
 
                 return new ResponseErrorAPI<string>(StatusCodes.Status200OK, "Thêm mới nhân viên thành công.");
             }
