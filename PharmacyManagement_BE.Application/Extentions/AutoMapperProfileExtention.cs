@@ -36,6 +36,8 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<UpdateStaffCommandRequest, Staff>();
 
             CreateMap<Staff, Staff>();
+
+            CreateMap<Staff, StaffResponse>();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 var userExists = await _userManager.FindByIdAsync(request.Id.ToString());
 
                 if (userExists == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Nhân viên không tồn tại.");
+                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Nhân viên không tồn tại.");
 
                 // Kiểm tra tên đăng nhập tồn tại
                 var usernameExists = await _userManager.FindByNameAsync(request.UserName);
@@ -96,12 +96,12 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 await _userManager.RemoveFromRolesAsync(staff, rolesToRemove);
                 await _userManager.AddToRolesAsync(staff, rolesToAdd);
 
-                return new ResponseErrorAPI<string>(StatusCodes.Status200OK, "Chỉnh sửa nhân viên thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Chỉnh sửa nhân viên thành công.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
     }

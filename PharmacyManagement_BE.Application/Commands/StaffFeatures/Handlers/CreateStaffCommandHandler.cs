@@ -69,12 +69,12 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 // Thêm role cho tài khoản
                 await _userManager.AddToRolesAsync(staff, request.Roles);
 
-                return new ResponseErrorAPI<string>(StatusCodes.Status200OK, "Thêm mới nhân viên thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm mới nhân viên thành công.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
     }
