@@ -27,7 +27,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public string? RegistrationNumber { get; set; } 
         public string? BrandOrigin { get; set; } 
         public string? AgeOfUse { get; set; } 
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
         public Category Category { get; set; } = null!;
     }
 }

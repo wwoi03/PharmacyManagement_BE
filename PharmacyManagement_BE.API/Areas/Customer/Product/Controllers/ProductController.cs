@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.DTOs.Requests;
 using PharmacyManagement_BE.Domain.Roles;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.Common.Securitys;
 
 namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
 {
@@ -21,7 +22,7 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
         }
 
         [HttpGet("GetProducts")]
-        [Authorize()]
+        [AuthorizeOr("ADMIN,CUSTOMER")]
         public async Task<IActionResult> Get()
         {
             try
@@ -36,7 +37,6 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
         }
 
         [HttpPost("GetProductById")]
-        [Authorize(Roles = ProductRole.PM_PRODUCT_DETAILS)]
         public async Task<IActionResult> Get(Guid id)
         {
             try

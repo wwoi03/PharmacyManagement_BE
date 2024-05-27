@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using PharmacyManagement_BE.Domain.Entities;
@@ -16,40 +18,65 @@ namespace PharmacyManagement_BE.Application.Filters
 {
     public class PMAuthorizeActionFilter : IAsyncAuthorizationFilter
     {
-        private readonly string _functionCode;
-        private readonly string _permission;
-
         private IConfiguration _configuration;
         private IPMEntities _entities;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly string _roles;
 
-        public PMAuthorizeActionFilter(string functionCode, string permission, IConfiguration configuration, IPMEntities entities)
+        public PMAuthorizeActionFilter(string roles, IConfiguration configuration, IPMEntities entities, UserManager<ApplicationUser> userManager)
         {
             this._configuration = configuration;
             this._entities = entities;
-            this._functionCode = functionCode;
-            this._permission = permission;
+            this._userManager = userManager;
+            this._roles = roles;
         }
 
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             var identity = context.HttpContext.User.Identity as ClaimsIdentity;
+
             if (identity != null)
             {
                 var userClaims = identity.Claims;
-                // B1: Lấy thông tin User từ Token
-                var user = new ApplicationUser
-                {
-                    UserName = userClaims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value,
-                };
 
-                // B2: kiểm tra người dùng có quyền truy cập tài nguyên
+                // Kiểm tra có token
+                var username = userClaims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-
-                if (string.IsNullOrEmpty(user.UserName))
+                if (string.IsNullOrEmpty(username))
                 {
                     context.HttpContext.Response.ContentType = "application/json";
                     context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     context.Result = new JsonResult(new ResponseErrorAPI<string>("Bạn không có quyền truy cập tài nguyên này"));
+
+                    return;
+                }
+                
+                // kiểm tra user tồn tại trong hệ thống
+                var user = await _userManager.FindByNameAsync(username);
+
+                if (user == null)
+                {
+                    context.HttpContext.Response.ContentType = "application/json";
+                    context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    context.Result = new JsonResult(new ResponseErrorAPI<string>(StatusCodes.Status401Unauthorized,"Bạn không có quyền truy cập tài nguyên này", null));
+
+                    return;
+                }
+
+                // lấy danh sách role của user
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                // Lấy danh sách role tài nguyên yêu cầu
+                string[] requiredRoles = _roles.Split(',');
+
+                // kiểm tra user có quyền truy cập tài nguyên
+                bool hasPermission = requiredRoles.Any(requiredRole => userRoles.Contains(requiredRole));
+
+                if (!hasPermission)
+                {
+                    context.HttpContext.Response.ContentType = "application/json";
+                    context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    context.Result = new JsonResult(new ResponseErrorAPI<string>(StatusCodes.Status401Unauthorized, "Bạn không có quyền truy cập tài nguyên này", null));
 
                     return;
                 }

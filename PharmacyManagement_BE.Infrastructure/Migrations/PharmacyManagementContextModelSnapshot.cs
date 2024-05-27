@@ -271,7 +271,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("ProvinceOrCity")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("StaffId")
+                    b.Property<Guid?>("StaffId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedTime")
@@ -294,16 +294,16 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UnitId")
+                    b.Property<Guid?>("UnitId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedTime")
@@ -332,7 +332,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ParentCategoryId")
+                    b.Property<Guid?>("ParentCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedTime")
@@ -345,7 +345,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Comment", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -361,19 +361,19 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ReplayCommentId")
+                    b.Property<Guid?>("ReplayCommentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StaffId")
+                    b.Property<Guid?>("StaffId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedTime")
@@ -451,7 +451,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Order", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -464,13 +464,13 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("BankName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("District")
@@ -497,7 +497,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PaymentMethodId")
+                    b.Property<Guid?>("PaymentMethodId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PaymentStatus")
@@ -512,7 +512,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("RecipientPhone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("StaffId")
+                    b.Property<Guid?>("StaffId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
@@ -544,13 +544,13 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.OrderDetails", b =>
                 {
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ShipmentDetailsId")
+                    b.Property<Guid?>("ShipmentDetailsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UnitId")
+                    b.Property<Guid?>("UnitId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedTime")
@@ -616,7 +616,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("BrandOrigin")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CodeMedicine")
@@ -704,7 +704,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedTime")
@@ -845,10 +845,10 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PromotionId")
+                    b.Property<Guid?>("PromotionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -897,7 +897,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("District")
@@ -934,7 +934,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedTime")
@@ -949,7 +949,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SupplierId")
+                    b.Property<Guid?>("SupplierId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedTime")
@@ -986,13 +986,13 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ShipmentId")
+                    b.Property<Guid?>("ShipmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("SoldPrice")
@@ -1031,7 +1031,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("StaffId")
+                    b.Property<Guid?>("StaffId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedTime")
@@ -1183,13 +1183,8 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BranchId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("BranchId1");
 
                     b.HasDiscriminator().HasValue("Staff");
                 });
@@ -1249,21 +1244,15 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Unit", "Unit")
                         .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UnitId");
 
                     b.Navigation("Customer");
 
@@ -1276,15 +1265,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Customer");
 
@@ -1314,15 +1299,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.PaymentMethod", "PaymentMethod")
                         .WithMany()
-                        .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaymentMethodId");
 
                     b.Navigation("Customer");
 
@@ -1344,9 +1325,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });
@@ -1374,9 +1353,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Product");
                 });
@@ -1461,15 +1438,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Promotion", "Promotion")
                         .WithMany()
-                        .HasForeignKey("PromotionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PromotionId");
 
                     b.Navigation("Product");
 
@@ -1491,9 +1464,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
                 });
@@ -1502,9 +1473,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Supplier", "Supplier")
                         .WithMany()
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SupplierId");
 
                     b.Navigation("Supplier");
                 });
@@ -1513,15 +1482,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Shipment", "Shipment")
                         .WithMany()
-                        .HasForeignKey("ShipmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ShipmentId");
 
                     b.Navigation("Product");
 
@@ -1532,9 +1497,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Staff", "Staff")
                         .WithMany()
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StaffId");
 
                     b.Navigation("Staff");
                 });
@@ -1556,17 +1519,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Voucher");
-                });
-
-            modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Staff", b =>
-                {
-                    b.HasOne("PharmacyManagement_BE.Domain.Entities.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Branch");
                 });
 #pragma warning restore 612, 618
         }

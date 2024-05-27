@@ -15,6 +15,6 @@ namespace PharmacyManagement_BE.Domain.Entities
         public string? Ward { get; set; }
         public string? AddressDetails { get; set; }
         public string? Phone { get; set; }
-        public Guid StaffId { get; set; }
+        public Guid? StaffId { get; set; }
     }
 }

@@ -10,10 +10,10 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class OrderDetails : BaseEntity<Guid>
     {
-        public Guid OrderId { get; set; }
-        public Guid ShipmentDetailsId { get; set; }
+        public Guid? OrderId { get; set; }
+        public Guid? ShipmentDetailsId { get; set; }
         public ShipmentDetails ShipmentDetails { get; set; } = null!;
-        public Guid UnitId { get; set; }
+        public Guid? UnitId { get; set; }
         public int Quantity { get; set; }
         public decimal PricePerUnit { get; set; }
         public decimal TotalPrice { get; set; }

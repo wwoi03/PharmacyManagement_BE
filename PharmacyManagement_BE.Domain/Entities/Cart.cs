@@ -10,11 +10,11 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class Cart : BaseEntity<Guid>
     {
-        public Guid ProductId { get; set; }
+        public Guid? ProductId { get; set; }
         public Product Product { get; set; } = null!;
-        public Guid UnitId { get; set; }
+        public Guid? UnitId { get; set; }
         public Unit Unit { get; set; } = null!;
-        public Guid CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
         public Customer Customer { get; set; } = null!;
         public int Quantity { get; set; }
     }
