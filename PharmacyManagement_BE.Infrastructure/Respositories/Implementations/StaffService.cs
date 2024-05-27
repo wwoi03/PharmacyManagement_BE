@@ -12,9 +12,26 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class StaffService : RepositoryService<Staff>, IStaffService
     {
+        private readonly PharmacyManagementContext _context;
+
         public StaffService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<List<Staff>> GetStaffsByBranch(Guid branchId)
+        {
+            return _context.Staffs.Where(s => s.BranchId == branchId).ToList();
+        }
+
+        public async Task<List<Staff>> SearchStaffs(string searchString)
+        {
+            return _context.Staffs.Where(s => 
+                s.UserName.Contains(searchString) ||
+                s.FullName.Contains(searchString) ||
+                s.PhoneNumber.Contains(searchString) ||
+                s.Email.Contains(searchString)
+                ).ToList();
         }
     }
 }

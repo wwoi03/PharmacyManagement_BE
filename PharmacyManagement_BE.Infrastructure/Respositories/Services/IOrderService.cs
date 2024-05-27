@@ -10,6 +10,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IOrderService : IRepositoryService<Order>
     {
-
+        Task<List<Order>> GetAllOrderByStaffId(Guid id);
     }
 }

@@ -946,6 +946,9 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("StaffId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
@@ -956,6 +959,8 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StaffId");
 
                     b.HasIndex("SupplierId");
 
@@ -1034,15 +1039,10 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("StaffId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StaffId");
 
                     b.ToTable("Suppliers");
                 });
@@ -1474,9 +1474,15 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Shipment", b =>
                 {
+                    b.HasOne("PharmacyManagement_BE.Domain.Entities.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId");
+
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierId");
+
+                    b.Navigation("Staff");
 
                     b.Navigation("Supplier");
                 });
@@ -1494,15 +1500,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Shipment");
-                });
-
-            modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Supplier", b =>
-                {
-                    b.HasOne("PharmacyManagement_BE.Domain.Entities.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("StaffId");
-
-                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.VoucherHistory", b =>

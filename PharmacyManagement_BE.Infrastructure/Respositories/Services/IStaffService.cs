@@ -10,6 +10,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IStaffService : IRepositoryService<Staff>
     {
-
+        Task<List<Staff>> GetStaffsByBranch(Guid branchId);
+        Task<List<Staff>> SearchStaffs(string searchString);
     }
 }

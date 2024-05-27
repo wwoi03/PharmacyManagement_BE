@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using PharmacyManagement_BE.Application.Commands.AuthFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.AccountFeatures.Requests;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PharmacyManagement_BE.Application.Commands.AuthFeatures.Handlers
+namespace PharmacyManagement_BE.Application.Commands.AccountFeatures.Handlers
 {
     internal class RevokeTokenHandler : IRequestHandler<RevokeTokenRequest, ResponseAPI<string>>
     {

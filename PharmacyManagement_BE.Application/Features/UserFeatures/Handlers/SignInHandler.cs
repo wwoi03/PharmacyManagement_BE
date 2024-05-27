@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using PharmacyManagement_BE.Application.DTOs.Requests;
@@ -51,6 +52,10 @@ namespace PharmacyManagement_BE.Application.Features.UserFeatures.Handlers
 
                 if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
                     return new ResponseErrorAPI<SignInResponse>("Thông tin tài khoản hoặc mật khẩu không chính xác.");
+
+                // Kiểm tra xem tài khoản có bị khóa không
+                if (await _userManager.IsLockedOutAsync(user))
+                    return new ResponseErrorAPI<SignInResponse>(StatusCodes.Status403Forbidden , $"Tài khoản của bạn đã bị khóa đến ngày {user.LockoutEnd}.");
 
                 // B3: tạo claim
                 var authClaims = await _tokenService.CreateAuthClaim(user);
