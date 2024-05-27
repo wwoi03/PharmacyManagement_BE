@@ -13,8 +13,8 @@ namespace PharmacyManagement_BE.Domain.Entities
         public DateTime ImportDate { get; set; }
         public string? Note { get; set; } 
         public string? Status { get; set; } 
-        public Guid SupplierId { get; set; }
+        public Guid? SupplierId { get; set; }
         public Supplier Supplier { get; set; } = null!;
-        public Guid BranchId { get; set; }
+        public Guid? BranchId { get; set; }
     }
 }

@@ -31,6 +31,13 @@ namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
             Obj = obj;
         }
 
+        public ResponseSuccessAPI(int code, string message)
+        {
+            IsSuccessed = true;
+            Code = code;
+            Message = message;
+        }
+
         public ResponseSuccessAPI(int code, string message, T obj)
         {
             IsSuccessed = true;

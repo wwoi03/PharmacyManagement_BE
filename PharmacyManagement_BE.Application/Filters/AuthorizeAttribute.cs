@@ -14,9 +14,9 @@ namespace PharmacyManagement_BE.Application.Filters
 
         }
 
-        public AuthorizeAttribute(string functionCode, string permission) : base(typeof(PMAuthorizeActionFilter))
+        public AuthorizeAttribute(string roles) : base(typeof(PMAuthorizeActionFilter))
         {
-            Arguments = new object[] { functionCode, permission };
+            Arguments = new object[] { roles };
         }
     }
 }

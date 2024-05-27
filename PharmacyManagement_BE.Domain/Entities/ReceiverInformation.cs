@@ -18,7 +18,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public string? Ward { get; set; }
         public AddressType AddressType { get; set; }
         public string? AddressDetails { get; set; }
-        public Guid CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
         public Customer Customer { get; set; } = null!;
     }
 }

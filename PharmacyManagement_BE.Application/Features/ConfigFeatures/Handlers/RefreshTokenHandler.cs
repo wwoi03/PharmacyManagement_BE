@@ -8,6 +8,7 @@ using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.Securitys;
+using PharmacyManagement_BE.Infrastructure.Respositories.Services;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,15 @@ namespace PharmacyManagement_BE.Application.Features.ConfigFeatures.Handlers
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
-        public RefreshTokenHandler(IPMEntities entities, IConfiguration configuration, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public RefreshTokenHandler(IPMEntities entities, IConfiguration configuration, UserManager<ApplicationUser> userManager, IMapper mapper, ITokenService tokenService)
         {
             this._entities = entities;
             this._configuration = configuration;
             this._userManager = userManager;
             this._mapper = mapper;
+            this._tokenService = tokenService;
         }
 
         public async Task<ResponseAPI<SignInResponse>> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
@@ -42,16 +45,17 @@ namespace PharmacyManagement_BE.Application.Features.ConfigFeatures.Handlers
                 if (request.AccessToken == null)
                     return new ResponseErrorAPI<SignInResponse>("Vui lòng đăng nhập.");
 
+                // Kiểm tra Token còn hạn
                 var jwtSecurityToken = new JwtSecurityToken(request.AccessToken);
-                var ValidTo = jwtSecurityToken.ValidTo.AddHours(7); // UTC+7 
+                var validTo = jwtSecurityToken.ValidTo.AddHours(7); // UTC+7 
 
-                if (ValidTo <= DateTime.Now)
+                if (DateTime.Now <= validTo)
                 {
                     // giải mãi token dựa vào SecretKey đã config trước đó
-                    var principal = Auth.GetPrincipalFromExpiredToken(request.AccessToken, _configuration["JWT:Secret"]);
+                    var principal = await _tokenService.GetPrincipalFromExpiredToken(request.AccessToken);
 
                     if (principal == null)
-                        return new ResponseErrorAPI<SignInResponse>("Vui lòng đăng nhập lại.");
+                        return new ResponseErrorAPI<SignInResponse>("Vui lòng đăng nhập.");
 
                     // Lấy userName từ token ra 
                     string username = principal?.Claims.ToList()[0]?.ToString()?.Split(' ')[1];
@@ -64,7 +68,6 @@ namespace PharmacyManagement_BE.Application.Features.ConfigFeatures.Handlers
                         return new ResponseErrorAPI<SignInResponse>("Vui lòng đăng nhập lại.");
                     }
 
-                    // Tạo Token mới
                     // tạo claim
                     var authClaims = new List<Claim>
                     {
@@ -72,40 +75,42 @@ namespace PharmacyManagement_BE.Application.Features.ConfigFeatures.Handlers
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     };
 
-                    // Lấy danh sách role của người dùng
+                    /*// Lấy danh sách role của người dùng
                     var userRoles = await _userManager.GetRolesAsync(user);
 
                     // thêm role vào claim
                     foreach (var role in userRoles)
                     {
                         authClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
-                    }
+                    }*/
 
                     // Tạo token
-                    var accessToken = Auth.GetToken(authClaims, _configuration);
+                    var accessToken = await _tokenService.GetToken(authClaims);
                     var token = new JwtSecurityTokenHandler().WriteToken(accessToken);
 
                     // Tạo refesh token Cập nhật RefeshToken vào Database
-                    var refreshToken = Auth.GenerateRefreshToken();
+                    var refreshToken = await _tokenService.GenerateRefreshToken();
                     var expired = _configuration["JWT:RefreshTokenValidityInDays"] ?? "";
                     user.RefreshToken = refreshToken;
                     user.RefreshTokenExpiryTime = DateTime.Now.AddDays(Convert.ToInt32(expired));
+
                     _entities.CustomerService.Update((Customer)user);
 
+                    // SaveChange
                     _entities.SaveChange();
 
                     // Response
                     var response = _mapper.Map<SignInResponse>(user);
                     response.Token = token;
 
-                    return new ResponseSuccessAPI<SignInResponse>(200, "Đăng nhập thành công", response);
+                    return new ResponseSuccessAPI<SignInResponse>(StatusCodes.Status200OK, "", response);
                 }
 
-                return new ResponseErrorAPI<SignInResponse>("Vui lòng đăng nhập lại.");
+                return new ResponseErrorAPI<SignInResponse>("Vui lòng đăng nhập.");
             }
             catch (Exception ex)
             {
-                return new ResponseErrorAPI<SignInResponse>("Vui lòng đăng nhập.");
+                return new ResponseErrorAPI<SignInResponse>("Lỗi hệ thống.");
             }
         }
     }
