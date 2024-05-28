@@ -21,6 +21,21 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
 
         public async Task Invoke(HttpContext context, UserManager<ApplicationUser> userManager)
         {
+            // Kiểm tra Token
+            if (!context.Request.Headers.ContainsKey("Authorization"))
+            {
+                await _next(context);
+                return;
+            }
+
+            var token = context.Request.Headers["Authorization"].ToString().Split(' ').Last();
+
+            if (string.IsNullOrEmpty(token))
+            {
+                await _next(context);
+                return;
+            }
+
             var identity = context.User.Identity as ClaimsIdentity;
 
             if (identity != null)
