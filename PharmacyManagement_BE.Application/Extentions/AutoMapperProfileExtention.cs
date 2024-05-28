@@ -5,6 +5,7 @@ using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
+using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
 using PharmacyManagement_BE.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,11 @@ namespace PharmacyManagement_BE.Application.Extentions
 
             CreateMap<Staff, Staff>();
 
+            //Phần Hào làm
             CreateMap<CreateDiseaseCommandRequest, Disease>();
+
+            CreateMap<Disease, DetailsDiseaseResponse>();
+
         }
     }
 }
