@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using PharmacyManagement_BE.API.Auth;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Domain.Roles;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using System.Text;
 
@@ -65,6 +68,54 @@ namespace PharmacyManagement_BE.API.Configs
                     }
                 };
             });
+
+            services.AddAuthorization(options =>
+            {
+                // Quản trị viên hệ thống
+                options.AddPolicy("Administrator", policy =>
+                {
+                    policy.Requirements.Add(new RoleRequirementBuilder()
+                        .SetRequiredRole(AccountRole.PM_ADMIN)
+                        .Build());
+                });
+
+                // Quản lý nhân viên
+                options.AddPolicy("EmployeeManager", policy =>
+                {
+                    policy.Requirements.Add(new RoleRequirementBuilder()
+                        .SetRequiredRole(AccountRole.PM_EMPLOYEE_MANAGER)
+                        .Build());
+                });
+
+                // Chuyên viên quản lý sản phẩm
+                options.AddPolicy("ProductManager", policy =>
+                {
+                    policy.Requirements.Add(new RoleRequirementBuilder()
+                        .SetRequiredRole(AccountRole.PM_PRODUCT_MANAGER)
+                        .AddRoleClaim(CategoryRole.PM_CREATE_CATEGORY)
+                        .AddRoleClaim(CategoryRole.PM_EDIT_CATEGORY)
+                        .AddRoleClaim(CategoryRole.PM_DELETE_CATEGORY)
+                        .Build());
+                });
+
+                // Nhân viên bán hàng
+                options.AddPolicy("Salesperson", policy =>
+                {
+                    policy.Requirements.Add(new RoleRequirementBuilder()
+                        .SetRequiredRole(AccountRole.PM_SALESPERSON)
+                        .Build());
+                });
+
+                // Khách hàng
+                options.AddPolicy("ProductManager", policy =>
+                {
+                    policy.Requirements.Add(new RoleRequirementBuilder()
+                        .SetRequiredRole(AccountRole.PM_CUSTOMER)
+                        .Build());
+                });
+            });
+
+            services.AddTransient<IAuthorizationHandler, RoleAuthorizationHandler>();
 
             return services;
         }
