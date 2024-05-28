@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PharmacyManagement_BE.Application.Commands.AuthFeatures.Requests
+namespace PharmacyManagement_BE.Application.Commands.AccountFeatures.Requests
 {
-    public class RevokeTokenRequest : IRequest<ResponseAPI<string>>
+    public class UnLockAccountCommandRequest : IRequest<ResponseAPI<string>>
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
     }
 }

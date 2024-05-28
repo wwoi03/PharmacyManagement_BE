@@ -16,5 +16,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public Guid? SupplierId { get; set; }
         public Supplier Supplier { get; set; } = null!;
         public Guid? BranchId { get; set; }
+        public Guid? StaffId { get; set; }
+        public Staff Staff { get; set; } = null!;
     }
 }
