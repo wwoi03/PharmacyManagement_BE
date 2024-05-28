@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Customs.Authorization.Requirements;
 using System.Linq;
 using System.Security.Claims;
 
-namespace PharmacyManagement_BE.Infrastructure.Customs.Authorization
+namespace PharmacyManagement_BE.Infrastructure.Customs.Authorization.Handlers
 {
     public class RoleAuthorizationHandler : AuthorizationHandler<RoleRequirement>
     {

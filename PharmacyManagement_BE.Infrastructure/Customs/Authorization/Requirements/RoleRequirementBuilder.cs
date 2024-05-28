@@ -1,4 +1,4 @@
-﻿namespace PharmacyManagement_BE.Infrastructure.Customs.Authorization
+﻿namespace PharmacyManagement_BE.Infrastructure.Customs.Authorization.Requirements
 {
     public class RoleRequirementBuilder
     {

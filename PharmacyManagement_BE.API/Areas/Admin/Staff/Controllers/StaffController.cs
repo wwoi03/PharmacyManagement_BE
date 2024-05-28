@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.StaffFeatures.Requests;
+using PharmacyManagement_BE.Domain.Roles;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
 {
@@ -20,7 +21,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
         }
 
         [HttpGet("GetStaffs")]
-        [Authorize(Policy = "Administrator")]
+        [Authorize(Policy = "StaffManager")]
         public async Task<IActionResult> Get()
         {
             try

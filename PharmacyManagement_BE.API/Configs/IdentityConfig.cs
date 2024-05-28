@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Roles;
 using PharmacyManagement_BE.Infrastructure.Customs.Authorization;
+using PharmacyManagement_BE.Infrastructure.Customs.Authorization.Handlers;
+using PharmacyManagement_BE.Infrastructure.Customs.Authorization.Requirements;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using System.Text;
 
@@ -73,19 +75,15 @@ namespace PharmacyManagement_BE.API.Configs
             services.AddAuthorization(options =>
             {
                 // Quản trị viên hệ thống
-                options.AddPolicy("Administrator", policy =>
+                options.AddPolicy("Admin", policy =>
                 {
-                    policy.Requirements.Add(new RoleRequirementBuilder()
-                        .SetRequiredRole(AccountRole.PM_ADMIN)
-                        .Build());
+                    policy.AddRequirements(new IsAdminRequirement(AccountRole.PM_ADMIN));
                 });
 
                 // Quản lý nhân viên
                 options.AddPolicy("StaffManager", policy =>
                 {
-                    policy.Requirements.Add(new RoleRequirementBuilder()
-                        .SetRequiredRole(AccountRole.PM_STAFF_MANAGER)
-                        .Build());
+                    policy.AddRequirements(new IsStaffManagerRequirement(AccountRole.PM_STAFF_MANAGER));
                 });
 
                 // Quản lý sản phẩm
@@ -117,6 +115,8 @@ namespace PharmacyManagement_BE.API.Configs
             });
 
             services.AddTransient<IAuthorizationHandler, RoleAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, IsAdminHandler>();
+            services.AddTransient<IAuthorizationHandler, IsStaffManagerHandler>();
 
             return services;
         }
