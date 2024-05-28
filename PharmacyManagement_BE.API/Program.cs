@@ -52,8 +52,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseMiddleware<TokenValidationExtention>();
-
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    app.UseMiddleware<TokenValidationExtention>();
+    app.MapControllers();
+});
 
 app.Run();

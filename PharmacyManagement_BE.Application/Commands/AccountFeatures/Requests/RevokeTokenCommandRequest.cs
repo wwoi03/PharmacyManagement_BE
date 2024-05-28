@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.AccountFeatures.Requests
 {
-    public class RevokeTokenRequest : IRequest<ResponseAPI<string>>
+    public class RevokeTokenCommandRequest : IRequest<ResponseAPI<string>>
     {
         public Guid Id { get; set; }
     }

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using PharmacyManagement_BE.API.Auth;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Roles;
+using PharmacyManagement_BE.Infrastructure.Customs.Authorization;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using System.Text;
 

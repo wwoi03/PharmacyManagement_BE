@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace PharmacyManagement_BE.API.Auth
+namespace PharmacyManagement_BE.Infrastructure.Customs.Authorization
 {
     public class RoleRequirement : IAuthorizationRequirement
     {

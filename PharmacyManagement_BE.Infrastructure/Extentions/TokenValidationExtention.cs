@@ -13,7 +13,6 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
     public class TokenValidationExtention
     {
         private readonly RequestDelegate _next;
-        //private readonly UserManager<ApplicationUser> _userManager;
 
         public TokenValidationExtention(RequestDelegate next)
         {
@@ -28,7 +27,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
             {
                 var claims = identity.Claims;
 
-                // Kiểm tra Token còn được cấp phép hay không
+                // Kiểm tra người dùng đã đăng nhập chưa
                 var username = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
                 if (username == null)
@@ -37,6 +36,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
                     return;
                 }
 
+                // Kiểm tra Token còn được cấp phép hay không
                 var user = await userManager.FindByNameAsync(username);
 
                 if (user != null && user.RefreshToken == null)
