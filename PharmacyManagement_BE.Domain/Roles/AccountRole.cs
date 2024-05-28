@@ -13,6 +13,6 @@ namespace PharmacyManagement_BE.Domain.Roles
         public const string PM_SALESPERSON = "PM_Salesperson";
         public const string PM_WAREHOUSE_MANAGER = "PM_Warehouse_Manager";
         public const string PM_PRODUCT_MANAGER = "PM_Product_Manager";
-        public const string PM_EMPLOYEE_MANAGER = "PM_Employee_Manager";
+        public const string PM_STAFF_MANAGER = "PM_Staff_Manager";
     }
 }

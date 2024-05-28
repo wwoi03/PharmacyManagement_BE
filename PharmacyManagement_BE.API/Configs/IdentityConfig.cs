@@ -39,7 +39,7 @@ namespace PharmacyManagement_BE.API.Configs
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
             }).AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
 
-            // Setup Authentication JWT 
+            // Cấu hình Authentication JWT 
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -69,6 +69,7 @@ namespace PharmacyManagement_BE.API.Configs
                 };
             });
 
+            // Cấu hình Policy
             services.AddAuthorization(options =>
             {
                 // Quản trị viên hệ thống
@@ -80,14 +81,14 @@ namespace PharmacyManagement_BE.API.Configs
                 });
 
                 // Quản lý nhân viên
-                options.AddPolicy("EmployeeManager", policy =>
+                options.AddPolicy("StaffManager", policy =>
                 {
                     policy.Requirements.Add(new RoleRequirementBuilder()
-                        .SetRequiredRole(AccountRole.PM_EMPLOYEE_MANAGER)
+                        .SetRequiredRole(AccountRole.PM_STAFF_MANAGER)
                         .Build());
                 });
 
-                // Chuyên viên quản lý sản phẩm
+                // Quản lý sản phẩm
                 options.AddPolicy("ProductManager", policy =>
                 {
                     policy.Requirements.Add(new RoleRequirementBuilder()
@@ -107,7 +108,7 @@ namespace PharmacyManagement_BE.API.Configs
                 });
 
                 // Khách hàng
-                options.AddPolicy("ProductManager", policy =>
+                options.AddPolicy("Customer", policy =>
                 {
                     policy.Requirements.Add(new RoleRequirementBuilder()
                         .SetRequiredRole(AccountRole.PM_CUSTOMER)
