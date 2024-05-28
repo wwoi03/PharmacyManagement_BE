@@ -38,6 +38,8 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Staff, Staff>();
 
             CreateMap<Staff, StaffResponse>();
+
+            CreateMap<Category, CategoryResponse>();
         }
     }
 }

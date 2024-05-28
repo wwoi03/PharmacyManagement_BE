@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\CategoryFeatures\Handlers\" />
+    <Folder Include="Commands\CategoryFeatures\Requests\" />
     <Folder Include="Commands\ProductFeatures\" />
   </ItemGroup>
 
