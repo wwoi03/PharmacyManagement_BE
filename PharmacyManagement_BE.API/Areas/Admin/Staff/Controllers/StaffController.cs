@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
@@ -19,6 +20,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
         }
 
         [HttpGet("GetStaffs")]
+        [Authorize(Policy = "EmployeeManager")]
         public async Task<IActionResult> Get()
         {
             try
