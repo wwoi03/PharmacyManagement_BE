@@ -34,7 +34,10 @@ namespace PharmacyManagement_BE.Infrastructure.Customs.Authorization.Handlers
                 var username = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
                 if (username == null)
+                {
                     context.Fail();
+                    return;
+                }
 
                 // Kiểm tra Roles, UserClaims, RoleClaims của người dùng
                 var user = await _userManager.FindByNameAsync(username);
