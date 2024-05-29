@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using PharmacyManagement_BE.API.Auth;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Roles;
+using PharmacyManagement_BE.Infrastructure.Customs.Authorization;
+using PharmacyManagement_BE.Infrastructure.Customs.Authorization.Handlers;
+using PharmacyManagement_BE.Infrastructure.Customs.Authorization.Requirements;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using System.Text;
 
@@ -39,7 +41,7 @@ namespace PharmacyManagement_BE.API.Configs
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
             }).AddEntityFrameworkStores<PharmacyManagementContext>().AddDefaultTokenProviders();
 
-            // Setup Authentication JWT 
+            // Cấu hình Authentication JWT 
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -69,25 +71,22 @@ namespace PharmacyManagement_BE.API.Configs
                 };
             });
 
+            // Cấu hình Policy
             services.AddAuthorization(options =>
             {
                 // Quản trị viên hệ thống
-                options.AddPolicy("Administrator", policy =>
+                options.AddPolicy("Admin", policy =>
                 {
-                    policy.Requirements.Add(new RoleRequirementBuilder()
-                        .SetRequiredRole(AccountRole.PM_ADMIN)
-                        .Build());
+                    policy.AddRequirements(new IsAdminRequirement(AccountRole.PM_ADMIN));
                 });
 
                 // Quản lý nhân viên
-                options.AddPolicy("EmployeeManager", policy =>
+                options.AddPolicy("StaffManager", policy =>
                 {
-                    policy.Requirements.Add(new RoleRequirementBuilder()
-                        .SetRequiredRole(AccountRole.PM_EMPLOYEE_MANAGER)
-                        .Build());
+                    policy.AddRequirements(new IsStaffManagerRequirement(AccountRole.PM_STAFF_MANAGER));
                 });
 
-                // Chuyên viên quản lý sản phẩm
+                // Quản lý sản phẩm
                 options.AddPolicy("ProductManager", policy =>
                 {
                     policy.Requirements.Add(new RoleRequirementBuilder()
@@ -107,7 +106,7 @@ namespace PharmacyManagement_BE.API.Configs
                 });
 
                 // Khách hàng
-                options.AddPolicy("ProductManager", policy =>
+                options.AddPolicy("Customer", policy =>
                 {
                     policy.Requirements.Add(new RoleRequirementBuilder()
                         .SetRequiredRole(AccountRole.PM_CUSTOMER)
@@ -116,6 +115,8 @@ namespace PharmacyManagement_BE.API.Configs
             });
 
             services.AddTransient<IAuthorizationHandler, RoleAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, IsAdminHandler>();
+            services.AddTransient<IAuthorizationHandler, IsStaffManagerHandler>();
 
             return services;
         }

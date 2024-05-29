@@ -16,11 +16,5 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Customer
         {
             _mediator = mediator;
         }
-
-        /*[HttpPost("RevokeToken")]
-        public async Task<IActionResult> RevokeToken(RevokeTokenRequest request)
-        {
-            return Ok();
-        }*/
     }
 }

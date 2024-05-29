@@ -44,5 +44,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Account.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("RevokeToken")]
+        public async Task<IActionResult> RevokeToken(RevokeTokenCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Customs.Authorization.Requirements;
 using System.Linq;
 using System.Security.Claims;
 
-namespace PharmacyManagement_BE.API.Auth
+namespace PharmacyManagement_BE.Infrastructure.Customs.Authorization.Handlers
 {
     public class RoleAuthorizationHandler : AuthorizationHandler<RoleRequirement>
     {
@@ -25,8 +26,16 @@ namespace PharmacyManagement_BE.API.Auth
             {
                 var claims = identity.Claims;
 
+                // Kiểm tra người dùng đã đang nhập
                 var username = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
 
+                if (username == null)
+                {
+                    context.Fail();
+                    return;
+                }
+
+                // Kiểm tra Roles, UserClaims, RoleClaims của người dùng
                 var user = await _userManager.FindByNameAsync(username);
 
                 if (user != null)

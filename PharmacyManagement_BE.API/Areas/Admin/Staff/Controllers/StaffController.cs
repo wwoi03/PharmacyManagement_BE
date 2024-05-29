@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.StaffFeatures.Requests;
+using PharmacyManagement_BE.Domain.Roles;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
 {
@@ -20,7 +21,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
         }
 
         [HttpGet("GetStaffs")]
-        [Authorize(Policy = "EmployeeManager")]
+        [Authorize(Policy = "StaffManager")]
         public async Task<IActionResult> Get()
         {
             try
@@ -106,6 +107,34 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
 
         [HttpPost("Search")]
         public async Task<IActionResult> Search(SearchStaffQueryRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("StaffAuthorization")]
+        public async Task<IActionResult> StaffAuthorization(AuthorizationStaffCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("GetRolesSaff")]
+        public async Task<IActionResult> GetRolesSaff(GetRolesStaffQueryRequest request)
         {
             try
             {

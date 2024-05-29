@@ -12,9 +12,16 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class CategoryService : RepositoryService<Category>, ICategoryService
     {
+        private readonly PharmacyManagementContext _context;
+
         public CategoryService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public List<Category> GetChildCategories(List<Category> allCategories, Guid parentId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
