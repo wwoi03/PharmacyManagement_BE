@@ -10,6 +10,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface ICategoryService : IRepositoryService<Category>
     {
-
+        List<Category> GetChildCategories(List<Category> allCategories, Guid parentId);
     }
 }

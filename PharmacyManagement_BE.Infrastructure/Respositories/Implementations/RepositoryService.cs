@@ -23,7 +23,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return await Context.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetById(Guid id)
+        public async Task<T> GetById(Guid? id)
         {
             return await Context.Set<T>().FindAsync(id);
         }

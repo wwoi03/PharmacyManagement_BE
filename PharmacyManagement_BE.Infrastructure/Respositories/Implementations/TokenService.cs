@@ -16,21 +16,21 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class TokenService : ITokenService
     {
-        /*private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         private readonly IConnectionMultiplexer _redis;
 
         public TokenService(IConfiguration configuration, IConnectionMultiplexer redis)
         {
             this._configuration = configuration;
             this._redis = redis;
-        }*/
+        }
 
-        private readonly IConfiguration _configuration;
+        /*private readonly IConfiguration _configuration;
 
         public TokenService(IConfiguration configuration)
         {
             this._configuration = configuration;
-        }
+        }*/
 
         public async Task<List<Claim>> CreateAuthClaim(ApplicationUser user)
         {
@@ -83,7 +83,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return token;
         }
 
-        /*public async Task<bool> IsBlacklistedAsync(string token)
+        public async Task<bool> IsBlacklistedAsync(string token)
         {
             var db = _redis.GetDatabase();
             var value = await db.StringGetAsync(token);
@@ -97,6 +97,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             // Lưu token vào Redis với thời gian hết hạn tương ứng
             await db.StringSetAsync(token, "blacklisted", expiryTime);
-        }*/
+        }
     }
 }

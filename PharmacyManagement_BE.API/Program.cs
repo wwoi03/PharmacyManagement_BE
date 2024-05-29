@@ -25,7 +25,7 @@ builder.Services.AddSwaggerSetup();
 builder.Services.AddDbContext<PharmacyManagementContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
 // Redis
-//builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(builder.Configuration["Redis:ConnectionString"]));
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(builder.Configuration["Redis:ConnectionString"]));
 
 // Identity Config
 builder.Services.AddIdentityConfig(builder.Configuration);
@@ -52,6 +52,10 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    app.UseMiddleware<TokenValidationExtention>();
+    app.MapControllers();
+});
 
 app.Run();
