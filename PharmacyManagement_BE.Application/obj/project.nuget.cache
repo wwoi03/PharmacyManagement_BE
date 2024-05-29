@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "A/u6c1Wm4fqi0DLN/k/uHIUj9B6Fz7RaAYZjDzktHIQJdmobq2s6EaGEnXHj/C9EOcNCZiSZvrd/OW/Y7Twl4Q==",
+  "dgSpecHash": "mVDa1PSDajsw/RdcQq0yAiUjReld1IunrlI8T00GUrRPc5wvxaAQNQNOpEhwC+M5Scm7Zhl2+Zd2YQ3Y3gWhKg==",
   "success": true,
   "projectFilePath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Application\\PharmacyManagement_BE.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tuand\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\tuand\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
+    "C:\\Users\\tuand\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",
     "C:\\Users\\tuand\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
     "C:\\Users\\tuand\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\tuand\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.19\\microsoft.aspnetcore.authentication.jwtbearer.6.0.19.nupkg.sha512",

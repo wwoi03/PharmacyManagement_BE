@@ -7,6 +7,7 @@ using PharmacyManagement_BE.Application.Extentions;
 using PharmacyManagement_BE.Application.Filters;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.DBContext;
+using PharmacyManagement_BE.Infrastructure.DBContext.Dapper;
 using PharmacyManagement_BE.Infrastructure.Extentions;
 using StackExchange.Redis;
 using System.Text;
@@ -21,8 +22,11 @@ builder.Services.AddEndpointsApiExplorer();
 // Swagger Config
 builder.Services.AddSwaggerSetup();
 
-// Conn database 
-builder.Services.AddDbContext<PharmacyManagementContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
+// Conn Database By EntityFramewoek
+builder.Services.AddDbContext<PharmacyManagementContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStringOnline")));
+
+// Dapper
+builder.Services.AddScoped<PMDapperContext>();
 
 // Redis
 builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(builder.Configuration["Redis:ConnectionString"]));

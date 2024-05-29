@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "4L22355dGeP9BmN9w0qAJdbUh72XlJ+tY6+wVfxPZAmFVKaD8XpI8DQIqckja6YHmECc6dlfwet21f6pO34rJA==",
+  "dgSpecHash": "FZxiSc4vpgEDrUP08r7Opx/j8BKhND9pIxbXmzVTLI4pmCFmBMQHBlfiUgRV3J7Az12qtFggogk7d3pd7YWumA==",
   "success": true,
   "projectFilePath": "C:\\Huflit_Study_Material\\Project\\project\\PharmacyManagement\\PharmacyManagement_BE\\PharmacyManagement_BE.Infrastructure\\PharmacyManagement_BE.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tuand\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\tuand\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
+    "C:\\Users\\tuand\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",
     "C:\\Users\\tuand\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\tuand\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
     "C:\\Users\\tuand\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
