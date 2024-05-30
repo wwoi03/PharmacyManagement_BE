@@ -12,10 +12,14 @@ namespace PharmacyManagement_BE.Domain.Entities
         [Key]
         public Guid OrderId { get; set; }
         public Order Order { get; set; } = null!;
+
         [Key]
         public Guid VoucherId { get; set; }
         public Voucher Voucher { get; set; } = null!;
+
+        [Required]
         public DateTime AppliedDate { get; set; }
+
         public double DiscountApplied { get; set; }
     }
 }

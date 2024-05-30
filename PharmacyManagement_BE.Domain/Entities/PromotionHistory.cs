@@ -12,10 +12,14 @@ namespace PharmacyManagement_BE.Domain.Entities
         [Key]
         public Guid PromotionId { get; set; }
         public Promotion Promotion { get; set; } = null!;
+
         [Key]
         public Guid OrderDetailsId { get; set; }
         public OrderDetails OrderDetails { get; set; } = null!;
-        public string? AppliedDate { get; set; }
+
+        [Required]
+        public DateTime AppliedDate { get; set; }
+
         public double DiscountApplied { get; set; }
     }
 }

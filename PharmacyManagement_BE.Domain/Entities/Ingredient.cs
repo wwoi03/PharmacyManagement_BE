@@ -10,7 +10,11 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class Ingredient : BaseEntity<Guid>
     {
-        public string? Name { get; set; } 
-        public string? Unit { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [StringLength(50)]
+        public string Unit { get; set; }
     }
 }
