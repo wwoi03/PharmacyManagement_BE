@@ -11,10 +11,10 @@ namespace PharmacyManagement_BE.Domain.Entities
     {
         public string? FullName { get; set; }
         public string? Gender { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string? Image { get; set; }
-        public string Status { get; set; } = string.Empty;
+        public string? Status { get; set; }
         public string? RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }

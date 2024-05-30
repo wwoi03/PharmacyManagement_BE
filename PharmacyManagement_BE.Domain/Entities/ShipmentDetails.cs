@@ -10,17 +10,33 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class ShipmentDetails : BaseEntity<Guid>
     {
-        public Guid? ShipmentId { get; set; }
+        [Required]
+        public Guid ShipmentId { get; set; }
         public Shipment Shipment { get; set; } = null!;
-        public Guid? ProductId { get; set; }
+
+        [Required]
+        public Guid ProductId { get; set; }
         public Product Product { get; set; } = null!;
-        public DateTime ImportDate { get; set; }
+
+        [Required]
+        public DateTime ManufactureDate { get; set; }
+
+        [Required]
         public DateTime ExpirationDate { get; set; }
+
         public decimal ImportPrice { get; set; }
+
         public int Quantity { get; set; }
+
         public int Sold { get; set; }
+
+        [StringLength(int.MaxValue)]
         public string? AdditionalInfo { get; set; }
+
+        [StringLength(int.MaxValue)]
         public string? Note { get; set; }
+
+        [StringLength(100)]
         public string? ProductionBatch { get; set; }
     }
 }

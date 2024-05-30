@@ -11,7 +11,7 @@ namespace PharmacyManagement_BE.Domain.Entities.Bases
     {
         [Key]
         public T Id { get; set; }
-        public DateTime CreatedTime { get; set; }
-        public DateTime UpdatedTime { get; set; }
+        public DateTime? CreatedTime { get; set; }
+        public DateTime? UpdatedTime { get; set; }
     }
 }

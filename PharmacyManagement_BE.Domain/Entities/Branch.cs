@@ -1,6 +1,7 @@
 ﻿using PharmacyManagement_BE.Domain.Entities.Bases;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,30 @@ namespace PharmacyManagement_BE.Domain.Entities
 {
     public class Branch : BaseEntity<Guid>
     {
-        public string? Name { get; set; }
-        public string? ProvinceOrCity { get; set; }
-        public string? District { get; set; }
-        public string? Ward { get; set; }
-        public string? AddressDetails { get; set; }
-        public string? Phone { get; set; }
-        public Guid? StaffId { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; } // Chỉnh sửa để không cho phép giá trị null
+
+        [Required]
+        [StringLength(50)]
+        public string ProvinceOrCity { get; set; } // Chỉnh sửa để không cho phép giá trị null
+
+        [Required]
+        [StringLength(50)]
+        public string District { get; set; } // Chỉnh sửa để không cho phép giá trị null
+
+        [Required]
+        [StringLength(50)]
+        public string Ward { get; set; } // Chỉnh sửa để không cho phép giá trị null
+
+        [Required]
+        [StringLength(1000)]
+        public string AddressDetails { get; set; } // Chỉnh sửa để không cho phép giá trị null
+
+        [Required]
+        [StringLength(50)]
+        public string Phone { get; set; } // Chỉnh sửa để không cho phép giá trị null
+
+        public Guid? StaffId { get; set; } // Chỉnh sửa để không cho phép giá trị null
     }
 }
