@@ -12,6 +12,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         [Key]
         public Guid PromotionProductId { get; set; }
         public PromotionProduct PromotionProduct { get; set; } = null!;
+
         [Key]
         public Guid ProductId { get; set; }
         public int Quantity { get; set; }

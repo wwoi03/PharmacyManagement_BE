@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 
@@ -11,9 +12,10 @@ using PharmacyManagement_BE.Infrastructure.DBContext;
 namespace PharmacyManagement_BE.Infrastructure.Migrations
 {
     [DbContext(typeof(PharmacyManagementContext))]
-    partial class PharmacyManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20240530174642_UpdateConstraintDatabase")]
+    partial class UpdateConstraintDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
