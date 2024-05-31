@@ -29,6 +29,62 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return _context.Shipments.Where(x => x.StaffId == id).ToList();
         }
 
+        public async Task<List<CostStatisticsShipmentDTO>> GetCostStatisticsShipment(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@BranchId", branchId);
+            parameters.Add("@FromDate", fromDate);
+            parameters.Add("@ToDate", toDate);
+            parameters.Add("@SupplierName", $"%{supplierName}%");
+
+            var sql = @"
+                    SELECT sp.Name as SupplierName, 
+                        SUM(sd.Quantity * sd.ImportPrice) as TotalCost, 
+                        COUNT(sd.ProductId) as TotalProduct, 
+                        SUM(sd.Quantity) as TotalQuantity, 
+                        @FromDate as FromDate, 
+                        @ToDate as ToDate
+                    FROM Shipments s 
+	                    INNER JOIN Suppliers sp ON s.SupplierId = sp.Id
+	                    LEFT JOIN ShipmentDetails sd ON s.Id = sd.ShipmentId
+                    WHERE s.BranchId = @BranchId
+                        AND s.ImportDate BETWEEN @FromDate AND @ToDate 
+                        AND sp.Name LIKE @SupplierName
+                    GROUP BY sp.Name";
+
+            return (await _dapperContext.GetConnection.QueryAsync<CostStatisticsShipmentDTO>(sql, parameters)).ToList();
+        }
+
+        public async Task<List<CostStatisticsShipmentDTO>> GetCostStatisticsShipmentByMonth(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@BranchId", branchId);
+            parameters.Add("@FromDate", fromDate);
+            parameters.Add("@ToDate", toDate);
+            parameters.Add("@SupplierName", $"%{supplierName}%");
+
+            var sql = @"
+                    SELECT 
+                        sp.Name as SupplierName, 
+                        SUM(sd.Quantity * sd.ImportPrice) as TotalCost, 
+                        COUNT(sd.ProductId) as TotalProduct, 
+                        SUM(sd.Quantity) as TotalQuantity, 
+	                    DATEFROMPARTS(YEAR(s.ImportDate), MONTH(s.ImportDate), 1) as FromDate, 
+                        EOMONTH(DATEFROMPARTS(YEAR(s.ImportDate), MONTH(s.ImportDate), 1)) as ToDate
+                    FROM 
+                        Shipments s 
+	                    INNER JOIN Suppliers sp ON s.SupplierId = sp.Id
+	                    LEFT JOIN ShipmentDetails sd ON s.Id = sd.ShipmentId
+                    WHERE 
+                        s.BranchId = @BranchId
+                        AND s.ImportDate BETWEEN @FromDate AND @ToDate 
+                        AND sp.Name LIKE @SupplierName
+                    GROUP BY sp.Name, MONTH(s.ImportDate), YEAR(s.ImportDate)
+                    ORDER BY YEAR(s.ImportDate), MONTH(s.ImportDate)";
+
+            return (await _dapperContext.GetConnection.QueryAsync<CostStatisticsShipmentDTO>(sql, parameters)).ToList();
+        }
+
         public async Task<List<ShipmentDTO>> GetShipmentsByBranch(Guid branchId)
         {
             var sql = @"
