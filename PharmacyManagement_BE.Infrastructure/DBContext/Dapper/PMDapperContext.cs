@@ -17,7 +17,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext.Dapper
         public PMDapperContext(IConfiguration configuration)
         {
             this._configuration = configuration;
-            this._context = new SqlConnection(configuration.GetConnectionString("ConnectionStringOnline"));
+            this._context = new SqlConnection(configuration.GetConnectionString("ConnectionString"));
         }
 
         public IDbConnection GetConnection => this._context;
