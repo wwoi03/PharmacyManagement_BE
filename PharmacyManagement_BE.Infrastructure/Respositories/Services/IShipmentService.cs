@@ -13,5 +13,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     {
         Task<List<Shipment>> GetAllShipmentByStaffId(Guid id);
         Task<List<ShipmentDTO>> GetShipmentsByBranch(Guid branchId);
+        Task<List<ShipmentDTO>> SearchShipments(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName);
     }
 }

@@ -17,8 +17,22 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("GetShipmentsByBranch")]
         public async Task<IActionResult> GetShipmentsByBranch(GetShipmentsByBranchQueryRequest request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("SearchShipments")]
+        public async Task<IActionResult> SearchShipments(SearchShipmentsQueryRequest request)
         {
             try
             {

@@ -39,7 +39,28 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     WHERE s.BranchId = @BranchId
                     GROUP BY s.Id, s.ImportDate, s.Note, s.Status, sp.Name";
 
-            return (await _dapperContext.GetConnection.QueryAsync<ShipmentDTO>(sql, new { BranchId = branchId.ToString() })).ToList();
+            return (await _dapperContext.GetConnection.QueryAsync<ShipmentDTO>(sql, new { BranchId = branchId })).ToList();
+        }
+       
+        public async Task<List<ShipmentDTO>> SearchShipments(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@BranchId", branchId);
+            parameters.Add("@FromDate", fromDate);
+            parameters.Add("@ToDate", toDate);
+            parameters.Add("@SupplierName", $"%{supplierName}%");
+
+            var sql = @"
+                    SELECT s.Id, s.ImportDate, s.Note, s.Status, sp.Name as SupplierName, COUNT(DISTINCT sd.ProductId) as TotalProduct, SUM(sd.Quantity) as TotalQuantity
+                    FROM Shipments s 
+	                    INNER JOIN Suppliers sp ON s.SupplierId = sp.Id
+	                    LEFT JOIN ShipmentDetails sd ON s.Id = sd.ShipmentId
+                    WHERE s.BranchId = @BranchId 
+                        AND s.ImportDate BETWEEN @FromDate AND @ToDate 
+                        AND sp.Name LIKE @SupplierName
+                    GROUP BY s.Id, s.ImportDate, s.Note, s.Status, sp.Name";
+
+            return (await _dapperContext.GetConnection.QueryAsync<ShipmentDTO>(sql, parameters)).ToList();
         }
     }
 }
