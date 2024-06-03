@@ -34,7 +34,7 @@ namespace PharmacyManagement_BE.Application.Queries.ShipmentFeatures.Handlers
 
                 var response = new List<CostStatisticsShipmentDTO>();
                 if (string.IsNullOrEmpty(request.SupplierName))
-                    response = await _entities.ShipmentService.GetCostStatisticsShipment(request.BranchId, request.FromDate, request.ToDate, request.SupplierName);
+                    response = await _entities.ShipmentService.GetCostStatisticsShipment(request.BranchId, request.FromDate, request.ToDate);
                 else
                     response = await _entities.ShipmentService.GetCostStatisticsShipmentByMonth(request.BranchId, request.FromDate, request.ToDate, request.SupplierName);
 

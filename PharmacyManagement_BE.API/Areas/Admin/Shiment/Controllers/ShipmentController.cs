@@ -5,6 +5,7 @@ using PharmacyManagement_BE.Application.Queries.ShipmentFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
 {
+    [ApiExplorerSettings(GroupName = "Admin")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Admin")]

@@ -5,6 +5,7 @@ using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
 {
+    [ApiExplorerSettings(GroupName = "Admin")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Admin/Product")]

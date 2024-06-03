@@ -5,6 +5,7 @@ using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Customer.User.Controllers
 {
+    [ApiExplorerSettings(GroupName = "Customer")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Customer")]

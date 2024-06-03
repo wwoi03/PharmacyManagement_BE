@@ -29,13 +29,12 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return _context.Shipments.Where(x => x.StaffId == id).ToList();
         }
 
-        public async Task<List<CostStatisticsShipmentDTO>> GetCostStatisticsShipment(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName)
+        public async Task<List<CostStatisticsShipmentDTO>> GetCostStatisticsShipment(Guid branchId, DateTime fromDate, DateTime toDate)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@BranchId", branchId);
             parameters.Add("@FromDate", fromDate);
             parameters.Add("@ToDate", toDate);
-            parameters.Add("@SupplierName", $"%{supplierName}%");
 
             var sql = @"
                     SELECT sp.Name as SupplierName, 
@@ -49,7 +48,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 	                    LEFT JOIN ShipmentDetails sd ON s.Id = sd.ShipmentId
                     WHERE s.BranchId = @BranchId
                         AND s.ImportDate BETWEEN @FromDate AND @ToDate 
-                        AND sp.Name LIKE @SupplierName
                     GROUP BY sp.Name";
 
             return (await _dapperContext.GetConnection.QueryAsync<CostStatisticsShipmentDTO>(sql, parameters)).ToList();
@@ -85,7 +83,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return (await _dapperContext.GetConnection.QueryAsync<CostStatisticsShipmentDTO>(sql, parameters)).ToList();
         }
 
-        public async Task<List<ShipmentDTO>> GetShipmentsByBranch(Guid branchId)
+        /*public async Task<List<ShipmentDTO>> GetShipmentsByBranch(Guid branchId)
         {
             var sql = @"
                     SELECT s.Id, s.ImportDate, s.Note, s.Status, sp.Name as SupplierName, COUNT(DISTINCT sd.ProductId) as TotalProduct, SUM(sd.Quantity) as TotalQuantity
@@ -96,6 +94,33 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     GROUP BY s.Id, s.ImportDate, s.Note, s.Status, sp.Name";
 
             return (await _dapperContext.GetConnection.QueryAsync<ShipmentDTO>(sql, new { BranchId = branchId })).ToList();
+        }*/
+
+        public async Task<List<ShipmentDTO>> GetShipmentsByBranch(Guid branchId)
+        {
+            return _context.Shipments
+                .Where(s => s.BranchId == branchId)
+                .GroupJoin(_context.ShipmentDetails,
+                    s => s.Id,
+                    sd => sd.ShipmentId,
+                    (s, sdGroup) => new { Shipment = s, ShipmentDetails = sdGroup })
+                .SelectMany(
+                    temp => temp.ShipmentDetails.DefaultIfEmpty(),
+                    (temp, sd) => new { temp.Shipment, ShipmentDetail = sd })
+                .GroupBy(
+                    temp => new { temp.Shipment.Id, temp.Shipment.ImportDate, temp.Shipment.Note, temp.Shipment.Status, temp.Shipment.Supplier.Name },
+                    temp => temp.ShipmentDetail)
+                .Select(g => new ShipmentDTO
+                {
+                    Id = g.Key.Id,
+                    ImportDate = g.Key.ImportDate,
+                    Note = g.Key.Note,
+                    Status = g.Key.Status,
+                    SupplierName = g.Key.Name,
+                    TotalProduct = g.Select(sd => sd.ProductId).Distinct().Count(),
+                    TotalQuantity = g.Sum(sd => sd.Quantity)
+                })
+                .ToList();
         }
        
         public async Task<List<ShipmentDTO>> SearchShipments(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName)
