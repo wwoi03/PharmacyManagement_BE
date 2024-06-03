@@ -10,6 +10,8 @@
     <Folder Include="Commands\CategoryFeatures\Handlers\" />
     <Folder Include="Commands\CategoryFeatures\Requests\" />
     <Folder Include="Commands\ProductFeatures\" />
+    <Folder Include="Commands\ShipmentFeatures\Handlers\" />
+    <Folder Include="Commands\ShipmentFeatures\Requests\" />
   </ItemGroup>
 
   <ItemGroup>

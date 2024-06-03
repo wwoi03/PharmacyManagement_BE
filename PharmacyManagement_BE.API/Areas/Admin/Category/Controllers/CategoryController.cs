@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
 {
+    [ApiExplorerSettings(GroupName = "Admin")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Admin")]

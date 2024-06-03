@@ -6,6 +6,7 @@ using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 
 namespace PharmacyManagement_BE.API.Areas.Customer.Cart.Controllers
 {
+    [ApiExplorerSettings(GroupName = "Customer")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Customer")]

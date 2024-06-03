@@ -6,6 +6,7 @@ using PharmacyManagement_BE.Application.DTOs.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Config.Controllers
 {
+    [ApiExplorerSettings(GroupName = "Admin")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Config")]

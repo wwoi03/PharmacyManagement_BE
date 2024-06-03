@@ -5,6 +5,7 @@ using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace PharmacyManagement_BE.Application.Extentions
 
             CreateMap<Category, CategoryResponse>();
 
+            CreateMap<ShipmentResponse, ShipmentDTO>().ReverseMap();
         }
     }
 }

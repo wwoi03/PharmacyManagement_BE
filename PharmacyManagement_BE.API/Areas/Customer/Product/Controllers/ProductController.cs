@@ -9,6 +9,7 @@ using PharmacyManagement_BE.Infrastructure.Common.Securitys;
 
 namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
 {
+    [ApiExplorerSettings(GroupName = "Customer")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Customer")]
