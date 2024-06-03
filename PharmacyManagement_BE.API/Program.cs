@@ -49,7 +49,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/Customer/swagger.json", "Customer API");
+        options.SwaggerEndpoint("/swagger/Admin/swagger.json", "Admin API");
+    });
 }
 
 app.UseRouting();

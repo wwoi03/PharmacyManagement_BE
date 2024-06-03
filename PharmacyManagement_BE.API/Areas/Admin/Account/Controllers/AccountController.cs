@@ -8,6 +8,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Account.Controllers
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Admin")]
+    [ApiExplorerSettings(GroupName = "Admin")]
     public class AccountController : ControllerBase
     {
         private readonly IMediator _mediator;

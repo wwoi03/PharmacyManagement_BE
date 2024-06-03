@@ -8,6 +8,7 @@ using PharmacyManagement_BE.Domain.Roles;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
 {
+    [ApiExplorerSettings(GroupName = "Admin")]
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Admin")]

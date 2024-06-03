@@ -26,12 +26,13 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
         public async Task<List<Staff>> SearchStaffs(string searchString)
         {
-            return _context.Staffs.Where(s => 
-                s.UserName.Contains(searchString) ||
-                s.FullName.Contains(searchString) ||
-                s.PhoneNumber.Contains(searchString) ||
-                s.Email.Contains(searchString)
-                ).ToList();
+            return _context.Staffs
+                .Where(s => 
+                    s.UserName.Contains(searchString) ||
+                    s.FullName.Contains(searchString) ||
+                    s.PhoneNumber.Contains(searchString) ||
+                    s.Email.Contains(searchString))
+                .ToList();
         }
     }
 }
