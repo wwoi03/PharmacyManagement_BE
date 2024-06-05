@@ -10,8 +10,8 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDTOs
     {
         public string SupplierName { get; set; }
         public decimal TotalCost { get; set; }
-        public decimal TotalProduct { get; set; }
-        public decimal TotalQuantity { get; set; }
+        public int TotalProduct { get; set; }
+        public int TotalQuantity { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
     }
