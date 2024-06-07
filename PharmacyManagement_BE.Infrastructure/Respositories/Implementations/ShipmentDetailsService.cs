@@ -12,9 +12,25 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class ShipmentDetailsService : RepositoryService<ShipmentDetails>, IShipmentDetailsService
     {
+        private readonly PharmacyManagementContext _context;
+
         public ShipmentDetailsService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<bool> RemoveRangeShipmentDetails(List<ShipmentDetails> shipmentDetails)
+        {
+            try
+            {
+                _context.RemoveRange(shipmentDetails);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
     }
 }

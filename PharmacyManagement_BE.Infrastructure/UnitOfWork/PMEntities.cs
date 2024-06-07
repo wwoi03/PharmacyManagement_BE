@@ -42,6 +42,8 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
         public IUnitService UnitService { get; set; }
         public IVoucherHistoryService VoucherHistoryService { get; set; }
         public IVoucherService VoucherService { get; set; }
+        public ITokenService TokenService { get; set; }
+        public IAccountService AccountService { get; set; }
 
         public PMEntities(
             PharmacyManagementContext context,
@@ -75,7 +77,9 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
             ISymptomService symptomService,
             IUnitService unitService,
             IVoucherHistoryService voucherHistoryService,
-            IVoucherService voucherService)
+            IVoucherService voucherService, 
+            ITokenService tokenService,
+            IAccountService accountService)
         {
             this._context = context;
             this.ProductService = productService;
@@ -109,6 +113,8 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
             this.SymptomService = symptomService;
             this.VoucherHistoryService = voucherHistoryService;
             this.VoucherService = voucherService;
+            this.TokenService = tokenService;
+            this.AccountService = accountService;
         }
 
         public int SaveChange()

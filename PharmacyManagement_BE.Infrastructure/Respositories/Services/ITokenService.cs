@@ -16,7 +16,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<string> GenerateRefreshToken();
         Task<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token);
         Task<List<Claim>> CreateAuthClaim(ApplicationUser user);
-        /*Task AddToBlacklistAsync(string token, DateTime expiry);
-        Task<bool> IsBlacklistedAsync(string token);*/
+        Task<DateTime> GetRefreshTokenExpiryTime();
+        Task AddToBlacklistAsync(string token, DateTime expiry);
+        Task<bool> IsBlacklistedAsync(string token);
     }
 }

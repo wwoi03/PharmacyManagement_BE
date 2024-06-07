@@ -25,13 +25,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             this._redis = redis;
         }
 
-        /*private readonly IConfiguration _configuration;
-
-        public TokenService(IConfiguration configuration)
-        {
-            this._configuration = configuration;
-        }*/
-
         public async Task<List<Claim>> CreateAuthClaim(ApplicationUser user)
         {
             var authClaims = new List<Claim>
@@ -49,6 +42,12 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
             return Convert.ToBase64String(randomNumber);
+        }
+
+        public async Task<DateTime> GetRefreshTokenExpiryTime()
+        {
+            var expired = _configuration["JWT:RefreshTokenValidityInDays"] ?? "";
+            return DateTime.Now.AddDays(Convert.ToInt32(expired));
         }
 
         public async Task<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token)

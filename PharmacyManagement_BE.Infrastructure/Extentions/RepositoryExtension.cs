@@ -16,6 +16,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
         public static void AddRepositoryExtension(this IServiceCollection services)
         {
             services.AddTransient<IPMEntities, PMEntities>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IBranchService, BranchService>();

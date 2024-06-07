@@ -9,6 +9,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
 {
     public interface IPMEntities
     {
+        IAccountService AccountService { get; set; }
         IBranchService BranchService { get; set; }
         ICartService CartService { get; set; }
         ICategoryService CategoryService { get; set; }
@@ -40,6 +41,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
         IVoucherHistoryService VoucherHistoryService { get; set; }
         IVoucherService VoucherService { get; set; }
         IProductService ProductService { get; set; }
+        ITokenService TokenService { get; set; }
         int SaveChange();
     }
 }

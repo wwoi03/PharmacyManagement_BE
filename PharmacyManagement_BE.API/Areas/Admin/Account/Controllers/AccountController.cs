@@ -18,6 +18,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Account.Controllers
             this._mediator = mediator;
         }
 
+        [HttpPost("SignIn")]
+        public async Task<IActionResult> SignIn(SignInCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("LockAccount")]
         public async Task<IActionResult> LockAccount(LockAccountCommandRequest request)
         {

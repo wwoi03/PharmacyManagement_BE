@@ -16,5 +16,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<List<ShipmentDTO>> SearchShipments(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName);
         Task<List<CostStatisticsShipmentDTO>> GetCostStatisticsShipment(Guid branchId, DateTime fromDate, DateTime toDate);
         Task<List<CostStatisticsShipmentDTO>> GetCostStatisticsShipmentByMonth(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName);
+        Task<List<ShipmentDetails>> GetShipmentDetailsByShipment(Guid shipmentId);
     }
 }
