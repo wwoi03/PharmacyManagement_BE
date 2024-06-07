@@ -74,5 +74,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update(UpdateShipmentCommandRequest request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

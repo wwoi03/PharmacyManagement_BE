@@ -45,6 +45,7 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Handlers
                 if (!deleteShipmentResult)
                     return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
 
+                // SaveChange
                 _entities.SaveChange();
 
                 return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Xóa đơn hàng có mã {request.ShipmentId} thành công");

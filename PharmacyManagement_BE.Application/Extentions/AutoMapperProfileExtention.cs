@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
@@ -18,31 +19,39 @@ namespace PharmacyManagement_BE.Application.Extentions
     {
         public AutoMapperProfileExtention()
         {
+            #region Product
             CreateMap<Product, AllProductQueryResponse>();
+            #endregion Product 
 
+            #region Customer
             CreateMap<CreateUserCommandRequest, Customer>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.UserName));
             CreateMap<Customer, SignUpCommandResponse>();
-
             CreateMap<Customer, SignInResponse>();
+            #endregion Customer
 
+            #region Role
             CreateMap<IdentityRole<Guid>, RoleResponse>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NormalizedName));
-
             CreateMap<CreateRoleCommandRequest, IdentityRole<Guid>>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(opt => opt.Name.ToUpper()));
+            #endregion Role
 
+            #region Staff
             CreateMap<CreateStaffCommandRequest, Staff>();
-
             CreateMap<UpdateStaffCommandRequest, Staff>();
-
             CreateMap<Staff, Staff>();
-
             CreateMap<Staff, StaffResponse>();
+            #endregion Staff
 
+            #region Category
             CreateMap<Category, CategoryResponse>();
+            #endregion Category
 
+            #region Shipment
             CreateMap<ShipmentResponse, ShipmentDTO>().ReverseMap();
+            CreateMap<Shipment, UpdateShipmentCommandRequest>().ReverseMap();
+            #endregion Shipment
         }
     }
 }
