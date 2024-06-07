@@ -90,7 +90,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(UpdateShipmentCommandRequest request)
+        public async Task<IActionResult> Create(CreateShipmentCommandRequest request)
         {
             try
             {

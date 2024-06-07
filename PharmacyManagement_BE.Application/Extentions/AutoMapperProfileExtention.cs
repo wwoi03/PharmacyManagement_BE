@@ -51,6 +51,7 @@ namespace PharmacyManagement_BE.Application.Extentions
             #region Shipment
             CreateMap<ShipmentResponse, ShipmentDTO>().ReverseMap();
             CreateMap<Shipment, UpdateShipmentCommandRequest>().ReverseMap();
+            CreateMap<Shipment, CreateShipmentCommandRequest>().ReverseMap();
             #endregion Shipment
         }
     }

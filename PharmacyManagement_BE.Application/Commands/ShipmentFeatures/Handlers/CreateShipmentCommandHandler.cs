@@ -13,27 +13,21 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Handlers
 {
-    internal class UpdateShipmentCommandHandler : IRequestHandler<UpdateShipmentCommandRequest, ResponseAPI<string>>
+    internal class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentCommandRequest, ResponseAPI<string>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public UpdateShipmentCommandHandler(IPMEntities entities, IMapper mapper)
+        public CreateShipmentCommandHandler(IPMEntities entities, IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;
         }
 
-        public async Task<ResponseAPI<string>> Handle(UpdateShipmentCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<string>> Handle(CreateShipmentCommandRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                // Kiểm tra đơn hàng tồn tại
-                var shipment = await _entities.ShipmentService.GetById(request.ShipmentId);
-
-                if (shipment == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
-
                 // Kiểm tra Nhà cung cấp tồn tại
                 var supplier = await _entities.SupplierService.GetById(request.SupplierId);
 
@@ -47,10 +41,14 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Handlers
                     return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Chi nhánh không tồn tại.");
 
                 // Cập nhật đơn hàng mới
+                Shipment shipment = new Shipment();
                 _mapper.Map(request, shipment);
                 shipment.UpdatedTime = DateTime.Now;
+                shipment.UpdatedTime = DateTime.Now;
+                shipment.ImportDate = DateTime.Now;
                 shipment.StaffId = await _entities.AccountService.GetAccountId();
-                var result = _entities.ShipmentService.Update(shipment);
+
+                var result = _entities.ShipmentService.Create(shipment);
 
                 if (!result)
                     return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
@@ -58,7 +56,7 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Handlers
                 // SaveChange
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Cập nhật đơn hàng có mã {shipment.Id} thành công");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm mới đơn hàng có mã {shipment.Id} thành công");
             }
             catch (Exception ex)
             {

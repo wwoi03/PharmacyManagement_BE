@@ -16,6 +16,5 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests
         public string Status { get; set; }
         public Guid? SupplierId { get; set; }
         public Guid? BranchId { get; set; }
-        public Guid? StaffId { get; set; }
     }
 }
