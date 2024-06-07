@@ -9,6 +9,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
 {
     public interface IPMEntities
     {
+        IAccountService AccountService { get; set; }
         IBranchService BranchService { get; set; }
         ICartService CartService { get; set; }
         ICategoryService CategoryService { get; set; }

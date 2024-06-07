@@ -28,6 +28,7 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Handlers
         {
             try
             {
+                var a = await _entities.AccountService.GetAccountId();
                 // Kiểm tra đơn hàng tồn tại
                 var shipment = await _entities.ShipmentService.GetById(request.ShipmentId);
 
