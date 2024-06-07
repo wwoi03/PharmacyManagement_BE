@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.ShipmentFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
@@ -48,6 +49,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
 
         [HttpPost("GetCostStatisticShipment")]
         public async Task<IActionResult> GetCostStatisticShipment(GetCostStatisticsShipmentQueryRequest request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete(DeleteShipmentCommandRequest request)
         {
             try
             {
