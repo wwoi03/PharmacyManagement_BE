@@ -17,12 +17,12 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 {
     public class GetAllDiseaseCommandHandler : IRequestHandler<GetAllDiseaseCommandRequest, ResponseAPI<List<DetailsDiseaseResponse>>>
     {
-        private readonly PharmacyManagementContext _context;
+        private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public GetAllDiseaseCommandHandler( PharmacyManagementContext context, IMapper mapper)
+        public GetAllDiseaseCommandHandler( IPMEntities entities,IMapper mapper)
         {
-            this._context = context;
+            this._entities = entities;
             this._mapper = mapper;
         }
 
@@ -31,7 +31,7 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
             try
             {
                 //Lấy danh sách bệnh
-                var listDisease = await _context.Diseases.ToListAsync(cancellationToken);
+                var listDisease = await _entities.DiseaseService.GetAllDisease(cancellationToken);
 
 
                 //Gán danh sách bệnh thành response

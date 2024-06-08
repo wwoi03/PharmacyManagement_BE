@@ -10,6 +10,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IDiseaseService : IRepositoryService<Disease>
     {
-
+        public Task<bool> CheckName(string Name);
+        public Task<List<Disease>> GetAllDisease(CancellationToken cancellationToken);
+        public Task<List<Disease>> SearchDisease(string KeyWord, CancellationToken cancellationToken);
     }
 }

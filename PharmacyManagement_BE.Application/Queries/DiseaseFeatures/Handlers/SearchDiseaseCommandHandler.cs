@@ -17,12 +17,12 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 {
     public class SearchDiseaseCommandHandler : IRequestHandler<SearchDiseaseCommandRequest, ResponseAPI<List<DetailsDiseaseResponse>>>
     {
-        private readonly PharmacyManagementContext _context;
+        private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public SearchDiseaseCommandHandler(PharmacyManagementContext context, IMapper mapper)
+        public SearchDiseaseCommandHandler(IPMEntities entities, IMapper mapper)
         {
-            this._context = context;
+            this._entities = entities;
             this._mapper = mapper;
         }
 
@@ -38,11 +38,7 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 
 
                 // Tìm kiếm bệnh theo tên gần đúng
-                var listDisease = await _context.Diseases
-                    .Where
-                    (d => EF.Functions.Like(d.Name.ToUpper(), $"%{request.KeyWord.ToUpper().Trim()}%")
-                    || EF.Functions.Like(d.Description.ToUpper(), $"%{request.KeyWord.ToUpper().Trim()}%"))
-                    .ToListAsync(cancellationToken);
+                var listDisease = await _entities.DiseaseService.SearchDisease(request.KeyWord, cancellationToken);
 
                 //Gán giá trị response
                 var response = _mapper.Map<List<DetailsDiseaseResponse>>(listDisease);

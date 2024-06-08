@@ -32,3 +32,20 @@ H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_
 H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\refint\PharmacyManagement_BE.Application.dll
 H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.pdb
 H:\HK3nam3\Khóa luận tốt nghiệp\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\ref\PharmacyManagement_BE.Application.dll
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Application.deps.json
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Application.dll
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Application.pdb
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Domain.dll
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Infrastructure.dll
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Infrastructure.pdb
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\PharmacyManagement_BE.Domain.pdb
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.csproj.AssemblyReference.cache
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.GeneratedMSBuildEditorConfig.editorconfig
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.AssemblyInfoInputs.cache
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.AssemblyInfo.cs
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.csproj.CoreCompileInputs.cache
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.csproj.CopyComplete
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.dll
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\refint\PharmacyManagement_BE.Application.dll
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.pdb
+H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\ref\PharmacyManagement_BE.Application.dll

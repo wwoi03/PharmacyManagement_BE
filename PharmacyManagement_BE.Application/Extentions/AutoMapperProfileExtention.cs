@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
+using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDTOs;
 using System;
@@ -53,6 +55,11 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Shipment, UpdateShipmentCommandRequest>().ReverseMap();
             CreateMap<Shipment, CreateShipmentCommandRequest>().ReverseMap();
             #endregion Shipment
+
+            #region Disease 
+            CreateMap<CreateDiseaseCommandRequest, Disease>();
+            CreateMap<Disease, DetailsDiseaseResponse>();
+            #endregion Disease
         }
     }
 }

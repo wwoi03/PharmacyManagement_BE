@@ -18,9 +18,8 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
     {
 
         private readonly IPMEntities _entities;
-        private readonly PharmacyManagementContext _context;
 
-        public UpdateDiseaseCommandHandler(IPMEntities entities, PharmacyManagementContext context)
+        public UpdateDiseaseCommandHandler(IPMEntities entities)
         {
             this._entities = entities;
         }
@@ -40,7 +39,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
             //B2: kiểm tra bệnh đã tồn tại
-            var diseaseExit = _context.Diseases.FirstOrDefault(r => r.Name.ToUpper() == request.Name.ToUpper().Trim());
+            var diseaseExit = _entities.DiseaseService.CheckName(request.Name);
 
             if (diseaseExit != null)
                 return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Bệnh đã tồn tại.");
