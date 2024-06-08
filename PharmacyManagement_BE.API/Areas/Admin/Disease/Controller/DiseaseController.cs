@@ -36,7 +36,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
         }
 
         //Cập nhật bệnh 
-        [HttpPost("UpdateDisease")]
+        [HttpPut("UpdateDisease")]
         public async Task<IActionResult> Update(UpdateDiseaseCommandRequest request)
         {
             try

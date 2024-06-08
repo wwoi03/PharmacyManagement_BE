@@ -46,7 +46,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Symptom.Controllers
             }
         }
 
-        [HttpPost("UpdateSymptom")]
+        [HttpPut("UpdateSymptom")]
         public async Task<IActionResult> Update(UpdateSymptomCommandRequest request)
         {
             try

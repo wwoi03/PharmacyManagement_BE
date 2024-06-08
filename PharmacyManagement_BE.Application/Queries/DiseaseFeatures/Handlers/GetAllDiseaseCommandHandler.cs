@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 {
-    public class GetAllDiseaseCommandHandler : IRequestHandler<GetAllDiseaseCommandRequest, ResponseAPI<List<DetailsDiseaseResponse>>>
+    internal class GetAllDiseaseCommandHandler : IRequestHandler<GetAllDiseaseCommandRequest, ResponseAPI<List<DetailsDiseaseResponse>>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        private GetAllDiseaseCommandHandler( IPMEntities entities,IMapper mapper)
+        public GetAllDiseaseCommandHandler( IPMEntities entities,IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;

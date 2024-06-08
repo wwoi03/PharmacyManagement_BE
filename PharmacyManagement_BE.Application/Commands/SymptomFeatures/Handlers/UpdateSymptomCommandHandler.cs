@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
 {
-    public class UpdateSymptomCommandHandler : IRequestHandler<UpdateSymptomCommandRequest, ResponseAPI<string>>
+    internal class UpdateSymptomCommandHandler : IRequestHandler<UpdateSymptomCommandRequest, ResponseAPI<string>>
     {
         private readonly IPMEntities _entities;
 
-        private UpdateSymptomCommandHandler(IPMEntities entities)
+        public UpdateSymptomCommandHandler(IPMEntities entities)
         {
             this._entities = entities;
         }

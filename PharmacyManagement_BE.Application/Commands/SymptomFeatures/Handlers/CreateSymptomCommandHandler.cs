@@ -14,12 +14,12 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
 {
-    public class CreateSymptomCommandHandler : IRequestHandler<CreateSymptomCommandRequest, ResponseAPI<string>>
+    internal class CreateSymptomCommandHandler : IRequestHandler<CreateSymptomCommandRequest, ResponseAPI<string>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        private CreateSymptomCommandHandler(IPMEntities entities, IMapper mapper)
+        public CreateSymptomCommandHandler(IPMEntities entities, IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;

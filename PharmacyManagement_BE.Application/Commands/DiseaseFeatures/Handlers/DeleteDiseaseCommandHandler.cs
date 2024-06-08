@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
 {
-    public class DeleteDiseaseCommandHandler : IRequestHandler<DeleteDiseaseCommandRequest, ResponseAPI<string>>
+    internal class DeleteDiseaseCommandHandler : IRequestHandler<DeleteDiseaseCommandRequest, ResponseAPI<string>>
     {
         private readonly IPMEntities _entities;
 
-        private DeleteDiseaseCommandHandler(IPMEntities entities)
+        public DeleteDiseaseCommandHandler(IPMEntities entities)
         {
             this._entities = entities;
         }

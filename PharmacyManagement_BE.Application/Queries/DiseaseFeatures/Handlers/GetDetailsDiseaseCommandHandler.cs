@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 {
-    public class GetDetailsDiseaseCommandHandler : IRequestHandler<GetDetailsDiseaseCommandRequest, ResponseAPI<DetailsDiseaseResponse>>
+    internal class GetDetailsDiseaseCommandHandler : IRequestHandler<GetDetailsDiseaseCommandRequest, ResponseAPI<DetailsDiseaseResponse>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        private GetDetailsDiseaseCommandHandler(IPMEntities entities, IMapper mapper)
+        public GetDetailsDiseaseCommandHandler(IPMEntities entities, IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;

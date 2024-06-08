@@ -21,8 +21,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<bool> CheckExit(string name, string description)
         {
             return await Context.Symptoms.AnyAsync
-                (r => r.Name.ToUpperInvariant().Trim() == name.ToUpperInvariant().Trim() &&
-                r.Description.ToUpperInvariant().Trim() == description.ToUpperInvariant().Trim());
+                (r => r.Name.ToUpper().Trim() == name.ToUpper().Trim() &&
+                r.Description.ToUpper().Trim() == description.ToUpper().Trim());
         }
 
     }
