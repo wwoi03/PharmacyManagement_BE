@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.ShipmentDetailsFeatures.Requests
 {
-    public class GetShipmentDetailsByShipmentQueryRequest : IRequest<ResponseAPI<List<ListShipmentDetailsDTO>>>
+    public class GetDetailsShipmentDetailsQueryRequest : IRequest<ResponseAPI<DetailsShipmentDetailsDTO>>
     {
-        public Guid ShipmentId { get; set; }
+        public Guid ShipmentDetailsId { get; set; }
     }
 }

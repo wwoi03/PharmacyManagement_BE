@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsDTOs
 {
-    public class ListShipmentDetailsDTOs
+    public class ListShipmentDetailsDTO
     {
         public Guid ShipmentDetailsId { get; set; }
         public string ProductName { get; set; }

@@ -12,6 +12,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface IShipmentDetailsService : IRepositoryService<ShipmentDetails>
     {
         Task<bool> RemoveRangeShipmentDetails(List<ShipmentDetails> shipmentDetails);
-        Task<List<ListShipmentDetailsDTOs>> GetShipmentDetailsByShipment(Guid shipmentId);
+        Task<List<ListShipmentDetailsDTO>> GetShipmentDetailsByShipment(Guid shipmentId);
     }
 }

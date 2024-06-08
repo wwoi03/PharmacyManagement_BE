@@ -25,7 +25,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         }
 
         #region Dapper
-        public async Task<List<ListShipmentDetailsDTOs>> GetShipmentDetailsByShipment(Guid shipmentId)
+        public async Task<List<ListShipmentDetailsDTO>> GetShipmentDetailsByShipment(Guid shipmentId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@ShipmentId", shipmentId);
@@ -44,8 +44,10 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     WHERE sd.ShipmentId = @ShipmentId
                     ORDER BY sd.ImportPrice";
 
-            return (await _dapperContext.GetConnection.QueryAsync<ListShipmentDetailsDTOs>(sql, parameters)).ToList();
+            return (await _dapperContext.GetConnection.QueryAsync<ListShipmentDetailsDTO>(sql, parameters)).ToList();
         }
+
+
         #endregion Dapper
 
         #region EntityFramework & LinQ

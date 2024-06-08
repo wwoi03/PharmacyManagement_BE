@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.ShipmentDetailsFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
@@ -19,11 +20,25 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
         }
 
         [HttpPost("GetShipmentDetailsByShipment")]
-        public async Task<IActionResult> GetShipmentDetailsByShipment(GetShipmentDetailsByShipmentQueryRequest request)
+        public async Task<IActionResult> GetShipmentDetailsByShipment(Guid shipmentId)
         {
             try
             {
-                var result = await mediator.Send(request);
+                var result = await mediator.Send(new GetShipmentDetailsByShipmentQueryRequest { ShipmentId = shipmentId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(Guid shipmentDetailsId)
+        {
+            try
+            {
+                var result = await mediator.Send(new DeleteShipmentDetailsCommandRequest { ShipmentDetailsId = shipmentDetailsId });
                 return Ok(result);
             }
             catch (Exception ex)

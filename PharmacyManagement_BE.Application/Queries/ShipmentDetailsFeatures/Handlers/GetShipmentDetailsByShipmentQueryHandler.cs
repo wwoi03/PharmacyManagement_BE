@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.ShipmentDetailsFeatures.Handlers
 {
-    internal class GetShipmentDetailsByShipmentQueryHandler : IRequestHandler<GetShipmentDetailsByShipmentQueryRequest, ResponseAPI<List<ListShipmentDetailsDTOs>>>
+    internal class GetShipmentDetailsByShipmentQueryHandler : IRequestHandler<GetShipmentDetailsByShipmentQueryRequest, ResponseAPI<List<ListShipmentDetailsDTO>>>
     {
         private readonly IPMEntities _entities;
 
@@ -21,7 +21,7 @@ namespace PharmacyManagement_BE.Application.Queries.ShipmentDetailsFeatures.Hand
             this._entities = entities;
         }
 
-        public async Task<ResponseAPI<List<ListShipmentDetailsDTOs>>> Handle(GetShipmentDetailsByShipmentQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<List<ListShipmentDetailsDTO>>> Handle(GetShipmentDetailsByShipmentQueryRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -29,17 +29,17 @@ namespace PharmacyManagement_BE.Application.Queries.ShipmentDetailsFeatures.Hand
                 var shipment = await _entities.ShipmentService.GetById(request.ShipmentId);
 
                 if (shipment == null)
-                    return new ResponseErrorAPI<List<ListShipmentDetailsDTOs>>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
+                    return new ResponseErrorAPI<List<ListShipmentDetailsDTO>>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
 
                 // Lấy danh sách chi tiết đơn hàng
                 var response = await _entities.ShipmentDetailsService.GetShipmentDetailsByShipment(request.ShipmentId);
 
-                return new ResponseSuccessAPI<List<ListShipmentDetailsDTOs>>(StatusCodes.Status200OK, response);
+                return new ResponseSuccessAPI<List<ListShipmentDetailsDTO>>(StatusCodes.Status200OK, response);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return new ResponseErrorAPI<List<ListShipmentDetailsDTOs>>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<List<ListShipmentDetailsDTO>>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
     }
