@@ -25,17 +25,17 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
         }
 
-        public async Task<bool> CheckName(string Name)
-            => await Context.Diseases.AnyAsync(r => r.Name.ToUpper() == Name.ToUpper().Trim());
-
-        public async Task<List<Disease>> GetAllDisease(CancellationToken cancellationToken)
-            => await Context.Diseases.ToListAsync(cancellationToken);
-
+        public async Task<bool> CheckExit(string name, string description)
+        {
+            return await Context.Symptoms.AnyAsync
+                (r => r.Name.ToUpperInvariant().Trim() == name.ToUpperInvariant().Trim() &&
+                r.Description.ToUpperInvariant().Trim() == description.ToUpperInvariant().Trim());
+        }
         public async Task<List<Disease>> SearchDisease(string KeyWord, CancellationToken cancellationToken)
         {
              return await Context.Diseases.Where
-             (d => EF.Functions.Like(d.Name.ToUpper(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
-             EF.Functions.Like(d.Description.ToUpper(), $"%{KeyWord.ToUpper().Trim()}%"))
+             (d => EF.Functions.Like(d.Name.ToUpperInvariant().Trim(), $"%{KeyWord.ToUpperInvariant().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
+             EF.Functions.Like(d.Description.ToUpperInvariant().Trim(), $"%{KeyWord.ToUpperInvariant().Trim()}%"))
              .ToListAsync(cancellationToken);
         }
            

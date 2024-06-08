@@ -16,7 +16,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
     {
         private readonly IPMEntities _entities;
 
-        public DeleteDiseaseCommandHandler(IPMEntities entities)
+        private DeleteDiseaseCommandHandler(IPMEntities entities)
         {
             this._entities = entities;
         }

@@ -7,9 +7,10 @@ using PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
 {
+    [ApiExplorerSettings(GroupName = "Admin")]
     [Route("api/[area]/[controller]")]
     [ApiController]
-    [Area("Admin/Product")]
+    [Area("Admin")]
     public class DiseaseController : ControllerBase
     {
         private readonly IMediator _mediator;

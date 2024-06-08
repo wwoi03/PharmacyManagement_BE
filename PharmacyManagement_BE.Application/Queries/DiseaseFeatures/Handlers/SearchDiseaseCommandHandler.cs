@@ -20,7 +20,7 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public SearchDiseaseCommandHandler(IPMEntities entities, IMapper mapper)
+        private SearchDiseaseCommandHandler(IPMEntities entities, IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;

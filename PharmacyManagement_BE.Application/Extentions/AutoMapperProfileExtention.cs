@@ -4,6 +4,7 @@ using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.SymptomFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
@@ -60,6 +61,10 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<CreateDiseaseCommandRequest, Disease>();
             CreateMap<Disease, DetailsDiseaseResponse>();
             #endregion Disease
+
+            #region Symptom
+            CreateMap<CreateSymptomCommandRequest, Symptom>();
+            #endregion Symptom
         }
     }
 }

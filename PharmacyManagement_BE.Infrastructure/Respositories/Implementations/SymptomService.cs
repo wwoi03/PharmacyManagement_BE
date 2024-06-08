@@ -1,4 +1,5 @@
-﻿using PharmacyManagement_BE.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
@@ -16,5 +17,13 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         {
 
         }
+
+        public async Task<bool> CheckExit(string name, string description)
+        {
+            return await Context.Symptoms.AnyAsync
+                (r => r.Name.ToUpperInvariant().Trim() == name.ToUpperInvariant().Trim() &&
+                r.Description.ToUpperInvariant().Trim() == description.ToUpperInvariant().Trim());
+        }
+
     }
 }

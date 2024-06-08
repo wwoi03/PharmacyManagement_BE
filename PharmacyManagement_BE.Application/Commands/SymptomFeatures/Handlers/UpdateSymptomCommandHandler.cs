@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.SymptomFeatures.Requests;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
-using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -12,46 +10,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
+namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
 {
-    public class UpdateDiseaseCommandHandler : IRequestHandler<UpdateDiseaseCommandRequest, ResponseAPI<string>>
+    public class UpdateSymptomCommandHandler : IRequestHandler<UpdateSymptomCommandRequest, ResponseAPI<string>>
     {
-
         private readonly IPMEntities _entities;
 
-        private UpdateDiseaseCommandHandler(IPMEntities entities)
+        private UpdateSymptomCommandHandler(IPMEntities entities)
         {
             this._entities = entities;
         }
 
-        public async Task<ResponseAPI<string>> Handle(UpdateDiseaseCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<string>> Handle(UpdateSymptomCommandRequest request, CancellationToken cancellationToken)
         {
             //Kiểm tra tồn tại
-            var disease = await _entities.DiseaseService.GetById(request.Id);
+            var symptom = await _entities.SymptomService.GetById(request.Id);
 
-            if(disease == null)
-                return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
+            if(symptom == null )
+                return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Triệu chứng không tồn tại.");
 
-            //B1: kiểm tra giá trị đầu vào
+            //Kiểm tra giá trị đầu vào
             var validation = request.IsValid();
 
             if (!validation.IsSuccessed)
                 return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
-
-            //B2: kiểm tra bệnh đã tồn tại
-            var diseaseExit = await _entities.DiseaseService.CheckExit(request.Name, request.Description);
-
-            if (diseaseExit)
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Bệnh đã tồn tại.");
-
+            
+            
             try
             {
                 //Gán giá trị thay đổi
-                disease.Name = request.Name;
-                disease.Description = request.Description;
+                symptom.Name = request.Name;
+                symptom.Description = request.Description;
 
-                // Cập nhật lại bệnh
-                var status = _entities.DiseaseService.Update(disease);
+                // Cập nhật lại triệu chứng
+                var status = _entities.SymptomService.Update(symptom);
 
                 //Kiểm tra trạng thái
                 if (status == false)
@@ -66,6 +58,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
             {
                 return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Lỗi hệ thống.");
             }
+
         }
     }
 }
