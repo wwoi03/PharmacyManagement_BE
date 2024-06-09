@@ -5,6 +5,7 @@ using PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Request
 using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
+using PharmacyManagement_BE.Application.DTOs.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDTOs;
@@ -57,6 +58,7 @@ namespace PharmacyManagement_BE.Application.Extentions
 
             #region ShipmentDetails
             CreateMap<ShipmentDetails, UpdateShipmentDetailsCommandRequest>().ReverseMap();
+            CreateMap<ShipmentDetails, ShipmentDetailsRequest>().ReverseMap();
             #endregion ShipmentDetails
         }
     }

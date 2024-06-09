@@ -80,11 +80,25 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         #endregion Dapper
 
         #region EntityFramework & LinQ
+        public async Task<bool> CreateRangeShipmentDetails(List<ShipmentDetails> shipmentDetails)
+        {
+            try
+            {
+                _context.ShipmentDetails.AddRange(shipmentDetails);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
         public async Task<bool> RemoveRangeShipmentDetails(List<ShipmentDetails> shipmentDetails)
         {
             try
             {
-                _context.RemoveRange(shipmentDetails);
+                _context.ShipmentDetails.RemoveRange(shipmentDetails);
                 return true;
             }
             catch (Exception ex)

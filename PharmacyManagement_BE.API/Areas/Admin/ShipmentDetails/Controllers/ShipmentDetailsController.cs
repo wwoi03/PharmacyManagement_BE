@@ -61,6 +61,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
             }
         }
 
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(CreateShipmentDetailsCommandRequest request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("SearchShipmentDetailsByProduct")]
         public async Task<IActionResult> SearchShipmentDetailsByProduct(SearchShipmentDetailsByProductQueryRequest request)
         {

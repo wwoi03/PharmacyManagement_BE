@@ -26,6 +26,12 @@ namespace PharmacyManagement_BE.Application.Queries.ShipmentDetailsFeatures.Hand
             
             try
             {
+                // Kiểm tra chi tiết đơn hàng tồn tại
+                var shipmentDetails = await _entities.ShipmentDetailsService.GetById(request.ShipmentDetailsId);
+
+                if (shipmentDetails == null)
+                    return new ResponseErrorAPI<DetailsShipmentDetailsDTO>(StatusCodes.Status404NotFound, "Chi tiết đơn hàng không tồn tại.");
+
                 // Lấy danh sách chi tiết đơn hàng
                 var response = await _entities.ShipmentDetailsService.GetDetailsShipmentDetails(request.ShipmentDetailsId);
 
