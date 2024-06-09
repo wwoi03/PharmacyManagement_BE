@@ -34,7 +34,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     SELECT 
                         sd.Id AS ShipmentDetailsId,
                         p.Name AS ProductName,
-                        'NO IMAGE' AS ProductImage,
+                        sd.Image AS ProductImage,
                         sd.ImportPrice AS ImportPrice,
                         sd.Quantity AS Quantity,
                         sd.Sold AS Sold,
@@ -64,6 +64,30 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 return false;
             }
         }
+
+        public async Task<List<ListShipmentDetailsDTO>> SearchShipmentDetailsByProduct(Guid shipmentId, string NameOrCodeMedicine)
+        {
+            return _context.ShipmentDetails
+                .Where(sd => sd.ShipmentId == shipmentId)
+                .Join(_context.Products,
+                    shipmentDetails => shipmentDetails.ProductId,
+                    product => product.Id,
+                    (shipmentDetails, product) => new { shipmentDetails = shipmentDetails, product = product })
+                .Where(temp => (temp.product.Name.Contains(NameOrCodeMedicine) || temp.product.CodeMedicine.Equals(NameOrCodeMedicine)))
+                .Select(temp => new ListShipmentDetailsDTO
+                {
+                    ShipmentDetailsId = temp.shipmentDetails.Id,
+                    ProductName = temp.product.Name,
+                    ProductImage = temp.product.Image,
+                    ManufactureDate = temp.shipmentDetails.ManufactureDate,
+                    ExpirationDate = temp.shipmentDetails.ExpirationDate,
+                    ImportPrice = temp.shipmentDetails.ImportPrice,
+                    Quantity = temp.shipmentDetails.Quantity,
+                    Sold = temp.shipmentDetails.Sold
+                })
+                .ToList();
+        }
+
         #endregion EntityFramework & LinQ
     }
 }

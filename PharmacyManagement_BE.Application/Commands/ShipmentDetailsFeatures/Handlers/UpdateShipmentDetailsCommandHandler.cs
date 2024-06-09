@@ -25,7 +25,6 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Han
 
         public async Task<ResponseAPI<string>> Handle(UpdateShipmentDetailsCommandRequest request, CancellationToken cancellationToken)
         {
-
             try
             {
                 // Kiểm tra chi tiết đơn hàng tồn tại
