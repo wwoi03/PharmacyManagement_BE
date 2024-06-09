@@ -40,7 +40,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
 
         public ResponseSuccessAPI(int code, T obj)
         {
-            IsSuccessed = false;
+            IsSuccessed = true;
             Code = code;
             Obj = obj;
         }

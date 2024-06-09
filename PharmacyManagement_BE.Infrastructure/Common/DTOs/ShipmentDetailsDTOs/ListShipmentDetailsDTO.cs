@@ -10,7 +10,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsDTOs
     {
         public Guid ShipmentDetailsId { get; set; }
         public string ProductName { get; set; }
-        public string ProductImage { get; set; }
+        public string ProductImage { get; set; } = string.Empty;
         public DateTime ManufactureDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public decimal ImportPrice { get; set; }
