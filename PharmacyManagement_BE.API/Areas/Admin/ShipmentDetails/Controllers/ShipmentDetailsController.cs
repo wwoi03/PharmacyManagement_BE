@@ -46,5 +46,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update(UpdateShipmentDetailsCommandRequest request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
