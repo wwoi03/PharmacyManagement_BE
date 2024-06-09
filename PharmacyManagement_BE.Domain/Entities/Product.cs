@@ -48,5 +48,8 @@ namespace PharmacyManagement_BE.Domain.Entities
 
         public Guid? CategoryId { get; set; }
         public Category Category { get; set; } = null!;
+
+        [Required]
+        public string Image { get; set; }
     }
 }

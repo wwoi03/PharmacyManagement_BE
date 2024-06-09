@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 
@@ -11,9 +12,10 @@ using PharmacyManagement_BE.Infrastructure.DBContext;
 namespace PharmacyManagement_BE.Infrastructure.Migrations
 {
     [DbContext(typeof(PharmacyManagementContext))]
-    partial class PharmacyManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20240609092745_UpdateProduct")]
+    partial class UpdateProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1090,7 +1092,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.ShipmentDetailsUnit", b =>
                 {
-                    b.Property<Guid>("ShipmentDetailsId")
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UnitId")
@@ -1099,11 +1101,16 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("ShipmentDetailsId", "UnitId");
+                    b.Property<Guid>("ShipmentDetailsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductId", "UnitId");
+
+                    b.HasIndex("ShipmentDetailsId");
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("ShipmentDetailsUnit");
+                    b.ToTable("ProductUnits");
                 });
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Supplier", b =>

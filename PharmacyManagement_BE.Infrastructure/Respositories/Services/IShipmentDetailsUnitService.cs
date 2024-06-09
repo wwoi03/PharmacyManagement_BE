@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
-    public interface IProductUnitService : IRepositoryService<ProductUnit>
+    public interface IShipmentDetailsUnitService : IRepositoryService<ShipmentDetailsUnit>
     {
 
     }

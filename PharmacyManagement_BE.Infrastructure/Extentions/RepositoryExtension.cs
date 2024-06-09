@@ -34,7 +34,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
             services.AddTransient<IProductImageService, ProductImageService>();
             services.AddTransient<IProductIngredientService, ProductIngredientService>();
             services.AddTransient<IProductSupportService, ProductSupportService>();
-            services.AddTransient<IProductUnitService, ProductUnitService>();
+            services.AddTransient<IShipmentDetailsUnitService, ShipmentDetailsUnitService>();
             services.AddTransient<IPromotionHistoryService, PromotionHistoryService>();
             services.AddTransient<IPromotionProductService, PromotionProductService>();
             services.AddTransient<IPromotionProgramService, PromotionProgramService>();
