@@ -46,5 +46,61 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update(UpdateShipmentDetailsCommandRequest request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(CreateShipmentDetailsCommandRequest request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("SearchShipmentDetailsByProduct")]
+        public async Task<IActionResult> SearchShipmentDetailsByProduct(SearchShipmentDetailsByProductQueryRequest request)
+        {
+            try
+            {
+                var result = await mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("GetDetailsShipmentDetails")]
+        public async Task<IActionResult> GetDetailsShipmentDetails(Guid shipmentDetailsId)
+        {
+            try
+            {
+                var result = await mediator.Send(new GetDetailsShipmentDetailsQueryRequest { ShipmentDetailsId = shipmentDetailsId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

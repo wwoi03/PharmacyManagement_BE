@@ -25,6 +25,35 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         }
 
         #region Dapper
+        public async Task<DetailsShipmentDetailsDTO> GetDetailsShipmentDetails(Guid shipmentDetailsId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@ShipmentDetailsId", shipmentDetailsId);
+
+            var sql = @"
+                    SELECT 
+                        sd.Id AS ShipmentDetailsId,
+                        sl.Name AS SupplierName,
+                        p.Id AS ProductId,
+                        p.Name AS ProductName,
+                        p.Image AS ProductImage,
+                        sd.ImportPrice AS ImportPrice,
+                        sd.Quantity AS Quantity,
+                        sd.Sold AS Sold,
+                        sd.ManufactureDate AS ManufactureDate,
+                        sd.ExpirationDate AS ExpirationDate,
+                        sd.Note AS Note,
+                        sd.ProductionBatch AS ProductionBatch
+                    FROM ShipmentDetails sd 
+                        INNER JOIN Shipments s ON sd.ShipmentId = s.Id
+                        INNER JOIN Suppliers sl ON s.SupplierId = sl.Id
+                        INNER JOIN Products p ON sd.ProductId = p.Id
+                    WHERE sd.Id = @ShipmentDetailsId
+                    ORDER BY sd.ImportPrice";
+
+            return _dapperContext.GetConnection.QueryFirst<DetailsShipmentDetailsDTO>(sql, parameters);
+        }
+
         public async Task<List<ListShipmentDetailsDTO>> GetShipmentDetailsByShipment(Guid shipmentId)
         {
             var parameters = new DynamicParameters();
@@ -34,7 +63,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     SELECT 
                         sd.Id AS ShipmentDetailsId,
                         p.Name AS ProductName,
-                        'NO IMAGE' AS ProductImage,
+                        p.Image AS ProductImage,
                         sd.ImportPrice AS ImportPrice,
                         sd.Quantity AS Quantity,
                         sd.Sold AS Sold,
@@ -51,11 +80,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         #endregion Dapper
 
         #region EntityFramework & LinQ
-        public async Task<bool> RemoveRangeShipmentDetails(List<ShipmentDetails> shipmentDetails)
+        public async Task<bool> CreateRangeShipmentDetails(List<ShipmentDetails> shipmentDetails)
         {
             try
             {
-                _context.RemoveRange(shipmentDetails);
+                _context.ShipmentDetails.AddRange(shipmentDetails);
                 return true;
             }
             catch (Exception ex)
@@ -64,6 +93,44 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 return false;
             }
         }
+
+        public async Task<bool> RemoveRangeShipmentDetails(List<ShipmentDetails> shipmentDetails)
+        {
+            try
+            {
+                _context.ShipmentDetails.RemoveRange(shipmentDetails);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+        public async Task<List<ListShipmentDetailsDTO>> SearchShipmentDetailsByProduct(Guid shipmentId, string NameOrCodeMedicine)
+        {
+            return _context.ShipmentDetails
+                .Where(sd => sd.ShipmentId == shipmentId)
+                .Join(_context.Products,
+                    shipmentDetails => shipmentDetails.ProductId,
+                    product => product.Id,
+                    (shipmentDetails, product) => new { shipmentDetails = shipmentDetails, product = product })
+                .Where(temp => (temp.product.Name.Contains(NameOrCodeMedicine) || temp.product.CodeMedicine.Equals(NameOrCodeMedicine)))
+                .Select(temp => new ListShipmentDetailsDTO
+                {
+                    ShipmentDetailsId = temp.shipmentDetails.Id,
+                    ProductName = temp.product.Name,
+                    ProductImage = temp.product.Image,
+                    ManufactureDate = temp.shipmentDetails.ManufactureDate,
+                    ExpirationDate = temp.shipmentDetails.ExpirationDate,
+                    ImportPrice = temp.shipmentDetails.ImportPrice,
+                    Quantity = temp.shipmentDetails.Quantity,
+                    Sold = temp.shipmentDetails.Sold
+                })
+                .ToList();
+        }
+
         #endregion EntityFramework & LinQ
     }
 }
