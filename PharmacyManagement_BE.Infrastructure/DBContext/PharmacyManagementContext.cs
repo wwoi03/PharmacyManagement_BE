@@ -54,8 +54,8 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
                 .HasKey(o => new { o.PromotionId, o.OrderDetailsId });
             modelBuilder.Entity<OrderDetails>()
                .HasKey(o => new { o.OrderId, o.ShipmentDetailsId, o.UnitId });
-            modelBuilder.Entity<ProductUnit>()
-               .HasKey(o => new { o.ProductId, o.UnitId });
+            modelBuilder.Entity<ShipmentDetailsUnit>()
+               .HasKey(o => new { o.ShipmentDetailsId, o.UnitId });
         }
 
         #region DbSet
@@ -74,7 +74,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
         public DbSet<ProductDisease> ProductDiseases { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductIngredient> ProductIngredients { get; set; }
-        public DbSet<ProductUnit> ProductUnits { get; set; }
+        public DbSet<ShipmentDetailsUnit> ShipmentDetailsUnit { get; set; }
         public DbSet<ProductSupport> ProductSupports { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<PromotionHistory> PromotionHistories { get; set; }

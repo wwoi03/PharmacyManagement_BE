@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Domain.Entities
 {
-    public class ProductUnit
+    public class ShipmentDetailsUnit
     {
         [Key]
-        public Guid ProductId { get; set; }
-        public Product Product { get; set; } = null!;
+        public Guid ShipmentDetailsId { get; set; }
+        public ShipmentDetails ShipmentDetails { get; set; } = null!;
 
         [Key]
         public Guid UnitId { get; set; }

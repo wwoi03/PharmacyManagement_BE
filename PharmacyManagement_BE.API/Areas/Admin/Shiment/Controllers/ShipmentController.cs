@@ -20,11 +20,11 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
         }
 
         [HttpPost("GetShipmentsByBranch")]
-        public async Task<IActionResult> GetShipmentsByBranch(GetShipmentsByBranchQueryRequest request)
+        public async Task<IActionResult> GetShipmentsByBranch(Guid branchId)
         {
             try
             {
-                var result = await mediator.Send(request);
+                var result = await mediator.Send(new GetShipmentsByBranchQueryRequest { BranchId = branchId });
                 return Ok(result);
             }
             catch (Exception ex)
@@ -61,12 +61,12 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
             }
         }
 
-        [HttpPost("Delete")]
-        public async Task<IActionResult> Delete(DeleteShipmentCommandRequest request)
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(Guid shipmentId)
         {
             try
             {
-                var result = await mediator.Send(request);
+                var result = await mediator.Send(new DeleteShipmentCommandRequest { ShipmentId = shipmentId });
                 return Ok(result);
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
             }
         }
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public async Task<IActionResult> Update(UpdateShipmentCommandRequest request)
         {
             try
