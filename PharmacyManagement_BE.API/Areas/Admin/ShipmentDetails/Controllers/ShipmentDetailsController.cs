@@ -74,5 +74,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("GetDetailsShipmentDetails")]
+        public async Task<IActionResult> GetDetailsShipmentDetails(Guid shipmentDetailsId)
+        {
+            try
+            {
+                var result = await mediator.Send(new GetDetailsShipmentDetailsQueryRequest { ShipmentDetailsId = shipmentDetailsId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     {
         Task<bool> RemoveRangeShipmentDetails(List<ShipmentDetails> shipmentDetails);
         Task<List<ListShipmentDetailsDTO>> GetShipmentDetailsByShipment(Guid shipmentId);
+        Task<DetailsShipmentDetailsDTO> GetDetailsShipmentDetails(Guid shipmentDetailsId);
         Task<List<ListShipmentDetailsDTO>> SearchShipmentDetailsByProduct(Guid shipmentId,string NameOrCodeMedicine);
     }
 }

@@ -12,5 +12,6 @@ namespace PharmacyManagement_BE.Application.Queries.ShipmentDetailsFeatures.Requ
     public class GetDetailsShipmentDetailsQueryRequest : IRequest<ResponseAPI<DetailsShipmentDetailsDTO>>
     {
         public Guid ShipmentDetailsId { get; set; }
+        
     }
 }

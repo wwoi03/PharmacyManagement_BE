@@ -25,6 +25,35 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         }
 
         #region Dapper
+        public async Task<DetailsShipmentDetailsDTO> GetDetailsShipmentDetails(Guid shipmentDetailsId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@ShipmentDetailsId", shipmentDetailsId);
+
+            var sql = @"
+                    SELECT 
+                        sd.Id AS ShipmentDetailsId,
+                        sl.Name AS SupplierName,
+                        p.Id AS ProductId,
+                        p.Name AS ProductName,
+                        p.Image AS ProductImage,
+                        sd.ImportPrice AS ImportPrice,
+                        sd.Quantity AS Quantity,
+                        sd.Sold AS Sold,
+                        sd.ManufactureDate AS ManufactureDate,
+                        sd.ExpirationDate AS ExpirationDate,
+                        sd.Note AS Note,
+                        sd.ProductionBatch AS ProductionBatch
+                    FROM ShipmentDetails sd 
+                        INNER JOIN Shipments s ON sd.ShipmentId = s.Id
+                        INNER JOIN Suppliers sl ON s.SupplierId = sl.Id
+                        INNER JOIN Products p ON sd.ProductId = p.Id
+                    WHERE sd.Id = @ShipmentDetailsId
+                    ORDER BY sd.ImportPrice";
+
+            return _dapperContext.GetConnection.QueryFirst<DetailsShipmentDetailsDTO>(sql, parameters);
+        }
+
         public async Task<List<ListShipmentDetailsDTO>> GetShipmentDetailsByShipment(Guid shipmentId)
         {
             var parameters = new DynamicParameters();
@@ -34,7 +63,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     SELECT 
                         sd.Id AS ShipmentDetailsId,
                         p.Name AS ProductName,
-                        sd.Image AS ProductImage,
+                        p.Image AS ProductImage,
                         sd.ImportPrice AS ImportPrice,
                         sd.Quantity AS Quantity,
                         sd.Sold AS Sold,

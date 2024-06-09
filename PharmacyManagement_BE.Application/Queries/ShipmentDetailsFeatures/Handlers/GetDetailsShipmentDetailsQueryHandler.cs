@@ -26,16 +26,10 @@ namespace PharmacyManagement_BE.Application.Queries.ShipmentDetailsFeatures.Hand
             
             try
             {
-                // Kiểm tra đơn hàng tồn tại
-                var shipmentDetails = await _entities.ShipmentDetailsService.GetById(request.ShipmentDetailsId);
-
-                if (shipmentDetails == null)
-                    return new ResponseErrorAPI<DetailsShipmentDetailsDTO>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
-
                 // Lấy danh sách chi tiết đơn hàng
-                var response = await _entities.ShipmentDetailsService.GetShipmentDetailsByShipment(request.ShipmentDetailsId);
+                var response = await _entities.ShipmentDetailsService.GetDetailsShipmentDetails(request.ShipmentDetailsId);
 
-                return new ResponseSuccessAPI<DetailsShipmentDetailsDTO>(StatusCodes.Status200OK);
+                return new ResponseSuccessAPI<DetailsShipmentDetailsDTO>(StatusCodes.Status200OK, response);
             }
             catch (Exception ex)
             {
