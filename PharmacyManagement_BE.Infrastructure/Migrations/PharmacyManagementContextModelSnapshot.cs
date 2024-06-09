@@ -688,6 +688,10 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("HowToUse")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -804,24 +808,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.HasIndex("SupportId");
 
                     b.ToTable("ProductSupports");
-                });
-
-            modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.ProductUnit", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UnitId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("SalePrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ProductId", "UnitId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("ProductUnits");
                 });
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Promotion", b =>
@@ -1100,6 +1086,24 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.HasIndex("ShipmentId");
 
                     b.ToTable("ShipmentDetails");
+                });
+
+            modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.ShipmentDetailsUnit", b =>
+                {
+                    b.Property<Guid>("ShipmentDetailsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("SalePrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ShipmentDetailsId", "UnitId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("ShipmentDetailsUnit");
                 });
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Supplier", b =>
@@ -1517,25 +1521,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Navigation("Support");
                 });
 
-            modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.ProductUnit", b =>
-                {
-                    b.HasOne("PharmacyManagement_BE.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PharmacyManagement_BE.Domain.Entities.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Unit");
-                });
-
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.PromotionHistory", b =>
                 {
                     b.HasOne("PharmacyManagement_BE.Domain.Entities.Promotion", "Promotion")
@@ -1632,6 +1617,25 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Shipment");
+                });
+
+            modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.ShipmentDetailsUnit", b =>
+                {
+                    b.HasOne("PharmacyManagement_BE.Domain.Entities.ShipmentDetails", "ShipmentDetails")
+                        .WithMany()
+                        .HasForeignKey("ShipmentDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PharmacyManagement_BE.Domain.Entities.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShipmentDetails");
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.VoucherHistory", b =>

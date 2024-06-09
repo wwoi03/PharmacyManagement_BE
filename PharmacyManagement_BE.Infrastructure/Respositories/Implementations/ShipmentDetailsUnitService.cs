@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
-    public class ProductUnitService : RepositoryService<ProductUnit>, IProductUnitService
+    public class ShipmentDetailsUnitService : RepositoryService<ShipmentDetailsUnit>, IShipmentDetailsUnitService
     {
-        public ProductUnitService(PharmacyManagementContext context) : base(context)
+        public ShipmentDetailsUnitService(PharmacyManagementContext context) : base(context)
         {
 
         }
