@@ -32,5 +32,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("SearchProduct")]
+        public async Task<IActionResult> SearchProduct(Guid productId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new DeleteProductCommandRequest { ProductId = productId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
