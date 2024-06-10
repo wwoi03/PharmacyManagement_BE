@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests
 {
-    public class SearchDiseaseCommandRequest : IRequest<ResponseAPI<List<DetailsDiseaseResponse>>>
+    public class SearchDiseasesQueryRequest : IRequest<ResponseAPI<List<DiseaseDTO>>>
     {
         public string KeyWord { get; set; }
 

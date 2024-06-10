@@ -15,18 +15,18 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 {
-    internal class SearchDiseaseCommandHandler : IRequestHandler<SearchDiseaseCommandRequest, ResponseAPI<List<DetailsDiseaseResponse>>>
+    internal class SearchDiseasesQueryHandler : IRequestHandler<SearchDiseasesQueryRequest, ResponseAPI<List<DiseaseDTO>>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public SearchDiseaseCommandHandler(IPMEntities entities, IMapper mapper)
+        public SearchDiseasesQueryHandler(IPMEntities entities, IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;
         }
 
-        public async Task<ResponseAPI<List<DetailsDiseaseResponse>>> Handle(SearchDiseaseCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<List<DiseaseDTO>>> Handle(SearchDiseasesQueryRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -34,25 +34,25 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<List<DetailsDiseaseResponse>>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status400BadRequest, validation.Message);
 
 
                 // Tìm kiếm bệnh theo tên gần đúng
                 var listDisease = await _entities.DiseaseService.SearchDisease(request.KeyWord, cancellationToken);
 
-                //Gán giá trị response
-                var response = _mapper.Map<List<DetailsDiseaseResponse>>(listDisease);
-
                 //Kiểm tra danh sách
-                if (response == null || response.Count == 0)
-                    return new ResponseErrorAPI<List<DetailsDiseaseResponse>>(StatusCodes.Status404NotFound, "Không tìm thấy loại bệnh");
+                if (listDisease == null || listDisease.Count == 0)
+                    return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy loại bệnh");
+
+                //Gán giá trị response
+                var response = _mapper.Map<List<DiseaseDTO>>(listDisease);
 
                 //Trả về danh sách
-                return new ResponseSuccessAPI<List<DetailsDiseaseResponse>>(StatusCodes.Status200OK, "Danh sách bệnh", response);
+                return new ResponseSuccessAPI<List<DiseaseDTO>>(StatusCodes.Status200OK, "Danh sách bệnh", response);
             }
             catch (Exception)
             {
-                return new ResponseErrorAPI<List<DetailsDiseaseResponse>>("Lỗi hệ thống.");
+                return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
     }

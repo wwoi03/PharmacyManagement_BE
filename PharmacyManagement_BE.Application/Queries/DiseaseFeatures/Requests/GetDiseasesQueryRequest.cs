@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests
 {
-    public class GetAllDiseaseCommandRequest : IRequest<ResponseAPI<List<DetailsDiseaseResponse>>>
+    public class GetDiseasesQueryRequest : IRequest<ResponseAPI<List<DiseaseDTO>>>
     {
     }
 }

@@ -23,14 +23,14 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
 
         public async Task<ResponseAPI<string>> Handle(DeleteSymptomCommandRequest request, CancellationToken cancellationToken)
         {
-            // Kiểm tra tồn tại
-            var symptom = await _entities.SymptomService.GetById(request.Id);
-
-            if (symptom == null)
-                return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Không tìm thấy triệu chứng.");
-
             try
             {
+                // Kiểm tra tồn tại
+                var symptom = await _entities.SymptomService.GetById(request.Id);
+
+                if (symptom == null)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Không tìm thấy triệu chứng.");
+
                 //Xóa triệu chứng
                 var deleteSymptom = _entities.SymptomService.Delete(symptom);
 

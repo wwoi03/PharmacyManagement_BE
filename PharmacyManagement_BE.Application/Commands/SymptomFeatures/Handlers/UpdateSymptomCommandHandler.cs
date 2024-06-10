@@ -23,21 +23,20 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
 
         public async Task<ResponseAPI<string>> Handle(UpdateSymptomCommandRequest request, CancellationToken cancellationToken)
         {
-            //Kiểm tra tồn tại
-            var symptom = await _entities.SymptomService.GetById(request.Id);
-
-            if(symptom == null )
-                return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Triệu chứng không tồn tại.");
-
-            //Kiểm tra giá trị đầu vào
-            var validation = request.IsValid();
-
-            if (!validation.IsSuccessed)
-                return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
-            
-            
             try
             {
+                //Kiểm tra tồn tại
+                var symptom = await _entities.SymptomService.GetById(request.Id);
+
+                if (symptom == null)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Triệu chứng không tồn tại.");
+
+                //Kiểm tra giá trị đầu vào
+                var validation = request.IsValid();
+
+                if (!validation.IsSuccessed)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+
                 //Gán giá trị thay đổi
                 symptom.Name = request.Name;
                 symptom.Description = request.Description;

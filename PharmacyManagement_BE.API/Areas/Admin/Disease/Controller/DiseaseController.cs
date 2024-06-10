@@ -65,7 +65,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
         }
 
         [HttpPost("DetailsDisease")]
-        public async Task<IActionResult> Details(GetDetailsDiseaseCommandRequest request)
+        public async Task<IActionResult> Details(GetDetailsDiseaseQueryRequest request)
         {
             try
             {
@@ -78,12 +78,12 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
             }
         }
 
-        [HttpPost("ListDisease")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("GetDiseases")]
+        public async Task<IActionResult> GetDiseases()
         {
             try
             {
-                var result = await _mediator.Send(new GetAllDiseaseCommandRequest());
+                var result = await _mediator.Send(new GetDiseasesQueryRequest());
                 return Ok(result);
             }
             catch (Exception ex)
@@ -93,7 +93,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
         }
 
         [HttpPost("SearchDisease")]
-        public async Task<IActionResult> Search(SearchDiseaseCommandRequest request)
+        public async Task<IActionResult> Search(SearchDiseasesQueryRequest request)
         {
             try
             {

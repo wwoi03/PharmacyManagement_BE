@@ -10,6 +10,7 @@ using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.SymptomDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,12 +59,13 @@ namespace PharmacyManagement_BE.Application.Extentions
             #endregion Shipment
 
             #region Disease 
-            CreateMap<CreateDiseaseCommandRequest, Disease>();
-            CreateMap<Disease, DetailsDiseaseResponse>();
+            CreateMap<CreateDiseaseCommandRequest, Disease>().ReverseMap();
+            CreateMap<Disease, DiseaseDTO>().ReverseMap();
             #endregion Disease
 
             #region Symptom
-            CreateMap<CreateSymptomCommandRequest, Symptom>();
+            CreateMap<CreateSymptomCommandRequest, Symptom>().ReverseMap();
+            CreateMap<Symptom, SymptomDTO>().ReverseMap();
             #endregion Symptom
         }
     }

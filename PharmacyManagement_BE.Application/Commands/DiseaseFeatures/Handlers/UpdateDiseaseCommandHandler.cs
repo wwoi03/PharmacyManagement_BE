@@ -64,7 +64,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
             }
             catch (Exception)
             {
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
     }

@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 {
-    internal class GetDetailsDiseaseCommandHandler : IRequestHandler<GetDetailsDiseaseCommandRequest, ResponseAPI<DetailsDiseaseResponse>>
+    internal class GetDetailsDiseaseQueryHandler : IRequestHandler<GetDetailsDiseaseQueryRequest, ResponseAPI<DiseaseDTO>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public GetDetailsDiseaseCommandHandler(IPMEntities entities, IMapper mapper)
+        public GetDetailsDiseaseQueryHandler(IPMEntities entities, IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;
         }
 
-        public async Task<ResponseAPI<DetailsDiseaseResponse>> Handle(GetDetailsDiseaseCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<DiseaseDTO>> Handle(GetDetailsDiseaseQueryRequest request, CancellationToken cancellationToken)
         {
            
             try
@@ -33,17 +33,16 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
                 //Kiểm tra tồn tại
                 var validation = await _entities.DiseaseService.GetById(request.Id);
 
-                var disease = _mapper.Map<DetailsDiseaseResponse>(validation);
+                if(validation == null)
+                    return new ResponseErrorAPI<DiseaseDTO>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
 
-                if (disease == null)
-                    return new ResponseErrorAPI<DetailsDiseaseResponse>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
+                var disease = _mapper.Map<DiseaseDTO>(validation);
 
-
-                return new ResponseSuccessAPI<DetailsDiseaseResponse>(StatusCodes.Status200OK, "Thông tin bệnh", disease);
+                return new ResponseSuccessAPI<DiseaseDTO>(StatusCodes.Status200OK, "Thông tin bệnh", disease);
             }
             catch (Exception)
             {
-                return new ResponseErrorAPI<DetailsDiseaseResponse>("Lỗi hệ thống.");
+                return new ResponseErrorAPI<DiseaseDTO>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
     }

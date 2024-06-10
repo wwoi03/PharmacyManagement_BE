@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests
 {
-    public class GetDetailsDiseaseCommandRequest : IRequest<ResponseAPI<DetailsDiseaseResponse>>
+    public class GetDetailsDiseaseQueryRequest : IRequest<ResponseAPI<DiseaseDTO>>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

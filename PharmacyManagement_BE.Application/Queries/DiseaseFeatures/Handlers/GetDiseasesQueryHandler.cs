@@ -15,38 +15,37 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 {
-    internal class GetAllDiseaseCommandHandler : IRequestHandler<GetAllDiseaseCommandRequest, ResponseAPI<List<DetailsDiseaseResponse>>>
+    internal class GetDiseasesQueryHandler : IRequestHandler<GetDiseasesQueryRequest, ResponseAPI<List<DiseaseDTO>>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public GetAllDiseaseCommandHandler( IPMEntities entities,IMapper mapper)
+        public GetDiseasesQueryHandler( IPMEntities entities,IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;
         }
 
-        public async Task<ResponseAPI<List<DetailsDiseaseResponse>>> Handle(GetAllDiseaseCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<List<DiseaseDTO>>> Handle(GetDiseasesQueryRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 //Lấy danh sách bệnh
                 var listDisease = await _entities.DiseaseService.GetAll();
 
+                //Kiểm tra danh sách
+                if (listDisease == null || listDisease.Count == 0)
+                    return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy danh sách bệnh");
 
                 //Gán danh sách bệnh thành response
-                var response = _mapper.Map<List<DetailsDiseaseResponse>>(listDisease);
-
-                //Kiểm tra danh sách
-                if (response == null || response.Count == 0)
-                    return new ResponseErrorAPI<List<DetailsDiseaseResponse>>(StatusCodes.Status404NotFound, "Không tìm thấy danh sách bệnh");
+                var response = _mapper.Map<List<DiseaseDTO>>(listDisease);
 
                 //Trả về danh sách
-                return new ResponseSuccessAPI<List<DetailsDiseaseResponse>>(StatusCodes.Status200OK, "Danh sách bệnh", response);
+                return new ResponseSuccessAPI<List<DiseaseDTO>>(StatusCodes.Status200OK, "Danh sách bệnh", response);
             }
             catch (Exception)
             {
-                return new ResponseErrorAPI<List<DetailsDiseaseResponse>>("Lỗi hệ thống.");
+                return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
     }

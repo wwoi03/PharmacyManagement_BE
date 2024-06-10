@@ -27,20 +27,20 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
 
         public async Task<ResponseAPI<string>> Handle(CreateDiseaseCommandRequest request, CancellationToken cancellationToken)
         {
-            //B1: kiểm tra giá trị đầu vào
-            var validation = request.IsValid();
-
-            if (!validation.IsSuccessed)
-                return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
-
-            //B2: kiểm tra bệnh đã tồn tại
-            var checkExit = await _entities.DiseaseService.CheckExit(request.Name, request.Description);
-
-            if (checkExit)
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Bệnh đã tồn tại.");
-            
             try
             {
+                //B1: kiểm tra giá trị đầu vào
+                var validation = request.IsValid();
+
+                if (!validation.IsSuccessed)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+
+                //B2: kiểm tra bệnh đã tồn tại
+                var checkExit = await _entities.DiseaseService.CheckExit(request.Name, request.Description);
+
+                if (checkExit)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Bệnh đã tồn tại.");
+
                 // Chuyển đổi request sang dữ liệu
                 var createDisease = _mapper.Map<Disease>(request);
 
@@ -57,7 +57,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 return new ResponseSuccessAPI<string>("Thêm loại bệnh thành công.");
             }
             catch (Exception){
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
     }
