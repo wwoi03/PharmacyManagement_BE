@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
@@ -18,10 +19,18 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<ResponseAPI<string>> Get()
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(Guid productId)
         {
-            return null;
+            try
+            {
+                var result = await _mediator.Send(new DeleteProductCommandRequest { ProductId = productId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
