@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Tests.Fatory
 {
-    internal class PMWebApplicationFactory : WebApplicationFactory<Program>
+    internal class PMWebApplicationFactory : WebApplicationFactory<Program> 
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -21,31 +21,10 @@ namespace PharmacyManagement_BE.Tests.Fatory
             {
                 // Register a new DBContext that will use our test connection string
                 string? connString = "Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True";
-                services.AddSqlServer<PharmacyManagementContext>(connString);
-
-                PharmacyManagementContext dbContext = CreateDbContext(services);
-                dbContext.Database.EnsureDeleted();
+                services.AddDbContext<PharmacyManagementContext>(option => option.UseSqlServer(connString));
             });
 
             builder.UseEnvironment("Development");
-        }
-
-        private static string? GetConnectionString()
-        {
-            var configuration = new ConfigurationBuilder()
-                .AddUserSecrets<PMWebApplicationFactory>()
-                .Build();
-
-            var connString = configuration.GetConnectionString("ConnectionString");
-            return connString;
-        }
-
-        private static PharmacyManagementContext CreateDbContext(IServiceCollection services)
-        {
-            var serviceProvider = services.BuildServiceProvider();
-            var scope = serviceProvider.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<PharmacyManagementContext>();
-            return dbContext;
         }
     }
 }

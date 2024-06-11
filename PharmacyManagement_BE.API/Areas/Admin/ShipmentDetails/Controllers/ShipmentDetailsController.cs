@@ -19,8 +19,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost("GetShipmentDetailsByShipment")]
-        public async Task<IActionResult> GetShipmentDetailsByShipment(Guid shipmentId)
+        [HttpGet("GetShipmentDetailsByShipment")]
+        public async Task<IActionResult> GetShipmentDetailsByShipment([FromQuery] Guid shipmentId)
         {
             try
             {
