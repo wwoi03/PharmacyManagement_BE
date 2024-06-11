@@ -90,7 +90,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
         }
 
         [HttpPost("GetDetailsShipmentDetails")]
-        public async Task<IActionResult> GetDetailsShipmentDetails(Guid shipmentDetailsId)
+        public async Task<IActionResult> GetDetailsShipmentDetails([FromBody] Guid shipmentDetailsId)
         {
             try
             {
