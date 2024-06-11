@@ -24,19 +24,54 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Branchs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProvinceOrCity = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StaffId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ProvinceOrCity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    District = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Ward = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    AddressDetails = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    StaffId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,10 +83,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParentCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ParentCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CodeCategory = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,10 +99,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    CodeDisease = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,10 +115,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Unit = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CodeIngredient = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -93,10 +131,10 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Provider = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Provider = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,14 +146,15 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DiscountType = table.Column<int>(type: "int", nullable: false),
                     DiscountValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CodePromotion = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -123,14 +162,33 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Suppliers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CodeSupplier = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Support",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    CodeSupport = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,10 +200,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    CodeSymptom = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -157,9 +216,10 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    NameDetails = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -171,15 +231,16 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DiscountValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountType = table.Column<int>(type: "int", nullable: false),
+                    DiscountType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CodeVoucher = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -203,107 +264,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    BranchId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Branchs_BranchId1",
-                        column: x => x.BranchId1,
-                        principalTable: "Branchs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CodeMedicine = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Specifications = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Uses = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HowToUse = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SideEffects = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Warning = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Preserve = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Dosage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Contraindication = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    View = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DosageForms = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BrandOrigin = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AgeOfUse = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DiseaseSymptoms",
-                columns: table => new
-                {
-                    DiseaseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SymptomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DiseaseSymptoms", x => new { x.DiseaseId, x.SymptomId });
-                    table.ForeignKey(
-                        name: "FK_DiseaseSymptoms_Diseases_DiseaseId",
-                        column: x => x.DiseaseId,
-                        principalTable: "Diseases",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DiseaseSymptoms_Symptoms_SymptomId",
-                        column: x => x.SymptomId,
-                        principalTable: "Symptoms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -394,36 +354,103 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ReceiverInformations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReceiverName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    RecipientPhone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Satus = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ProvinceOrCity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    District = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Ward = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    AddressType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    AddressDetails = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReceiverInformations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReceiverInformations_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CodeMedicine = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Specifications = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ShortDescription = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Uses = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HowToUse = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SideEffects = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Warning = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Preserve = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Dosage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Contraindication = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DosageForms = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    RegistrationNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    BrandOrigin = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AgeOfUse = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    View = table.Column<int>(type: "int", nullable: false),
+                    CartView = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrdererName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReceiverName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RecipientPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProvinceOrCity = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrdererName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ReceiverName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RecipientPhone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Email = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    ProvinceOrCity = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    District = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Ward = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AddressDetails = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TransportFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     FinalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     PaymentAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PaymentStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PaymentMethodId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StaffId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    PaymentStatus = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    AccountNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    BankName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PaymentMethodId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StaffId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CodeOrder = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -438,58 +465,61 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         name: "FK_Orders_PaymentMethods_PaymentMethodId",
                         column: x => x.PaymentMethodId,
                         principalTable: "PaymentMethods",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReceiverInformations",
+                name: "Shipments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ReceiverName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RecipientPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Satus = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProvinceOrCity = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddressType = table.Column<int>(type: "int", nullable: false),
-                    AddressDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReceiverInformations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ReceiverInformations_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Suppliers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImportDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: true),
+                    Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StaffId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CodeShipment = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                    table.PrimaryKey("PK_Shipments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Suppliers_AspNetUsers_StaffId",
+                        name: "FK_Shipments_AspNetUsers_StaffId",
                         column: x => x.StaffId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Shipments_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Suppliers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DiseaseSymptoms",
+                columns: table => new
+                {
+                    DiseaseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SymptomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiseaseSymptoms", x => new { x.DiseaseId, x.SymptomId });
+                    table.ForeignKey(
+                        name: "FK_DiseaseSymptoms_Diseases_DiseaseId",
+                        column: x => x.DiseaseId,
+                        principalTable: "Diseases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DiseaseSymptoms_Symptoms_SymptomId",
+                        column: x => x.SymptomId,
+                        principalTable: "Symptoms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -503,8 +533,8 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     UnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -534,16 +564,16 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StaffId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StaffId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false),
-                    CommentText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReplayCommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CommentText = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    ReplayCommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CommentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CommentType = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -552,8 +582,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         name: "FK_Comments_AspNetUsers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_Products_ProductId",
                         column: x => x.ProductId,
@@ -592,9 +621,9 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Image = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -657,41 +686,16 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductUnits",
-                columns: table => new
-                {
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductUnits", x => new { x.ProductId, x.UnitId });
-                    table.ForeignKey(
-                        name: "FK_ProductUnits_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductUnits_Units_UnitId",
-                        column: x => x.UnitId,
-                        principalTable: "Units",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PromotionProducts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PromotionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdditionalInfo = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -737,25 +741,36 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Shipments",
+                name: "ShipmentDetails",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ImportDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ShipmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ManufactureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ImportPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Sold = table.Column<int>(type: "int", nullable: false),
+                    AdditionalInfo = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: true),
+                    ProductionBatch = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shipments", x => x.Id);
+                    table.PrimaryKey("PK_ShipmentDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Shipments_Suppliers_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Suppliers",
+                        name: "FK_ShipmentDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShipmentDetails_Shipments_ShipmentId",
+                        column: x => x.ShipmentId,
+                        principalTable: "Shipments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -780,40 +795,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShipmentDetails",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShipmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ImportDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ImportPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    SoldPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShipmentDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ShipmentDetails_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ShipmentDetails_Shipments_ShipmentId",
-                        column: x => x.ShipmentId,
-                        principalTable: "Shipments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
@@ -823,10 +804,10 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     PricePerUnit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -840,6 +821,31 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShipmentDetailsUnit",
+                columns: table => new
+                {
+                    ShipmentDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShipmentDetailsUnit", x => new { x.ShipmentDetailsId, x.UnitId });
+                    table.ForeignKey(
+                        name: "FK_ShipmentDetailsUnit_ShipmentDetails_ShipmentDetailsId",
+                        column: x => x.ShipmentDetailsId,
+                        principalTable: "ShipmentDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShipmentDetailsUnit_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PromotionHistories",
                 columns: table => new
                 {
@@ -848,7 +854,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     OrderDetailsOrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDetailsShipmentDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDetailsUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AppliedDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppliedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DiscountApplied = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -899,11 +905,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_BranchId1",
-                table: "AspNetUsers",
-                column: "BranchId1");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -983,11 +984,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 column: "SupportId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductUnits_UnitId",
-                table: "ProductUnits",
-                column: "UnitId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PromotionHistories_OrderDetailsOrderId_OrderDetailsShipmentDetailsId_OrderDetailsUnitId",
                 table: "PromotionHistories",
                 columns: new[] { "OrderDetailsOrderId", "OrderDetailsShipmentDetailsId", "OrderDetailsUnitId" });
@@ -1018,14 +1014,19 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 column: "ShipmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShipmentDetailsUnit_UnitId",
+                table: "ShipmentDetailsUnit",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shipments_StaffId",
+                table: "Shipments",
+                column: "StaffId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Shipments_SupplierId",
                 table: "Shipments",
                 column: "SupplierId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Suppliers_StaffId",
-                table: "Suppliers",
-                column: "StaffId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VoucherHistories_VoucherId",
@@ -1051,6 +1052,9 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Branchs");
+
+            migrationBuilder.DropTable(
                 name: "Carts");
 
             migrationBuilder.DropTable(
@@ -1072,9 +1076,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 name: "ProductSupports");
 
             migrationBuilder.DropTable(
-                name: "ProductUnits");
-
-            migrationBuilder.DropTable(
                 name: "PromotionHistories");
 
             migrationBuilder.DropTable(
@@ -1082,6 +1083,9 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ReceiverInformations");
+
+            migrationBuilder.DropTable(
+                name: "ShipmentDetailsUnit");
 
             migrationBuilder.DropTable(
                 name: "VoucherHistories");
@@ -1102,13 +1106,13 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 name: "Support");
 
             migrationBuilder.DropTable(
-                name: "Units");
-
-            migrationBuilder.DropTable(
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
                 name: "PromotionProducts");
+
+            migrationBuilder.DropTable(
+                name: "Units");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -1135,13 +1139,10 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Suppliers");
-
-            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Branchs");
+                name: "Suppliers");
         }
     }
 }
