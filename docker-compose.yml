@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  pharmacymanagement_be.api:
+    image: ${DOCKER_REGISTRY-}pharmacymanagementbeapi
+    build:
+      context: .
+      dockerfile: PharmacyManagement_BE.API\Dockerfile
+    ports:
+      - "5000:80"

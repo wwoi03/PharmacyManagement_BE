@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyManagement_BE.API", "PharmacyManagement_BE.API\PharmacyManagement_BE.API.csproj", "{58B3704B-4945-49A2-934B-320ED538BD53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyManagement_BE.API", "PharmacyManagement_BE.API\PharmacyManagement_BE.API.csproj", "{58B3704B-4945-49A2-934B-320ED538BD53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyManagement_BE.Application", "PharmacyManagement_BE.Application\PharmacyManagement_BE.Application.csproj", "{E62DDDCD-A100-42B3-A82B-E52DAC202279}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyManagement_BE.Application", "PharmacyManagement_BE.Application\PharmacyManagement_BE.Application.csproj", "{E62DDDCD-A100-42B3-A82B-E52DAC202279}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyManagement_BE.Domain", "PharmacyManagement_BE.Domain\PharmacyManagement_BE.Domain.csproj", "{5632BC7D-35AA-4051-9E77-8D473BA8900C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyManagement_BE.Domain", "PharmacyManagement_BE.Domain\PharmacyManagement_BE.Domain.csproj", "{5632BC7D-35AA-4051-9E77-8D473BA8900C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmacyManagement_BE.Infrastructure", "PharmacyManagement_BE.Infrastructure\PharmacyManagement_BE.Infrastructure.csproj", "{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyManagement_BE.Infrastructure", "PharmacyManagement_BE.Infrastructure\PharmacyManagement_BE.Infrastructure.csproj", "{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6C0909DD-629E-458F-86B2-017A0D4F463A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C0909DD-629E-458F-86B2-017A0D4F463A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C0909DD-629E-458F-86B2-017A0D4F463A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C0909DD-629E-458F-86B2-017A0D4F463A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C0909DD-629E-458F-86B2-017A0D4F463A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
