@@ -62,7 +62,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CreateShipmentDetailsCommandRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateShipmentDetailsCommandRequest request)
         {
             try
             {
@@ -89,8 +89,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.ShipmentDetails.Controllers
             }
         }
 
-        [HttpPost("GetDetailsShipmentDetails")]
-        public async Task<IActionResult> GetDetailsShipmentDetails(Guid shipmentDetailsId)
+        [HttpGet("GetDetailsShipmentDetails")]
+        public async Task<IActionResult> GetDetailsShipmentDetails([FromQuery] Guid shipmentDetailsId)
         {
             try
             {
