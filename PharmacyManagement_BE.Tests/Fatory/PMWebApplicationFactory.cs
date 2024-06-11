@@ -17,12 +17,13 @@ namespace PharmacyManagement_BE.Tests.Fatory
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureServices(services =>
+            builder.ConfigureServices((context, services) =>
             {
                 // Register a new DBContext that will use our test connection string
-                string? connString = "Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True";
+                string? connString = context.Configuration.GetConnectionString("ConnectionString");
                 services.AddDbContext<PharmacyManagementContext>(option => option.UseSqlServer(connString));
             });
+
 
             builder.UseEnvironment("Development");
         }
