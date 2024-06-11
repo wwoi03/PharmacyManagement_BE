@@ -27,8 +27,4 @@
     <ProjectReference Include="..\PharmacyManagement_BE.Domain\PharmacyManagement_BE.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>
