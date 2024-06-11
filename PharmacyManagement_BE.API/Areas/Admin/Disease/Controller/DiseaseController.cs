@@ -64,8 +64,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
             }
         }
 
-        [HttpPost("DetailsDisease")]
-        public async Task<IActionResult> Details(GetDetailsDiseaseQueryRequest request)
+        [HttpGet("DetailsDisease")]
+        public async Task<IActionResult> Details([FromQuery]GetDetailsDiseaseQueryRequest request)
         {
             try
             {
@@ -92,8 +92,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
             }
         }
 
-        [HttpPost("SearchDisease")]
-        public async Task<IActionResult> Search(SearchDiseasesQueryRequest request)
+        [HttpGet("SearchDisease")]
+        public async Task<IActionResult> Search([FromQuery]SearchDiseasesQueryRequest request)
         {
             try
             {

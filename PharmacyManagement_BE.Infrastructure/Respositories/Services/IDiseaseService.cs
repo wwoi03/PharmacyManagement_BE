@@ -11,6 +11,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface IDiseaseService : IRepositoryService<Disease>
     {
          Task<bool> CheckExit(string name, string description);
-         Task<List<Disease>> SearchDisease(string KeyWord, CancellationToken cancellationToken);
+         Task<List<Disease>> Search(string KeyWord, CancellationToken cancellationToken);
     }
 }

@@ -36,7 +36,7 @@ namespace PharmacyManagement_BE.Application.Queries.SymptomFeatures.Handlers
                     return new ResponseErrorAPI<List<SymptomDTO>>(StatusCodes.Status400BadRequest, validation.Message);
 
                 // Tìm kiếm triệu chứng theo tên gần đúng
-                var listSymptom = await _entities.SymptomService.SearchSymptom(request.KeyWord, cancellationToken);
+                var listSymptom = await _entities.SymptomService.Search(request.KeyWord, cancellationToken);
                 
                 //Kiểm tra danh sách
                 if (listSymptom == null || listSymptom.Count == 0)

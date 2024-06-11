@@ -46,16 +46,16 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
 
                 //Kiểm tra trạng thái
                 if (status == false)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Cập nhật bệnh thất bại, vui lòng thử lại sau.");
+                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Cập nhật triệu chứng thất bại, vui lòng thử lại sau.");
 
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Cập nhật loại bệnh thành công.");
+                return new ResponseSuccessAPI<string>("Cập nhật triệu chứng thành công.");
             }
             catch (Exception)
             {
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
 
         }

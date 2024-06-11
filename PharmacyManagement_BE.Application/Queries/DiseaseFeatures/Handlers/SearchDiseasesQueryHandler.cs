@@ -38,7 +38,7 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 
 
                 // Tìm kiếm bệnh theo tên gần đúng
-                var listDisease = await _entities.DiseaseService.SearchDisease(request.KeyWord, cancellationToken);
+                var listDisease = await _entities.DiseaseService.Search(request.KeyWord, cancellationToken);
 
                 //Kiểm tra danh sách
                 if (listDisease == null || listDisease.Count == 0)

@@ -86,6 +86,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Symptom> Symptoms { get; set; }
+        public DbSet<Support> Supports { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<VoucherHistory> VoucherHistories { get; set; }

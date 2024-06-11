@@ -34,7 +34,7 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
                 if (!validation.IsSuccessed)
                     return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
-                // Không kiểm tra tên triệu chứng vì triệu trứng có thể có nhiều tên trùng nhau, kể cả trên 1 loại bệnh: (đau đầu: cảm giác, đau đầu: căng thẳng)
+                // Không kiểm tra tên triệu chứng vì triệu chứng có thể có nhiều tên trùng nhau, kể cả trên 1 loại bệnh: (đau đầu: cảm giác, đau đầu: căng thẳng)
                 var checkExit = await _entities.SymptomService.CheckExit(request.Name, request.Description);
 
                 if (checkExit)
@@ -43,21 +43,21 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
                 // Chuyển đổi request sang dữ liệu
                 var createSymptom = _mapper.Map<Symptom>(request);
 
-                // Tạo triệu trứng mới
+                // Tạo triệu chứngmới
                 var symptom = _entities.SymptomService.Create(createSymptom);
 
                 //Kiểm tra trạng thái
                 if (symptom == false)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm triệu trứng thất bại, vui lòng thử lại sau.");
+                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm triệu chứng thất bại, vui lòng thử lại sau.");
 
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Thêm triệu trứng thành công.");
+                return new ResponseSuccessAPI<string>("Thêm triệu chứng thành công.");
             }
             catch (Exception)
             {
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
 
         }

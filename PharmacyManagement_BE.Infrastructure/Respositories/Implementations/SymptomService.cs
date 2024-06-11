@@ -22,11 +22,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<bool> CheckExit(string name, string description)
         {
             return await Context.Symptoms.AnyAsync
-                (r => r.Name.ToUpper().Trim() == name.ToUpper().Trim() &&
-                r.Description.ToUpper().Trim() == description.ToUpper().Trim());
+                (r => r.Name.ToUpper().Replace(" ", "") == name.ToUpper().Replace(" ", "") &&
+                r.Description.ToUpper().Replace(" ", "") == description.ToUpper().Replace(" ", ""));
         }
 
-        public async Task<List<Symptom>> SearchSymptom(string KeyWord, CancellationToken cancellationToken)
+        public async Task<List<Symptom>> Search(string KeyWord, CancellationToken cancellationToken)
         {
             return await Context.Symptoms.Where
              (d => EF.Functions.Like(d.Name.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha

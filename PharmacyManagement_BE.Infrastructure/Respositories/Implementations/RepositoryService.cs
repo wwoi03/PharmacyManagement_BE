@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -66,5 +68,22 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 return false;
             }
         }
+
+        // Kệ Hào
+        //public async Task<bool> CheckExit<T>( List<Object> exit) where T : class
+        //{
+        //    var query = Context.Set<T>().AsQueryable(); // Bắt đầu với truy vấn cơ bản từ loại dữ liệu T
+
+        //    foreach (var item in exit)
+        //    {
+        //        string propertyName = nameof(item); // Lấy tên thuộc tính động
+        //        string propertyValue = item.ToString().ToUpper().Replace(" ", ""); // Lấy giá trị thuộc tính
+
+        //        // Thêm điều kiện vào truy vấn động
+        //        query = query.Where(r => EF.Functions.Like((EF.Property<string>(r, propertyName)), propertyValue));
+        //    }
+        //    return await query.AnyAsync();
+        //}
+
     }
 }

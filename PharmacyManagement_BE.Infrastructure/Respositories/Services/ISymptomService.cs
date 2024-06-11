@@ -13,6 +13,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     {
         //Kiểm tra tồn tại triệu chứng chưa: giống cả tên và mô tả
         Task<bool> CheckExit(string Name, string description);
-        Task<List<Symptom>> SearchSymptom(string KeyWord, CancellationToken cancellationToken);
+        Task<List<Symptom>> Search(string KeyWord, CancellationToken cancellationToken);
     }
 }

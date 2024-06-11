@@ -1162,7 +1162,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Support");
+                    b.ToTable("Supports");
                 });
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Symptom", b =>

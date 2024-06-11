@@ -62,6 +62,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Symptom.Controllers
             }
         }
 
+        [HttpGet("DetailsSymptom")]
+        public async Task<IActionResult> Details([FromQuery]GetDetailsSymptomQueryRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("GetSymptoms")]
         public async Task<IActionResult> GetSymptoms()
         {
@@ -76,8 +90,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Symptom.Controllers
             }
         }
 
-        [HttpPost("SearchSymptom")]
-        public async Task<IActionResult> Search(SearchSymptomQueryRequest request)
+        [HttpGet("SearchSymptom")]
+        public async Task<IActionResult> Search([FromQuery]SearchSymptomQueryRequest request)
         {
             try
             {
