@@ -1,14 +1,20 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.SupportFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.SymptomFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
+using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupportDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.SymptomDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,10 +62,27 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Shipment, CreateShipmentCommandRequest>().ReverseMap();
             #endregion Shipment
 
+<<<<<<< HEAD
             #region ShipmentDetails
             CreateMap<ShipmentDetails, UpdateShipmentDetailsCommandRequest>().ReverseMap();
             CreateMap<ShipmentDetails, ShipmentDetailsRequest>().ReverseMap();
             #endregion ShipmentDetails
+=======
+            #region Disease 
+            CreateMap<CreateDiseaseCommandRequest, Disease>().ReverseMap();
+            CreateMap<Disease, DiseaseDTO>().ReverseMap();
+            #endregion Disease
+
+            #region Symptom
+            CreateMap<CreateSymptomCommandRequest, Symptom>().ReverseMap();
+            CreateMap<Symptom, SymptomDTO>().ReverseMap();
+            #endregion Symptom
+
+            #region Support
+            CreateMap<CreateSupportCommandRequest, Support>().ReverseMap();
+            CreateMap<Support, SupportDTO>().ReverseMap();
+            #endregion Support
+>>>>>>> s1-hao-Symptoms-Features
         }
     }
 }
