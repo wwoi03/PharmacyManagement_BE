@@ -62,12 +62,11 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Shipment, CreateShipmentCommandRequest>().ReverseMap();
             #endregion Shipment
 
-<<<<<<< HEAD
             #region ShipmentDetails
             CreateMap<ShipmentDetails, UpdateShipmentDetailsCommandRequest>().ReverseMap();
             CreateMap<ShipmentDetails, ShipmentDetailsRequest>().ReverseMap();
             #endregion ShipmentDetails
-=======
+
             #region Disease 
             CreateMap<CreateDiseaseCommandRequest, Disease>().ReverseMap();
             CreateMap<Disease, DiseaseDTO>().ReverseMap();
@@ -82,7 +81,6 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<CreateSupportCommandRequest, Support>().ReverseMap();
             CreateMap<Support, SupportDTO>().ReverseMap();
             #endregion Support
->>>>>>> s1-hao-Symptoms-Features
         }
     }
 }
