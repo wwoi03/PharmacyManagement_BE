@@ -15,9 +15,6 @@ namespace PharmacyManagement_BE.Domain.Entities
         [StringLength(100)]
         public string Name { get; set; }
 
-        [StringLength(50)]
-        public string Unit { get; set; }
-
         [Required]
         [StringLength(50)]
         [Column(TypeName = "varchar(50)")]
