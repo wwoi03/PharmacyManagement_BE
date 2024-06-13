@@ -1,10 +1,39 @@
-version: '3.4'
+﻿# Khởi đầu khối định nghĩa các dịch vụ, mỗi dịch vụ sẽ tạo một container.
+services:  
+    # Tên của dịch vụ, sử dụng trong Docker Compose để quản lý.
+    pharmacymanagement_be.api:  
+        # Tên image sẽ được sử dụng hoặc tạo. Sử dụng biến môi trường DOCKER_REGISTRY nếu có, nếu không mặc định là rỗng.
+        image: ${DOCKER_REGISTRY-}pharmacymanagementbeapi 
+        # Định nghĩa cách Docker sẽ build image cho container này từ Dockerfile.
+        build:  
+            # Đường dẫn tới thư mục chứa Dockerfile, '.' đại diện cho thư mục hiện tại.
+            context: .  
+            # Đường dẫn tới Dockerfile cụ thể sẽ được sử dụng để build image.
+            dockerfile: PharmacyManagement_BE.API\Dockerfile  
+        # Định nghĩa cổng mạng từ máy host sẽ được ánh xạ tới cổng của container.
+        ports:  
+            # Ánh xạ cổng 5000 trên máy host tới cổng 80 trong container, cổng 80 thường là cổng mặc định cho web traffic.
+            - "5000:80"  
 
-services:
-  pharmacymanagement_be.api:
-    image: ${DOCKER_REGISTRY-}pharmacymanagementbeapi
-    build:
-      context: .
-      dockerfile: PharmacyManagement_BE.API\Dockerfile
-    ports:
-      - "5000:80"
+    pharmacymanagement_be.api.service:
+        image: tuandao8826/test-docker-swarm:dotnet-web-api
+        ports:
+            - "5000:80"
+        # Mô tả cấu hình của dịch vụ
+        deploy:
+            # Số lượng Container
+            replicas: 5
+            # Mô tả tài nguyên sử dụng cho các Container
+            resources:
+                # Giới hạn
+                limits:
+                    cpus: "0.5"
+                    memory: 150MB
+                # Yêu cầu tối thiểu của mỗi Container
+                reservations:
+                    cpus: "0.25"
+                    memory: 50MB
+            # Chính sách khởi động lại Container
+            restart_policy:
+                # Điều kiện khởi động lại
+                condition: on-failure

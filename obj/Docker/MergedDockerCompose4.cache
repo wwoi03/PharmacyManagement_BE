@@ -1,0 +1,22 @@
+name: dockercompose1702267468567987570
+services:
+  pharmacymanagement_be.api:
+    build:
+      context: C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE
+      dockerfile: PharmacyManagement_BE.API\Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: pharmacymanagementbeapi
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "5000"
+        protocol: tcp
+      - mode: ingress
+        target: 80
+        protocol: tcp
+networks:
+  default:
+    name: dockercompose1702267468567987570_default
