@@ -24,6 +24,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             this._dapperContext = dapperContext;
         }
 
+        #region Dapper
         public async Task<List<ListCategoryDTO>> GetChildrenCategories(Guid parentCategoryId)
         {
             var parameters = new DynamicParameters();
@@ -86,6 +87,14 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             return (await _dapperContext.GetConnection.QueryAsync<ListCategoryDTO>(sql)).ToList();
         }
+        #endregion Dapper
+
+
+        #region EF & LinQ
+        public async Task<Category> GetCategoryByNameOrCode(string name, string codeCategory)
+        {
+            return _context.Categories.FirstOrDefault(i => i.Name.Equals(name) || i.CodeCategory.Equals(codeCategory));
+        }
 
         public async Task<List<ListCategoryDTO>> SearchCategories(string contentStr)
         {
@@ -108,8 +117,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     CodeCategory = g.Key.CodeCategory,
                     CategoryName = g.Key.Name,
                     NumberChildren = g.Count(x => x != null)  // Chỉ đếm những childrenCategory không phải là null
-                 })
+                })
                 .ToList();
         }
+        #endregion EF & LinQ
     }
 }

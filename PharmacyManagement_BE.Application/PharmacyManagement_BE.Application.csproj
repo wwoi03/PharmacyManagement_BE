@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\CategoryFeatures\Handlers\" />
-    <Folder Include="Commands\CategoryFeatures\Requests\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PharmacyManagement_BE.Infrastructure\PharmacyManagement_BE.Infrastructure.csproj" />
   </ItemGroup>
 

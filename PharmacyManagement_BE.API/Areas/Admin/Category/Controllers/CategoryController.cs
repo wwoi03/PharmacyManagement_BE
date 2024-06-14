@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PharmacyManagement_BE.Application.Commands.CategoryFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.CategoryFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
@@ -66,6 +67,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
             try
             {
                 var result = await _mediator.Send(new GetHierarchicalCategoriesQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody] CreateCategoryCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
                 return Ok(result);
             }
             catch (Exception ex)

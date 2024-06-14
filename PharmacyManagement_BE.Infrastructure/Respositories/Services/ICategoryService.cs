@@ -15,5 +15,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<List<ListCategoryDTO>> GetParentCategories();
         Task<List<ListCategoryDTO>> SearchCategories(string contentStr);
         Task<List<ListHierarchicalCategoryDTO>> GetHierarchicalCategories();
+        Task<Category> GetCategoryByNameOrCode(string name, string codeCategory);
     }
 }
