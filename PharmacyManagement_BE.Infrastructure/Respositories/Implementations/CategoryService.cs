@@ -86,5 +86,30 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             return (await _dapperContext.GetConnection.QueryAsync<ListCategoryDTO>(sql)).ToList();
         }
+
+        public async Task<List<ListCategoryDTO>> SearchCategories(string contentStr)
+        {
+            return _context.Categories
+                .Where(i => i.Name.Contains(contentStr) || i.CodeCategory.Equals(contentStr.Trim()))
+                .GroupJoin(_context.Categories,
+                    parentCategory => parentCategory.Id,
+                    childrenCategory => childrenCategory.ParentCategoryId,
+                    (parentCategory, childrenCategory) => new { parentCategory, childrenCategory })
+                .SelectMany(
+                    temp => temp.childrenCategory.DefaultIfEmpty(), // Xử lý trường hợp không có childrenCategory nào
+                    (parent, child) => new { parent.parentCategory, child })
+                .GroupBy(
+                    temp => new { temp.parentCategory.Id, temp.parentCategory.CodeCategory, temp.parentCategory.Name },
+                    temp => temp.child)
+                .OrderBy(g => g.Key.Name)
+                .Select(g => new ListCategoryDTO
+                {
+                    Id = g.Key.Id,
+                    CodeCategory = g.Key.CodeCategory,
+                    CategoryName = g.Key.Name,
+                    NumberChildren = g.Count(x => x != null)  // Chỉ đếm những childrenCategory không phải là null
+                 })
+                .ToList();
+        }
     }
 }

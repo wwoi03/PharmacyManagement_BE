@@ -46,6 +46,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
             }
         }
 
+        [HttpGet("SearchCategories")]
+        public async Task<IActionResult> SearchCategories([FromQuery] string contentStr)
+        {
+            try
+            {
+                var result = await _mediator.Send(new SearchCategoriesQueryRequest { ContentStr = contentStr });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("GetHierarchicalCategories")]
         public async Task<IActionResult> GetHierarchicalCategories()
         {
