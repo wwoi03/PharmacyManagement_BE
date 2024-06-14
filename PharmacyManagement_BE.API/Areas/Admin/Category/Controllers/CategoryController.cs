@@ -88,5 +88,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] UpdateCategoryCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -120,6 +120,16 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 })
                 .ToList();
         }
+
+        public async Task<Category> GetCategoryByName(string name)
+        {
+            return _context.Categories.FirstOrDefault(i => i.Name.Equals(name));
+        }
+
+        public async Task<Category> GetCategoryByCode(string code)
+        {
+            return _context.Categories.FirstOrDefault(i => i.CodeCategory.Equals(code));
+        }
         #endregion EF & LinQ
     }
 }

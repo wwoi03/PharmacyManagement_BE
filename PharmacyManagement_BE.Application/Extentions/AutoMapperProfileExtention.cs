@@ -85,6 +85,7 @@ namespace PharmacyManagement_BE.Application.Extentions
 
             #region Category
             CreateMap<Category, CreateCategoryCommandRequest>().ReverseMap();
+            CreateMap<Category, UpdateCategoryCommandRequest>().ReverseMap();
             #endregion Category
         }
     }

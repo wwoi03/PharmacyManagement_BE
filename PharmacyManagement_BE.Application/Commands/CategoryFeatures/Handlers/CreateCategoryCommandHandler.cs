@@ -39,12 +39,12 @@ namespace PharmacyManagement_BE.Application.Commands.CategoryFeatures.Handlers
                 var result = _entities.CategoryService.Create(category);
 
                 if (!result)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Hiện tại không thể loại sản phẩm này.");
+                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Hiện tại không thể thêm loại sản phẩm này.");
 
                 // SaveChange
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm loại sản phẩm mới thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm mới loại sản phẩm có mã {category.CodeCategory} thành công.");
             }
             catch (Exception ex)
             {
