@@ -102,5 +102,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete([FromQuery] Guid? categoryId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new DeleteCategoryCommandRequest { CategoryId = categoryId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
