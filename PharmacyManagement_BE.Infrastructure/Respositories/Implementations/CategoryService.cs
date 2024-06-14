@@ -91,7 +91,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
 
         #region EF & LinQ
-        public async Task<Category> GetCategoryByNameOrCode(string name, string codeCategory)
+        public async Task<Category?> GetCategoryByNameOrCode(string name, string codeCategory)
         {
             return _context.Categories.FirstOrDefault(i => i.Name.Equals(name) || i.CodeCategory.Equals(codeCategory));
         }
@@ -121,14 +121,30 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 .ToList();
         }
 
-        public async Task<Category> GetCategoryByName(string name)
+        public async Task<Category?> GetCategoryByName(string name)
         {
             return _context.Categories.FirstOrDefault(i => i.Name.Equals(name));
         }
 
-        public async Task<Category> GetCategoryByCode(string code)
+        public async Task<Category?> GetCategoryByCode(string code)
         {
             return _context.Categories.FirstOrDefault(i => i.CodeCategory.Equals(code));
+        }
+
+        public async Task<DetailsCategoryDTO?> GetCategoryDetails(Guid categoryId)
+        {
+            return _context.Categories
+                .Where(c => c.Id == categoryId)
+                .Select(c => new DetailsCategoryDTO
+                {
+                    Id = c.Id,
+                    CodeCategory = c.CodeCategory,
+                    CategoryName = c.Name,
+                    ParentCategoryId = c.ParentCategoryId,
+                    ParentCategoryName = _context.Categories.FirstOrDefault(i => i.Id == c.ParentCategoryId).Name,
+                    NumberChildren = _context.Categories.Count(child => child.ParentCategoryId == c.Id)  // Đếm số lượng danh mục con
+                })
+                .FirstOrDefault();
         }
         #endregion EF & LinQ
     }
