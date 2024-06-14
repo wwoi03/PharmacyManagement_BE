@@ -33,5 +33,10 @@ namespace PharmacyManagement_BE.Domain.Entities
         public VoucherType DiscountType { get; set; }
 
         public int Quantity { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Column(TypeName = "varchar(50)")]
+        public string CodeVoucher { get; set; }
     }
 }

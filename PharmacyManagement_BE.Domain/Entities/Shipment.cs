@@ -33,5 +33,10 @@ namespace PharmacyManagement_BE.Domain.Entities
         [Required]
         public Guid? StaffId { get; set; }
         public Staff Staff { get; set; } = null!;
+
+        [Required]
+        [StringLength(50)]
+        [Column(TypeName = "varchar(50)")]
+        public string CodeShipment { get; set; }
     }
 }

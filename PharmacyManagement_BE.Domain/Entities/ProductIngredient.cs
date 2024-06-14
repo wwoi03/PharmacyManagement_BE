@@ -18,5 +18,8 @@ namespace PharmacyManagement_BE.Domain.Entities
         public Ingredient Ingredient { get; set; } = null!;
 
         public decimal Content { get; set; }
+
+        public Guid UnitId { get; set; }
+        public Unit Unit { get; set; } = null!;
     }
 }

@@ -82,5 +82,10 @@ namespace PharmacyManagement_BE.Domain.Entities
         public Guid? StaffId { get; set; }
 
         public Guid? BranchId { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [Column(TypeName = "varchar(50)")]
+        public string CodeOrder { get; set; }
     }
 }

@@ -337,6 +337,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CodeCategory")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
@@ -409,6 +414,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CodeDisease")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
@@ -450,6 +460,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CodeIngredient")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
@@ -457,11 +472,6 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
@@ -491,6 +501,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
                     b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CodeOrder")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -667,7 +682,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<string>("CodeMedicine")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Contraindication")
                         .HasColumnType("nvarchar(max)");
@@ -788,9 +803,14 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<decimal>("Content")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("ProductId", "IngredientId");
 
                     b.HasIndex("IngredientId");
+
+                    b.HasIndex("UnitId");
 
                     b.ToTable("ProductIngredients");
                 });
@@ -815,6 +835,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CodePromotion")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -1000,6 +1025,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<Guid>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CodeShipment")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
@@ -1117,6 +1147,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("CodeSupplier")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
@@ -1149,6 +1184,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CodeSupport")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
@@ -1166,7 +1206,7 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Support");
+                    b.ToTable("Supports");
                 });
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.Symptom", b =>
@@ -1174,6 +1214,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CodeSymptom")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -1209,6 +1254,16 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("NameDetails")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UnitType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
@@ -1222,6 +1277,11 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CodeVoucher")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -1497,9 +1557,17 @@ namespace PharmacyManagement_BE.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PharmacyManagement_BE.Domain.Entities.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Ingredient");
 
                     b.Navigation("Product");
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("PharmacyManagement_BE.Domain.Entities.ProductSupport", b =>
