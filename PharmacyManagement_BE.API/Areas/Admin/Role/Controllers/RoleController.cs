@@ -20,13 +20,12 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Role.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        [Authorize()]
+        [HttpGet("Get")]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var result = _mediator.Send(new GetAllRoleQueryRequest());
+                var result = await _mediator.Send(new GetRolesQueryRequest());
                 return Ok(result);
             }
             catch (Exception ex)
@@ -35,13 +34,40 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Role.Controllers
             }
         }
 
-        [HttpPost]
-        //[Authorize()]
-        public async Task<IActionResult> Post(CreateRoleCommandRequest request)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(CreateRoleCommandRequest request)
         {
             try
             {
-                var result = _mediator.Send(request);
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update(CreateRoleCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(CreateRoleCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
                 return Ok(result);
             }
             catch (Exception ex)
