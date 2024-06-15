@@ -12,7 +12,5 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests
     public class GetDetailsDiseaseQueryRequest : IRequest<ResponseAPI<DiseaseDTO>>
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
     }
 }
