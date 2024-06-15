@@ -29,6 +29,9 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests
             if (string.IsNullOrWhiteSpace(CodeDisease))
                 return new ValidationNotifyError<string>("Vui lòng nhập mã bệnh.");
 
+            if (!CheckInput.IsAlphaNumeric(CodeDisease))
+                return new ValidationNotifyError<string>("Mã bệnh không hợp lệ, vui lòng kiểm tra lại");
+
             return new ValidationNotifySuccess<string>();
         }
     }
