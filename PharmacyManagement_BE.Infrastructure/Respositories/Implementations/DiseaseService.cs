@@ -45,8 +45,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         }
         public async Task<List<Disease>> Search(string KeyWord, CancellationToken cancellationToken)
         {
-             return await Context.Diseases.Where
-             (d => EF.Functions.Like(d.Name.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
+            return await Context.Diseases.Where
+             (d => EF.Functions.Like(d.CodeDisease.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
+             EF.Functions.Like(d.Name.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
              EF.Functions.Like(d.Description.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%"))
              .ToListAsync(cancellationToken);
         }

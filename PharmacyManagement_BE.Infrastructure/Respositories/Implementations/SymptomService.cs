@@ -40,9 +40,10 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<List<Symptom>> Search(string KeyWord, CancellationToken cancellationToken)
         {
             return await Context.Symptoms.Where
-             (d => EF.Functions.Like(d.Name.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
-             EF.Functions.Like(d.Description.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%"))
-             .ToListAsync(cancellationToken);
+              (d => EF.Functions.Like(d.CodeSymptom.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
+              EF.Functions.Like(d.Name.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
+              EF.Functions.Like(d.Description.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%"))
+              .ToListAsync(cancellationToken);
         }
     }
 }

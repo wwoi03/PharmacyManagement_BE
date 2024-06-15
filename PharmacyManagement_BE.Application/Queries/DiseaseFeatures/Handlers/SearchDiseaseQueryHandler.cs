@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
 using PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
-using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -15,18 +13,18 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
 {
-    internal class SearchDiseasesQueryHandler : IRequestHandler<SearchDiseasesQueryRequest, ResponseAPI<List<DiseaseDTO>>>
+    internal class SearchDiseaseQueryHandler : IRequestHandler<SearchDiseaseQueryRequest, ResponseAPI<List<DiseaseDTO>>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public SearchDiseasesQueryHandler(IPMEntities entities, IMapper mapper)
+        public SearchDiseaseQueryHandler(IPMEntities entities, IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;
         }
 
-        public async Task<ResponseAPI<List<DiseaseDTO>>> Handle(SearchDiseasesQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<List<DiseaseDTO>>> Handle(SearchDiseaseQueryRequest request, CancellationToken cancellationToken)
         {
             try
             {

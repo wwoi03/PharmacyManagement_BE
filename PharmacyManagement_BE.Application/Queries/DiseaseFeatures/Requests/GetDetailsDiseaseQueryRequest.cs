@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using System;
 using System.Collections.Generic;

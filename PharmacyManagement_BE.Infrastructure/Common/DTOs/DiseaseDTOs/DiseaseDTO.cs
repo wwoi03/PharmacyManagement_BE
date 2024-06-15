@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses
+namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs
 {
     public class DiseaseDTO
     {
