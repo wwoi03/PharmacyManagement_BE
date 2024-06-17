@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.DTOs.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.ProductFeatures.Handlers
 {
-    internal class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, ResponseAPI<AllProductQueryResponse>>
+    internal class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, ResponseAPI<List<ListProductDTO>>>
     {
         private readonly IPMEntities _entities;
 
@@ -20,11 +22,20 @@ namespace PharmacyManagement_BE.Application.Queries.ProductFeatures.Handlers
             this._entities = entities;
         }
 
-        public async Task<ResponseAPI<AllProductQueryResponse>> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<List<ListProductDTO>>> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
-            var products = await _entities.ProductService.GetAll();
+            try
+            {
+                // Lấy danh sách sản phẩm
+                var response = await _entities.ProductService.GetProducts();
 
-            throw new NotImplementedException();
+                return new ResponseSuccessAPI<List<ListProductDTO>>(StatusCodes.Status200OK, response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new ResponseErrorAPI<List<ListProductDTO>>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
+            }
         }
     }
 }

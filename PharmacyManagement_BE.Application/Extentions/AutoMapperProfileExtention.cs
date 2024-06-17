@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using PharmacyManagement_BE.Application.Commands.CategoryFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Requests;
@@ -81,6 +82,11 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<CreateSupportCommandRequest, Support>().ReverseMap();
             CreateMap<Support, SupportDTO>().ReverseMap();
             #endregion Support
+
+            #region Category
+            CreateMap<Category, CreateCategoryCommandRequest>().ReverseMap();
+            CreateMap<Category, UpdateCategoryCommandRequest>().ReverseMap();
+            #endregion Category
         }
     }
 }
