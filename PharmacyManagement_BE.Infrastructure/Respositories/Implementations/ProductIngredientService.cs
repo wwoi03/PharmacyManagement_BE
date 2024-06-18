@@ -12,9 +12,24 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class ProductIngredientService : RepositoryService<ProductIngredient>, IProductIngredientService
     {
+        private readonly PharmacyManagementContext _context;
+
         public ProductIngredientService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<bool> CreateRange(List<ProductIngredient> productIngredients)
+        {
+            try
+            {
+                _context.ProductIngredients.AddRange(productIngredients);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
