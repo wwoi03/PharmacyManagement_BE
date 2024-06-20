@@ -87,5 +87,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         [StringLength(50)]
         [Column(TypeName = "varchar(50)")]
         public string CodeOrder { get; set; }
+
+        public DateTime ReceiptDate { get; set; }
     }
 }
