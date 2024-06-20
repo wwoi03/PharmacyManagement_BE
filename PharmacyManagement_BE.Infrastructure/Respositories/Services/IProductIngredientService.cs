@@ -10,6 +10,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IProductIngredientService : IRepositoryService<ProductIngredient>
     {
-
+        Task<bool> CreateRange(List<ProductIngredient> productIngredients);
     }
 }

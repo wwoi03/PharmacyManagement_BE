@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using PharmacyManagement_BE.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
             this._next = next;
         }
 
-        public async Task Invoke(HttpContext context, UserManager<ApplicationUser> userManager)
+        public async Task Invoke(HttpContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             // Kiểm tra Token
             if (!context.Request.Headers.ContainsKey("Authorization"))
@@ -30,6 +31,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
 
             var token = context.Request.Headers["Authorization"].ToString().Split(' ').Last();
 
+            // Kiểm tra Token rỗng hoặc có trong Blacklist
             if (string.IsNullOrEmpty(token))
             {
                 await _next(context);
@@ -58,6 +60,36 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
                 {
                     context.Response.StatusCode = 401;
                     return;
+                }
+                else if (user != null) // Kiểm ra token đã bị hủy
+                {
+                    var expiredRefreshToken = int.Parse(configuration["JWT:RefreshTokenValidityInDays"]);
+                    var expiredToken = int.Parse(configuration["JWT:TokenValidityInMinutes"]);
+
+                    var expirationClaim = identity.FindFirst("exp");
+
+                    if (expirationClaim != null && long.TryParse(expirationClaim.Value, out var exp))
+                    {
+                        // Chuyển đổi giá trị exp từ giây sang DateTime theo múi giờ Việt Nam
+                        var expirationDateTime = DateTimeOffset.FromUnixTimeSeconds(exp).ToOffset(TimeSpan.FromHours(7));
+
+                        var userTokenOriginTimeString = (expirationDateTime - TimeSpan.FromMinutes(expiredToken))
+                            .ToString("yyyy-MM-dd HH:mm:ss");
+                        var userRefreshTokenOriginTimeString = (user.RefreshTokenExpiryTime.Value - TimeSpan.FromDays(expiredRefreshToken))
+                            .ToString("yyyy-MM-dd HH:mm:ss"); ;
+
+                        var userTokenOriginTime = DateTime.ParseExact(userTokenOriginTimeString, "yyyy-MM-dd HH:mm:ss", null);
+                        var userRefreshTokenOriginTime = DateTime.ParseExact(userRefreshTokenOriginTimeString, "yyyy-MM-dd HH:mm:ss", null);
+
+                        // (Kiểm thời gian token - thời gian token sử dụng trong hệ thống) < (Thời gian RefreshToken - Thời gian sử dụng RefreshToken trong hệ thống)														
+                        if (userTokenOriginTime < userRefreshTokenOriginTime)
+                        {
+                            // Lưu Token vào Blacklist
+
+                            context.Response.StatusCode = 401;
+                            return;
+                        }
+                    }
                 }
             }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Application.Commands.CategoryFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
@@ -30,6 +31,7 @@ namespace PharmacyManagement_BE.Application.Extentions
         {
             #region Product
             CreateMap<Product, AllProductQueryResponse>();
+            CreateMap<Product, CreateProductCommandRequest>().ReverseMap();
             #endregion Product 
 
             #region Customer

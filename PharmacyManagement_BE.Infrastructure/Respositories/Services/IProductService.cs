@@ -13,5 +13,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     {
         Task<List<ListProductDTO>> SearchProducts(string ContentStr, string CategoryName);
         Task<List<ListProductDTO>> GetProducts();
+        Task<Product?> GetProductByCodeMedicineOrName(string codeMedicine, string name);
     }
 }
