@@ -44,10 +44,10 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return Convert.ToBase64String(randomNumber);
         }
 
-        public async Task<DateTime> GetRefreshTokenExpiryTime()
+        public async Task<DateTime> GetRefreshTokenExpiryTime(DateTime time)
         {
             var expired = _configuration["JWT:RefreshTokenValidityInDays"] ?? "";
-            return DateTime.Now.AddDays(Convert.ToInt32(expired));
+            return time.AddDays(int.Parse(expired));
         }
 
         public async Task<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token)
@@ -70,13 +70,13 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return principal;
         }
 
-        public async Task<JwtSecurityToken> GetToken(List<Claim> authClaims)
+        public async Task<JwtSecurityToken> GetToken(List<Claim> authClaims, DateTime time)
         {
             var authSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddMinutes(int.Parse(_configuration["JWT:TokenValidityInMinutes"])),
+                expires: time.AddMinutes(int.Parse(_configuration["JWT:TokenValidityInMinutes"])),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
             return token;

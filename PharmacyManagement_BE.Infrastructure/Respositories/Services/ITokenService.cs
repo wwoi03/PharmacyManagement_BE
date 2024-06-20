@@ -12,11 +12,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface ITokenService
     {
-        Task<JwtSecurityToken> GetToken(List<Claim> authClaims);
+        Task<JwtSecurityToken> GetToken(List<Claim> authClaims, DateTime time);
         Task<string> GenerateRefreshToken();
         Task<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token);
         Task<List<Claim>> CreateAuthClaim(ApplicationUser user);
-        Task<DateTime> GetRefreshTokenExpiryTime();
+        Task<DateTime> GetRefreshTokenExpiryTime(DateTime time);
         Task AddToBlacklistAsync(string token, DateTime expiry);
         Task<bool> IsBlacklistedAsync(string token);
     }
