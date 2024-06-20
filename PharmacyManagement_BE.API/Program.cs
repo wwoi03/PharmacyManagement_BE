@@ -14,6 +14,15 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy => policy.WithOrigins("http://localhost:4200") // Thay đổi theo origin của bạn
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
+
+
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -54,6 +63,8 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/Customer/swagger.json", "Customer API");
         options.SwaggerEndpoint("/swagger/Admin/swagger.json", "Admin API");
     });
+
+    app.UseCors("AllowSpecificOrigin"); // Sử dụng CORS
 }
 
 app.UseRouting();

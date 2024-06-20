@@ -55,6 +55,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 })
                 .ToList();
         }
+
+        public async Task<Product?> GetProductByCodeMedicineOrName(string codeMedicine, string name)
+        {
+            return _context.Products.FirstOrDefault(i => i.CodeMedicine.Equals(codeMedicine) || i.Name.Equals(name));
+        }
         #endregion EF & LinQ
     }
 }

@@ -85,19 +85,9 @@ namespace PharmacyManagement_BE.Application.Features.ConfigFeatures.Handlers
                     }*/
 
                     // Tạo token
-                    var accessToken = await _tokenService.GetToken(authClaims);
+                    DateTime time = DateTime.Now;
+                    var accessToken = await _entities.TokenService.GetToken(authClaims, time);
                     var token = new JwtSecurityTokenHandler().WriteToken(accessToken);
-
-                    // Tạo refesh token Cập nhật RefeshToken vào Database
-                    var refreshToken = await _tokenService.GenerateRefreshToken();
-                    var expired = _configuration["JWT:RefreshTokenValidityInDays"] ?? "";
-                    user.RefreshToken = refreshToken;
-                    user.RefreshTokenExpiryTime = DateTime.Now.AddDays(Convert.ToInt32(expired));
-
-                    _entities.CustomerService.Update((Customer)user);
-
-                    // SaveChange
-                    _entities.SaveChange();
 
                     // Response
                     var response = _mapper.Map<SignInResponse>(user);

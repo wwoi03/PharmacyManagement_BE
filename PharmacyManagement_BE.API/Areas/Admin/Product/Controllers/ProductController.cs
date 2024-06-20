@@ -61,5 +61,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(CreateProductCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
