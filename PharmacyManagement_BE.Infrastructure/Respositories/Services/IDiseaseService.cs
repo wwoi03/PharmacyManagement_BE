@@ -10,7 +10,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IDiseaseService : IRepositoryService<Disease>
     {
-         Task<bool> CheckExit(string name, string description);
+         Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid?Id = null);
          Task<List<Disease>> Search(string KeyWord, CancellationToken cancellationToken);
     }
 }

@@ -31,19 +31,20 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
             {
                 //Kiểm tra dữ liệu đầu vào
                 var validation = request.IsValid();
+
                 if (!validation.IsSuccessed)
                     return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
-                // Không kiểm tra tên triệu chứng vì triệu chứng có thể có nhiều tên trùng nhau, kể cả trên 1 loại bệnh: (đau đầu: cảm giác, đau đầu: căng thẳng)
-                var checkExit = await _entities.SymptomService.CheckExit(request.Name, request.Description);
+                // Không kiểm tra tên triệu chứng
+                var checkExit = await _entities.SymptomService.CheckExit(request.CodeSymptom, request.Name);
 
-                if (checkExit)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Triệu chứng đã tồn tại.");
+                if (!checkExit.IsSuccessed)
+                    return checkExit;
 
                 // Chuyển đổi request sang dữ liệu
                 var createSymptom = _mapper.Map<Symptom>(request);
 
-                // Tạo triệu chứngmới
+                // Tạo triệu chứng mới
                 var symptom = _entities.SymptomService.Create(createSymptom);
 
                 //Kiểm tra trạng thái

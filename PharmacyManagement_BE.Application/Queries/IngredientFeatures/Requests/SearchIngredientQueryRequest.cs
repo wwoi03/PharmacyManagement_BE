@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.IngredientDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using System;
@@ -7,11 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests
+namespace PharmacyManagement_BE.Application.Queries.IngredientFeatures.Requests
 {
-    public class SearchDiseasesQueryRequest : IRequest<ResponseAPI<List<DiseaseDTO>>>
+    public class SearchIngredientQueryRequest : IRequest<ResponseAPI<List<IngredientDTO>>>
     {
         public string KeyWord { get; set; }
 

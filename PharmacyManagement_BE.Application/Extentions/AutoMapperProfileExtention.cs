@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Application.Commands.CategoryFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
+<<<<<<< HEAD
 using PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests;
+=======
+using PharmacyManagement_BE.Application.Commands.IngredientFeatures.Requests;
+>>>>>>> s1-hao-Ingredients-features
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
@@ -12,8 +16,9 @@ using PharmacyManagement_BE.Application.Commands.SymptomFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
-using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.IngredientDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupportDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.SymptomDTOs;
@@ -85,10 +90,17 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Support, SupportDTO>().ReverseMap();
             #endregion Support
 
+<<<<<<< HEAD
             #region Category
             CreateMap<Category, CreateCategoryCommandRequest>().ReverseMap();
             CreateMap<Category, UpdateCategoryCommandRequest>().ReverseMap();
             #endregion Category
+=======
+            #region Ingredient
+            CreateMap<CreateIngredientCommandRequest, Ingredient>().ReverseMap();
+            CreateMap<Ingredient, IngredientDTO>().ReverseMap();
+            #endregion Ingredient
+>>>>>>> s1-hao-Ingredients-features
         }
     }
 }

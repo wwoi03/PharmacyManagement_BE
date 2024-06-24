@@ -37,9 +37,9 @@ namespace PharmacyManagement_BE.Application.Queries.SupportFeatures.Handlers
                 // Tìm kiếm hỗ trợ của thuốc theo tên gần đúng
                 var listSupport = await _entities.SupportService.Search(request.KeyWord, cancellationToken);
 
-                //Kiểm tra danh sách
-                if (listSupport == null || listSupport.Count == 0)
-                    return new ResponseErrorAPI<List<SupportDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy hỗ trợ của thuốc");
+                ////Kiểm tra danh sách
+                //if (listSupport == null || listSupport.Count == 0)
+                //    return new ResponseErrorAPI<List<SupportDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy hỗ trợ của thuốc");
 
                 //Gán giá trị response
                 var response = _mapper.Map<List<SupportDTO>>(listSupport);

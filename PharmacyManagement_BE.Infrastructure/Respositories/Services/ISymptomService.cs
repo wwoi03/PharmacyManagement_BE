@@ -12,7 +12,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface ISymptomService : IRepositoryService<Symptom>
     {
         //Kiểm tra tồn tại triệu chứng chưa: giống cả tên và mô tả
-        Task<bool> CheckExit(string Name, string description);
+        Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid? Id = null);
         Task<List<Symptom>> Search(string KeyWord, CancellationToken cancellationToken);
     }
 }

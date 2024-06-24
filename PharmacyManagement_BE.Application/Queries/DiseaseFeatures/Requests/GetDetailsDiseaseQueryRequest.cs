@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,5 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests
     public class GetDetailsDiseaseQueryRequest : IRequest<ResponseAPI<DiseaseDTO>>
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
     }
 }
