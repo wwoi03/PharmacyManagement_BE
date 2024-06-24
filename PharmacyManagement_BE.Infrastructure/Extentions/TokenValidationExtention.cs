@@ -76,7 +76,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
                         var userTokenOriginTimeString = (expirationDateTime - TimeSpan.FromMinutes(expiredToken))
                             .ToString("yyyy-MM-dd HH:mm:ss");
                         var userRefreshTokenOriginTimeString = (user.RefreshTokenExpiryTime.Value - TimeSpan.FromDays(expiredRefreshToken))
-                            .ToString("yyyy-MM-dd HH:mm:ss"); ;
+                            .ToString("yyyy-MM-dd HH:mm:ss"); 
 
                         var userTokenOriginTime = DateTime.ParseExact(userTokenOriginTimeString, "yyyy-MM-dd HH:mm:ss", null);
                         var userRefreshTokenOriginTime = DateTime.ParseExact(userRefreshTokenOriginTimeString, "yyyy-MM-dd HH:mm:ss", null);

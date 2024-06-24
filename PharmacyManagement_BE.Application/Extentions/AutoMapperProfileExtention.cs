@@ -2,11 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Application.Commands.CategoryFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
-<<<<<<< HEAD
 using PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests;
-=======
 using PharmacyManagement_BE.Application.Commands.IngredientFeatures.Requests;
->>>>>>> s1-hao-Ingredients-features
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
@@ -90,17 +87,14 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Support, SupportDTO>().ReverseMap();
             #endregion Support
 
-<<<<<<< HEAD
             #region Category
             CreateMap<Category, CreateCategoryCommandRequest>().ReverseMap();
             CreateMap<Category, UpdateCategoryCommandRequest>().ReverseMap();
             #endregion Category
-=======
             #region Ingredient
             CreateMap<CreateIngredientCommandRequest, Ingredient>().ReverseMap();
             CreateMap<Ingredient, IngredientDTO>().ReverseMap();
             #endregion Ingredient
->>>>>>> s1-hao-Ingredients-features
         }
     }
 }

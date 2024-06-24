@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
 {
-    internal class GetHelpdesksQueryHandler : IRequestHandler<GetHelpdesksQueryRequest, ResponseAPI<List<CommentDTO>>>>
+    internal class GetHelpdesksQueryHandler : IRequestHandler<GetHelpdesksQueryRequest, ResponseAPI<List<CommentDTO>>>
     {
         public Task<ResponseAPI<List<CommentDTO>>> Handle(GetHelpdesksQueryRequest request, CancellationToken cancellationToken)
         {
