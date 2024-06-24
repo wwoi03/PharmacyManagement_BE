@@ -14,6 +14,10 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests
     {
         public TimeType type { get; set; } = TimeType.week;
 
+        public StatisticRevenueQueryRequest(TimeType type)
+        {
+            this.type = type;
+        }
         public bool ValidateTimeType(TimeType timeType)
         {
             return Enum.IsDefined(typeof(TimeType), timeType);

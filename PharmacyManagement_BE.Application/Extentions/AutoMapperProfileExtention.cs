@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -91,10 +92,15 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Category, CreateCategoryCommandRequest>().ReverseMap();
             CreateMap<Category, UpdateCategoryCommandRequest>().ReverseMap();
             #endregion Category
+
             #region Ingredient
             CreateMap<CreateIngredientCommandRequest, Ingredient>().ReverseMap();
             CreateMap<Ingredient, IngredientDTO>().ReverseMap();
             #endregion Ingredient
+
+            #region Comment
+            CreateMap<Comment, CommentDTO>().ReverseMap();
+            #endregion Comment
         }
     }
 }

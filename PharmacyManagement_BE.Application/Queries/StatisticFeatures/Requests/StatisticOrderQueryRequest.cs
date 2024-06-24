@@ -12,6 +12,10 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests
 {
     public class StatisticOrderQueryRequest : IRequest<ResponseAPI<List<StatisticDTO>>>
     {
+        public StatisticOrderQueryRequest(TimeType type)
+        {
+            this.type = type;
+        }
         public TimeType type { get; set; } = TimeType.week;
 
         public bool ValidateTimeType(TimeType timeType)

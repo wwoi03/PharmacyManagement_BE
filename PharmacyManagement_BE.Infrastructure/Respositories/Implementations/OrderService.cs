@@ -2,6 +2,8 @@
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Types;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
@@ -238,6 +240,25 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             }
             return listStatistic;
+        }
+
+        //Lấy danh sách yêu cầu hủy đơn
+        public async Task<List<OrderDTO>> GetRequestCancellations()
+        {
+            var parameters = new DynamicParameters();
+            var listOrder = new List<OrderDTO>();
+            parameters.Add("@Status", OrderType.RequestCancelOrder);
+
+            string sql = @"
+                   SELECT *
+                    FROM Orders 
+                    WHERE Status = @Status";
+
+            // Thực hiện truy vấn và lấy kết quả
+
+            listOrder = (await _dapperContext.GetConnection.QueryAsync<OrderDTO>(sql, parameters)).AsList<OrderDTO>();
+
+            return listOrder;
         }
         #endregion Dapper
     }
