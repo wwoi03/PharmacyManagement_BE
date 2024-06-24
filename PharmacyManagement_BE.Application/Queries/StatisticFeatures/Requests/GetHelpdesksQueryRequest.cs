@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
 
 namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests
 {
-    public class GetHelpdesksQueryRequest : IRequest<ResponseAPI<string>>
+    public class GetHelpdesksQueryRequest : IRequest<ResponseAPI<List<CommentDTO>>>
     {
     }
 }
