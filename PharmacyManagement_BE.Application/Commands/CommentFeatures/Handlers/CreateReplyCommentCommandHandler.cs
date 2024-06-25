@@ -42,6 +42,8 @@ namespace PharmacyManagement_BE.Application.Commands.CommentFeatures.Handlers
                     return new ResponseErrorAPI<CommentDTO>(StatusCodes.Status404NotFound, "Không tìm thấy bình luận.");
 
                 // Chuyển đổi request sang dữ liệu
+                var createReply = new 
+
                 var createDisease = _mapper.Map<Disease>(request);
 
                 // Tạo bệnh mới
