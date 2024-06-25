@@ -26,7 +26,7 @@ namespace PharmacyManagement_BE.Application.Queries.CommentFeatures.Handlers
             try
             {
                 //Lấy danh sách cmt
-                var listComment = await _entities.CommentService.GetCustomerCommentQAs();
+                var listComment = await _entities.CommentService.GetCustomerCommentQANoReplys();
 
                 //Trả về danh sách
                 return new ResponseSuccessAPI<List<CommentDTO>>(StatusCodes.Status200OK, "Danh sách bình luận hỏi đáp", listComment);

@@ -16,40 +16,46 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
 {
     internal class StatisticQueryHandler : IRequestHandler<StatisticQueryRequest, ResponseAPI<GeneralStatisticsDTO>>
     {
-        private readonly IMediator _mediator;
+        private readonly IPMEntities _entities;
 
-        public StatisticQueryHandler (IMediator mediator)
+        public StatisticQueryHandler (IPMEntities entities)
         {
-            this._mediator = mediator;
+            this._entities = entities;
         }
 
         public async Task<ResponseAPI<GeneralStatisticsDTO>> Handle(StatisticQueryRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                var statisticOrderTask = _mediator.Send(new StatisticOrderQueryRequest(request.Order));
-                var statisticRevenueTask = _mediator.Send(new StatisticRevenueQueryRequest(request.Revenue));
-                var getCancellationsTask = _mediator.Send(new GetCancellationsQueryRequest());
-                var getCustomerCommentQAsTask = _mediator.Send(new GetCustomerCommentQAsQueryRequest());
-                var getCustomerCommentEvaluatesTask = _mediator.Send(new GetCustomerCommentEvaluatesRequest());
+                //Kiểm tra tồn tại
+                var validation = request.IsValid((int)request.Order,(int) request.Revenue);
 
+                if (!validation.IsSuccessed)
+                    return new ResponseErrorAPI<GeneralStatisticsDTO>(StatusCodes.Status400BadRequest, validation.Message);
 
-                // Chờ tất cả các task hoàn thành bất đồng bộ
-                await Task.WhenAll(statisticOrderTask, statisticRevenueTask, getCancellationsTask, getCustomerCommentQAsTask, getCustomerCommentEvaluatesTask);
+                // Đơn hàng
+                var order = await _entities.OrderService.StatisticOrder(request.Order);
 
-                // Lấy kết quả từ các task
+                //Doanh thu
+                var revenue = await _entities.OrderService.StatisticOrder(request.Revenue);
+
+                //Lấy danh sách cmt
+                var listRequestCancellation = await _entities.OrderService.GetRequestCancellations();
+
+                //Lấy danh sách cmt hỏi đáp
+                var listCommentQA = await _entities.CommentService.GetCustomerCommentQANoReplys();
+
+                //Lấy danh sách cmt đánh giá
+                var listCommentEvaluate = await _entities.CommentService.GetCustomerCommentEvaluateNoReplys();
+
                 var generalStatistics = new GeneralStatisticsDTO
                 {
-                    StatisticOrder = await statisticOrderTask,
-                    StatisticRevenue = await statisticRevenueTask,
-                    GetCancellations = await getCancellationsTask,
-                    GetCustomerCommentQAs = await getCustomerCommentQAsTask,
-                    GetCustomerCommentEvaluates = await getCustomerCommentEvaluatesTask
+                    StatisticRevenue = revenue,
+                    StatisticOrder = order,
+                    GetCancellations = listRequestCancellation,
+                    GetCustomerCommentEvaluates = listCommentEvaluate,
+                    GetCustomerCommentQAs = listCommentQA
                 };
-
-                //Kiểm tra lấy dữ liệu
-                if(generalStatistics == null)
-                    return new ResponseErrorAPI<GeneralStatisticsDTO>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
 
                 return new ResponseSuccessAPI<GeneralStatisticsDTO>(StatusCodes.Status200OK, "Thống kê", generalStatistics);
             }

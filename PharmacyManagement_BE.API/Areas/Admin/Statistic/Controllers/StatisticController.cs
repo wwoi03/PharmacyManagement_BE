@@ -32,7 +32,5 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Statistic.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-      
     }
 }

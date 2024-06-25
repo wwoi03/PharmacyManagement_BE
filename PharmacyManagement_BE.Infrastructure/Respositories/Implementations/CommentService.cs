@@ -23,15 +23,17 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
     public class CommentService : RepositoryService<Comment>, ICommentService
     {
         private readonly PMDapperContext _dapperContext;
+        private readonly IMapper _mapper;
 
-        public CommentService(PharmacyManagementContext context, PMDapperContext dapperContext) : base(context)
+        public CommentService(PharmacyManagementContext context, PMDapperContext dapperContext, IMapper mapper) : base(context)
         {
             this._dapperContext = dapperContext;
+            this._mapper = mapper;
         }
 
         #region Dapper
         //Lấy danh sách cmt hỏi đáp
-        public async Task<List<CommentDTO>> GetCustomerCommentQAs()
+        public async Task<List<CommentDTO>> GetCustomerCommentQANoReplys()
         {
             var parameters = new DynamicParameters();
             var listComment = new List<CommentDTO>();
@@ -39,10 +41,10 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             parameters.Add("@CommentType", CommentType.CommentQA);
 
             string sql = @"
-                   SELECT *
+                   SELECT Id, CustomerId, StaffId, ProductId, Rating, CommentText, ReplayCommentId, CommentDate, CommentType
                     FROM Comments AS cm1
                     WHERE cm1.CustomerId IS NOT NULL 
-                    AND CommentType = @CommentType
+                    AND cm1.CommentType = @CommentType
                       AND cm1.CustomerId NOT IN (
                         SELECT cm2.ReplayCommentId
                         FROM Comments AS cm2)";
@@ -55,27 +57,27 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
            
         }
 
-        public async Task<List<CommentDTO>> GetCustomerCommentEvaluates()
+        public async Task<List<CommentDTO>> GetCustomerCommentEvaluateNoReplys()
         {
             var parameters = new DynamicParameters();
-            var listComment = new List<CommentDTO>();
+            var listComment = new List<Comment>();
 
             parameters.Add("@CommentType", CommentType.CommentEvaluate);
 
             string sql = @"
-                   SELECT *
+                   SELECT  Id, CustomerId, StaffId, ProductId, Rating, CommentText, ReplayCommentId, CommentDate, CommentType
                     FROM Comments AS cm1
                     WHERE cm1.CustomerId IS NOT NULL 
-                    AND CommentType = @CommentType
+                    AND cm1.CommentType = @CommentType
                       AND cm1.CustomerId NOT IN (
                         SELECT cm2.ReplayCommentId
                         FROM Comments AS cm2)";
 
             // Thực hiện truy vấn và lấy kết quả
 
-            listComment = (await _dapperContext.GetConnection.QueryAsync<CommentDTO>(sql, parameters)).ToList();
+            listComment = (await _dapperContext.GetConnection.QueryAsync<Comment>(sql, parameters)).ToList();
 
-            return listComment;
+            return _mapper.Map<List<CommentDTO>>(listComment);
 
         }
 

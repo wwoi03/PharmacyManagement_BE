@@ -11,8 +11,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface ICommentService : IRepositoryService<Comment>
     {
-        Task<List<CommentDTO>> GetCustomerCommentQAs();
-        Task<List<CommentDTO>> GetCustomerCommentEvaluates();
+        Task<List<CommentDTO>> GetCustomerCommentQANoReplys();
+        Task<List<CommentDTO>> GetCustomerCommentEvaluateNoReplys();
         Task<Comment> SetUpCommentReply(Comment replyComment, Comment convertComment, Guid userId);
     }
 }

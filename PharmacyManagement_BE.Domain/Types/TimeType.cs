@@ -8,6 +8,8 @@ namespace PharmacyManagement_BE.Domain.Types
 {
     public enum TimeType
     {
-       week, month, year
+       week = 1,
+       month = 2,
+       year =3
     }
 }

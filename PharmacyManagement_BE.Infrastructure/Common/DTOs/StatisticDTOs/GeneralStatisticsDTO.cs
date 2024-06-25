@@ -11,10 +11,10 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs
 {
     public class GeneralStatisticsDTO
     {
-        public ResponseAPI<List<StatisticDTO>> StatisticRevenue { get; set; }
-        public ResponseAPI<List<StatisticDTO>> StatisticOrder { get; set; }
-        public ResponseAPI<List<CommentDTO>> GetCustomerCommentQAs { get; set; }
-        public ResponseAPI<List<CommentDTO>> GetCustomerCommentEvaluates { get; set; }
-        public ResponseAPI<List<OrderDTO>> GetCancellations { get;set; }
+        public List<StatisticDTO> StatisticRevenue { get; set; }
+        public List<StatisticDTO> StatisticOrder { get; set; }
+        public List<CommentDTO> GetCustomerCommentQAs { get; set; }
+        public List<CommentDTO> GetCustomerCommentEvaluates { get; set; }
+        public List<OrderDTO> GetCancellations { get;set; }
     }
 }
