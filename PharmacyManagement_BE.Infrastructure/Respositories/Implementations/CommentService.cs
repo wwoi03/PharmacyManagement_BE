@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using AutoMapper;
+using Dapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
@@ -22,12 +23,10 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
     public class CommentService : RepositoryService<Comment>, ICommentService
     {
         private readonly PMDapperContext _dapperContext;
-        private readonly IPMEntities _entities;
 
-        public CommentService(PharmacyManagementContext context, PMDapperContext dapperContext, IPMEntities entities) : base(context)
+        public CommentService(PharmacyManagementContext context, PMDapperContext dapperContext) : base(context)
         {
             this._dapperContext = dapperContext;
-            this._entities = entities;
         }
 
         #region Dapper
@@ -74,13 +73,13 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             // Thực hiện truy vấn và lấy kết quả
 
-            listComment = (await _dapperContext.GetConnection.QueryAsync<CommentDTO>(sql, parameters)).AsList<CommentDTO>();
+            listComment = (await _dapperContext.GetConnection.QueryAsync<CommentDTO>(sql, parameters)).ToList();
 
             return listComment;
 
         }
 
-        public async Task<Comment> SetUpCommentReply(Comment replyComment, Comment convertComment)
+        public async Task<Comment> SetUpCommentReply(Comment replyComment, Comment convertComment, Guid userId)
         {
             //set các giá trị còn thiếu cho cmt
             convertComment.CommentDate = DateTime.Now;
@@ -88,15 +87,12 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             convertComment.ProductId = replyComment.ProductId;
             convertComment.Product = replyComment.Product;
 
-            //Kiểm tra định danh
-            var userId = await _entities.AccountService.GetAccountId();
-
             if (await Context.Staffs.AnyAsync(r => r.Id == userId))
                 convertComment.StaffId = userId;
-            else
+            else if(await Context.Customers.AnyAsync(r => r.Id == userId))
             {
                 convertComment.CustomerId = userId;
-                convertComment.Customer = await _entities.CustomerService.GetById(userId);
+                convertComment.Customer = await Context.Customers.FirstOrDefaultAsync(r => r.Id == userId);
             }
 
             return convertComment;

@@ -19,8 +19,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Statistic.Controllers
             this._mediator = mediator;
         }
 
-        [HttpGet("StatisticOrder")]
-        public async Task<IActionResult> StatisticOrder([FromQuery] StatisticOrderQueryRequest request)
+        [HttpGet("Statistic")]
+        public async Task<IActionResult> Statistic([FromQuery] StatisticQueryRequest request)
         {
             try
             {
@@ -33,18 +33,6 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Statistic.Controllers
             }
         }
 
-        [HttpGet("StatisticRevenue")]
-        public async Task<IActionResult> StatisticRevenue([FromQuery] StatisticOrderQueryRequest request)
-        {
-            try
-            {
-                var result = await _mediator.Send(request);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+      
     }
 }

@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Commands.CommentFeatures.Requests;
 using PharmacyManagement_BE.Domain.Entities;
-using PharmacyManagement_BE.Infrastructure.Common.DTOs.strings;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
@@ -44,8 +43,11 @@ namespace PharmacyManagement_BE.Application.Commands.CommentFeatures.Handlers
                 // Chuyển đổi request sang dữ liệu bảng cmt
                 var convertComment = _mapper.Map<Comment>(request);
 
+                //Lấy id user
+                var userId = await _entities.AccountService.GetAccountId();
+
                 // Tạo bình luận mới
-                var createComment = await _entities.CommentService.SetUpCommentReply(replyComment, convertComment);
+                var createComment = await _entities.CommentService.SetUpCommentReply(replyComment, convertComment, userId);
 
                 var comment = _entities.CommentService.Create(createComment);
 

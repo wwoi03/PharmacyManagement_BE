@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Queries.CommentFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
-using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;

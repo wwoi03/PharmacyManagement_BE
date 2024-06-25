@@ -103,6 +103,7 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Comment, CommentDTO>().ReverseMap();
             CreateMap<Comment, CreateReplyCommentCommandRequest>().ReverseMap();
             #endregion Comment
+
         }
     }
 }
