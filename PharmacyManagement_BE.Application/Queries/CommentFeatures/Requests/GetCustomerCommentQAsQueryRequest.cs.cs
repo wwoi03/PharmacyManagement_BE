@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using MediatR;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
 
-namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests
+namespace PharmacyManagement_BE.Application.Queries.CommentFeatures.Requests
 {
-    public class GetCustomerCommentsQueryRequest : IRequest<ResponseAPI<List<CommentDTO>>>
+    public class GetCustomerCommentQAsQueryRequest : IRequest<ResponseAPI<List<CommentDTO>>>
     {
     }
 }

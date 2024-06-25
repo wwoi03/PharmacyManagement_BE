@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using PharmacyManagement_BE.Application.Queries.CommentFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests;
 using PharmacyManagement_BE.Domain.Types;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs;
@@ -29,10 +30,12 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
                 var statisticOrderTask = _mediator.Send(new StatisticOrderQueryRequest(request.Order));
                 var statisticRevenueTask = _mediator.Send(new StatisticRevenueQueryRequest(request.Revenue));
                 var getCancellationsTask = _mediator.Send(new GetCancellationsQueryRequest());
-                var getCustomerCommentsTask = _mediator.Send(new GetCustomerCommentsQueryRequest());
+                var getCustomerCommentQAsTask = _mediator.Send(new GetCustomerCommentQAsQueryRequest());
+                var getCustomerCommentEvaluatesTask = _mediator.Send(new GetCustomerCommentEvaluatesRequest());
+
 
                 // Chờ tất cả các task hoàn thành bất đồng bộ
-                await Task.WhenAll(statisticOrderTask, statisticRevenueTask, getCancellationsTask, getCustomerCommentsTask);
+                await Task.WhenAll(statisticOrderTask, statisticRevenueTask, getCancellationsTask, getCustomerCommentQAsTask, getCustomerCommentEvaluatesTask);
 
                 // Lấy kết quả từ các task
                 var generalStatistics = new GeneralStatisticsDTO
@@ -40,7 +43,8 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
                     StatisticOrder = await statisticOrderTask,
                     StatisticRevenue = await statisticRevenueTask,
                     GetCancellations = await getCancellationsTask,
-                    GetCustomerComments = await getCustomerCommentsTask
+                    GetCustomerCommentQAs = await getCustomerCommentQAsTask,
+                    GetCustomerCommentEvaluates = await getCustomerCommentEvaluatesTask
                 };
 
                 //Kiểm tra lấy dữ liệu

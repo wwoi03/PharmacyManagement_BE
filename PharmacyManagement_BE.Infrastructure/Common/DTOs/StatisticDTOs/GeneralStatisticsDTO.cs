@@ -13,7 +13,8 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs
     {
         public ResponseAPI<List<StatisticDTO>> StatisticRevenue { get; set; }
         public ResponseAPI<List<StatisticDTO>> StatisticOrder { get; set; }
-        public ResponseAPI<List<CommentDTO>> GetCustomerComments { get; set; }
+        public ResponseAPI<List<CommentDTO>> GetCustomerCommentQAs { get; set; }
+        public ResponseAPI<List<CommentDTO>> GetCustomerCommentEvaluates { get; set; }
         public ResponseAPI<List<OrderDTO>> GetCancellations { get;set; }
     }
 }
