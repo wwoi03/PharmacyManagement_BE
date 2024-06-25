@@ -28,10 +28,10 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
             try
             {
                 //Kiểm tra tồn tại
-                var validation = request.IsValid((int)request.Order,(int) request.Revenue);
+                //var validation = request.IsValid(request.Order, request.Revenue);
 
-                if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<GeneralStatisticsDTO>(StatusCodes.Status400BadRequest, validation.Message);
+                //if (!validation.IsSuccessed)
+                //    return new ResponseErrorAPI<GeneralStatisticsDTO>(StatusCodes.Status400BadRequest, validation.Message);
 
                 // Đơn hàng
                 var order = await _entities.OrderService.StatisticOrder(request.Order);
