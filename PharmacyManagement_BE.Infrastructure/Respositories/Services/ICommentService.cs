@@ -13,5 +13,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     {
         Task<List<CommentDTO>> GetCustomerCommentQAs();
         Task<List<CommentDTO>> GetCustomerCommentEvaluates();
+        Task<Comment> SetUpCommentReply(Comment replyComment, Comment convertComment);
     }
 }

@@ -12,9 +12,9 @@ using System.Xml.Linq;
 
 namespace PharmacyManagement_BE.Application.Commands.CommentFeatures.Requests
 {
-    public class CreateReplyCommentCommandRequest : IRequest<ResponseAPI<CommentDTO>>
+    public class CreateReplyCommentCommandRequest : IRequest<ResponseAPI<string>>
     {
-        public Guid ReplyCommentId { get; set; }
+        public Guid ReplayCommentId { get; set; }
         public string CommentText { get; set; }
 
         public ValidationNotify<string> IsValid()
