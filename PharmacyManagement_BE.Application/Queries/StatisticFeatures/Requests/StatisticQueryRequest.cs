@@ -16,12 +16,12 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests
         public TimeType Order { get; set; } = TimeType.week;
         public TimeType Revenue { get; set; } = TimeType.week;
 
-        public ValidationNotify<string> IsValid(int Order, int Revenue)
+        public ValidationNotify<string> IsValid()
         {
-            if (!Enum.IsDefined(typeof(TimeType), Order.GetType))
+            if (!Enum.IsDefined(typeof(TimeType), Order))
                 return new ValidationNotifyError<string>("Vui lòng chọn thống kê đơn hàng.");
 
-            if (!Enum.IsDefined(typeof(TimeType), Revenue.GetType))
+            if (!Enum.IsDefined(typeof(TimeType), Revenue))
                 return new ValidationNotifyError<string>("Vui lòng chọn thống kê doanh thu.");
 
             return new ValidationNotifySuccess<string>();

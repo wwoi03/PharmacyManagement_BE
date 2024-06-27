@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
 using PharmacyManagement_BE.Application.Commands.CommentFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -103,6 +104,10 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Comment, CommentDTO>().ReverseMap();
             CreateMap<Comment, CreateReplyCommentCommandRequest>().ReverseMap();
             #endregion Comment
+
+            #region Order
+            CreateMap<Order, OrderDTO>().ReverseMap();
+            #endregion Order
 
         }
     }

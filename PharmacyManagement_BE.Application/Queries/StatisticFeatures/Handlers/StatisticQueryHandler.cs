@@ -27,11 +27,12 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
         {
             try
             {
+               
                 //Kiểm tra tồn tại
-                //var validation = request.IsValid(request.Order, request.Revenue);
+                var validation = request.IsValid();
 
-                //if (!validation.IsSuccessed)
-                //    return new ResponseErrorAPI<GeneralStatisticsDTO>(StatusCodes.Status400BadRequest, validation.Message);
+                if (!validation.IsSuccessed)
+                    return new ResponseErrorAPI<GeneralStatisticsDTO>(StatusCodes.Status400BadRequest, validation.Message);
 
                 // Đơn hàng
                 var order = await _entities.OrderService.StatisticOrder(request.Order);
@@ -39,7 +40,7 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
                 //Doanh thu
                 var revenue = await _entities.OrderService.StatisticOrder(request.Revenue);
 
-                //Lấy danh sách cmt
+                //Lấy danh sách yêu cầu hủy
                 var listRequestCancellation = await _entities.OrderService.GetRequestCancellations();
 
                 //Lấy danh sách cmt hỏi đáp
