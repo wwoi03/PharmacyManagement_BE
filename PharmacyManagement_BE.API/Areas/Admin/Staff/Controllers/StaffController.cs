@@ -23,7 +23,6 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
 
         [HttpGet("GetStaffs")]
         //[Authorize(Policy = "StaffManager")]
-        [Authorize()]
         public async Task<IActionResult> Get()
         {
             try
