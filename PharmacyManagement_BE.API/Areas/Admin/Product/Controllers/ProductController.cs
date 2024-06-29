@@ -10,7 +10,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
     [ApiExplorerSettings(GroupName = "Admin")]
     [Route("api/[area]/[controller]")]
     [ApiController]
-    [Area("Admin/Product")]
+    [Area("Admin")]
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;

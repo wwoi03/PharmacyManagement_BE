@@ -30,6 +30,7 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
             {
                 var productExists = await _entities.ProductService.GetProductByCodeMedicineOrName(request.CodeMedicine, request.Name);
                 
+                // Kiểm tra sản phẩm tồn tại
                 if (productExists != null)
                 {
                     // Kiểm tra CodeMedicine tồn tại
@@ -106,6 +107,11 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
                         ProductId = product.Id,
                         SupportId = item
                     }).ToList();
+
+                    var createProductSupportsResult = await _entities.ProductSupportService.CreateRange(productSupports);
+
+                    if (!createProductSupportsResult)
+                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm hỗ trợ sản phẩm.");
                 }
 
                 // Thêm loại bệnh
@@ -116,6 +122,11 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
                         ProductId = product.Id,
                         DiseaseId = item
                     }).ToList();
+
+                    var createProductDiseasesResult = await _entities.ProductDiseaseService.CreateRange(productDiseases);
+
+                    if (!createProductDiseasesResult)
+                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm loại bệnh sản phẩm.");
                 }
 
                 // Thêm hình ảnh sản phẩm

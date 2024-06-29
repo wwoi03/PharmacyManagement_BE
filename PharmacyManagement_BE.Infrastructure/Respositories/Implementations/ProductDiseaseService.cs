@@ -12,9 +12,24 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class ProductDiseaseService : RepositoryService<ProductDisease>, IProductDiseaseService
     {
+        private readonly PharmacyManagementContext _context;
+
         public ProductDiseaseService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<bool> CreateRange(List<ProductDisease> productDiseases)
+        {
+            try
+            {
+                await _context.ProductDiseases.AddRangeAsync(productDiseases);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

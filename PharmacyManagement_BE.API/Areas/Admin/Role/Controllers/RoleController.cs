@@ -8,7 +8,7 @@ using PharmacyManagement_BE.Application.Queries.RoleFeatures.Requests;
 namespace PharmacyManagement_BE.API.Areas.Admin.Role.Controllers
 {
     [ApiExplorerSettings(GroupName = "Admin")]
-    [Route("api/[controller]")]
+    [Route("api/[area]/[controller]")]
     [Area("Admin")]
     [ApiController]
     public class RoleController : ControllerBase
