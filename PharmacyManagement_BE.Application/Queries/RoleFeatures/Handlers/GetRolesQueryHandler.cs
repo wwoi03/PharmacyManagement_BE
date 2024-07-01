@@ -32,6 +32,7 @@ namespace PharmacyManagement_BE.Application.Queries.RoleFeatures.Handlers
                 List<ListRoleDTO> response = roles.Select(i => new ListRoleDTO
                 {
                     RoleName = i.Name,
+                    RoleNormalizedName = i.NormalizedName,
                 }).ToList();
 
                 return new ResponseSuccessAPI<List<ListRoleDTO>>(StatusCodes.Status200OK, response);
