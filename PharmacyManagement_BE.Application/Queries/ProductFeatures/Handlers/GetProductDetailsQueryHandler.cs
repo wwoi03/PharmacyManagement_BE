@@ -14,25 +14,16 @@ namespace PharmacyManagement_BE.Application.Queries.ProductFeatures.Handlers
 {
     internal class GetProductDetailsQueryHandler : IRequestHandler<GetProductDetailsQueryRequest, ResponseAPI<DetailsProductDTO>>
     {
-        private readonly PMEntities _entities;
+        private readonly IPMEntities _entities;
 
-        public GetProductDetailsQueryHandler(PMEntities entities)
+        public GetProductDetailsQueryHandler(IPMEntities entities)
         {
             this._entities = entities;
         }
 
         public async Task<ResponseAPI<DetailsProductDTO>> Handle(GetProductDetailsQueryRequest request, CancellationToken cancellationToken)
         {
-            try
-            {
-
-                return new ResponseSuccessAPI<DetailsProductDTO>(StatusCodes.Status200OK);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return new ResponseErrorAPI<DetailsProductDTO>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
-            }
+            throw new NotImplementedException();
         }
     }
 }

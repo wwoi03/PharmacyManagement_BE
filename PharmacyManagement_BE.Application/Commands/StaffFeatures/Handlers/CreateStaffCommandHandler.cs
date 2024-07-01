@@ -54,10 +54,13 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 }
 
                 // Kiểm tra chi nhánh
-                var branchExists = await _entities.BranchService.GetById(request.BranchId);
+                if (request.BranchId != null)
+                {
+                    var branchExists = await _entities.BranchService.GetById(request.BranchId);
 
-                if (branchExists == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Chi nhánh không tồn tại.");
+                    if (branchExists == null)
+                        return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Chi nhánh không tồn tại.");
+                }
 
                 // Tạo tài khoản
                 var staff = _mapper.Map<Staff>(request);
