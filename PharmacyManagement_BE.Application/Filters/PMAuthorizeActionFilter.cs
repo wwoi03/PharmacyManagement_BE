@@ -58,7 +58,7 @@ namespace PharmacyManagement_BE.Application.Filters
                 {
                     context.HttpContext.Response.ContentType = "application/json";
                     context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                    context.Result = new JsonResult(new ResponseErrorAPI<string>(StatusCodes.Status401Unauthorized,"Bạn không có quyền truy cập tài nguyên này", null));
+                    context.Result = new JsonResult(new ResponseErrorAPI<string>(StatusCodes.Status401Unauthorized,"Bạn không có quyền truy cập tài nguyên này"));
 
                     return;
                 }
@@ -76,7 +76,7 @@ namespace PharmacyManagement_BE.Application.Filters
                 {
                     context.HttpContext.Response.ContentType = "application/json";
                     context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                    context.Result = new JsonResult(new ResponseErrorAPI<string>(StatusCodes.Status401Unauthorized, "Bạn không có quyền truy cập tài nguyên này", null));
+                    context.Result = new JsonResult(new ResponseErrorAPI<string>(StatusCodes.Status401Unauthorized, "Bạn không có quyền truy cập tài nguyên này"));
 
                     return;
                 }

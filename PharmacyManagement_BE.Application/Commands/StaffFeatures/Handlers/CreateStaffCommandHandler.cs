@@ -37,20 +37,28 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, validation.Message);
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
 
                 // Kiểm tra tên đăng nhập tồn tại
                 var userExists = await _userManager.FindByNameAsync(request.UserName);
 
                 if (userExists != null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Tên đăng nhập đã tồn tại");
+                {
+                    validation.Obj = "userName";
+                    validation.Message = "Tên đăng nhập đã tồn tại";
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
+                }
 
                 // Kiểm tra quyền hợp lệ
                 foreach (var roleName in request.Roles)
                 {
                     var role = await _roleManager.FindByNameAsync(roleName);
                     if (role == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, $"Vai trò với ID {roleName} không tồn tại.");
+                    {
+                        validation.Obj = "roles";
+                        validation.Message = $"Vai trò với ID {roleName} không tồn tại.";
+                        return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
+                    }
                 }
 
                 // Kiểm tra chi nhánh
@@ -58,8 +66,8 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 {
                     var branchExists = await _entities.BranchService.GetById(request.BranchId);
 
-                    if (branchExists == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Chi nhánh không tồn tại.");
+                    if (branchExists == null) 
+                        return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, "Chi nhánh không tồn tại.");
                 }
 
                 // Tạo tài khoản
@@ -67,7 +75,9 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 var result = await _userManager.CreateAsync(staff, request.Password);
 
                 if (!result.Succeeded)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, result.Errors.First().Description);
+                {
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, result.Errors.First().Description);
+                }
 
                 // Thêm role cho tài khoản
                 await _userManager.AddToRolesAsync(staff, request.Roles);
