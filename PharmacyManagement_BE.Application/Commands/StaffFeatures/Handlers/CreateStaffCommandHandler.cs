@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 if (userExists != null)
                 {
                     validation.Obj = "userName";
-                    validation.Message = "Tên đăng nhập đã tồn tại";
+                    validation.Message = "Tên đăng nhập đã tồn tại.";
                     return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
                 }
 
@@ -76,7 +77,9 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
 
                 if (!result.Succeeded)
                 {
-                    return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, result.Errors.First().Description);
+                    validation = ValidUser(result);
+
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
                 }
 
                 // Thêm role cho tài khoản
@@ -89,6 +92,59 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 Console.WriteLine(ex);
                 return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
+        }
+
+        private ValidationNotify<string> ValidUser(IdentityResult result)
+        {
+            ValidationNotify<string> validation = new ValidationNotify<string>();
+
+            foreach (var error in result.Errors)
+            {
+                switch (error.Code)
+                {
+                    case "DuplicateEmail":
+                        // Xử lý lỗi email trùng lặp
+                        validation.Obj = "email";
+                        validation.Message = "Email đã có người dùng đăng ký.";
+                        break;
+
+                    case "DuplicateUserName":
+                        // Xử lý lỗi tên người dùng trùng lặp
+                        validation.Obj = "userName";
+                        validation.Message = "Tên người dùng đã có người dùng đăng ký.";
+                        break;
+
+                    case "InvalidEmail":
+                        // Xử lý lỗi email không hợp lệ
+                        validation.Obj = "email";
+                        validation.Message = "Email không hợp lệ.";
+                        break;
+
+                    case "InvalidUserName":
+                        // Xử lý lỗi tên người dùng không hợp lệ
+                        validation.Obj = "userName";
+                        validation.Message = "Tên người dùng không hợp lệ.";
+                        break;
+
+                    case "PasswordTooShort":
+                    case "PasswordRequiresNonAlphanumeric":
+                    case "PasswordRequiresDigit":
+                    case "PasswordRequiresLower":
+                    case "PasswordRequiresUpper":
+                    case "PasswordRequiresUniqueChars":
+                        validation.Obj = "password";
+                        validation.Message = "Mật khẩu phải từ 8 ký tự trở lên, có ít nhất 1 chữ hoa, 1 chữ thường và 1 ký tự đặc biệt.";
+                        break;
+
+                    default:
+                        // Xử lý các lỗi khác nếu có
+                        validation.IsSuccessed = false;
+                        validation.Message = "Đã xảy ra lỗi trong quá trình đăng ký.";
+                        break;
+                }
+            }
+
+            return validation;
         }
     }
 }
