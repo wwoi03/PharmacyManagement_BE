@@ -10,7 +10,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
     [ApiExplorerSettings(GroupName = "Admin")]
     [Route("api/[area]/[controller]")]
     [ApiController]
-    [Area("Admin/Product")]
+    [Area("Admin")]
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -21,7 +21,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
         }
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete(Guid productId)
+        public async Task<IActionResult> Delete([FromBody] Guid productId)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
         }
 
         [HttpGet("SearchProduct")]
-        public async Task<IActionResult> SearchProduct(Guid productId)
+        public async Task<IActionResult> SearchProduct([FromQuery] Guid productId)
         {
             try
             {
@@ -63,7 +63,21 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CreateProductCommandRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateProductCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] UpdateProductCommandRequest request)
         {
             try
             {

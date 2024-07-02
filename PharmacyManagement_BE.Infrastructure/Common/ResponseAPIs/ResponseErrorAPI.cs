@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,11 +32,12 @@ namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
             Obj = obj;
         }
 
-        public ResponseErrorAPI(int code, string message)
+        public ResponseErrorAPI(int code, string message, ValidationNotify<T> validationNotify)
         {
             IsSuccessed = false;
             Code = code;
             Message = message;
+            ValidationNotify = validationNotify;
         }
 
         public ResponseErrorAPI(int code, T obj)
@@ -51,6 +53,20 @@ namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
             Code = code;    
             Message = message;
             Obj = obj;
+        }
+
+        public ResponseErrorAPI(int code, ValidationNotify<T> validationNotify)
+        {
+            IsSuccessed = false;
+            Code = code;
+            ValidationNotify = validationNotify;
+        }
+
+        public ResponseErrorAPI(int code, string message)
+        {
+            IsSuccessed = false;
+            Code = code;
+            Message = message;
         }
     }
 }

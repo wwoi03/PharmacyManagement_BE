@@ -1,15 +1,15 @@
-﻿using MediatR;
-using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+﻿using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductIngredientDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests
+namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs
 {
-    public class CreateProductCommandRequest : IRequest<ResponseAPI<string>>
+    public class DetailsProductDTO
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string CodeMedicine { get; set; }
         public string? Specifications { get; set; }
@@ -29,7 +29,7 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests
         public Guid? CategoryId { get; set; }
         public string Image { get; set; }
         public List<string> Images { get; set; }
-        public List<Guid>? ProductIngredients { get; set; }
+        public List<DetailsProductIngredientDTO>? ProductIngredients { get; set; }
         public List<Guid>? ProductSupports { get; set; }
         public List<Guid>? ProductDiseases { get; set; }
     }
