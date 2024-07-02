@@ -13,23 +13,23 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
 {
-    internal class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, ResponseAPI<string>>
+    internal class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest, ResponseAPI<string>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
 
-        public CreateProductCommandHandler(IPMEntities entities, IMapper mapper)
+        public UpdateProductCommandHandler(IPMEntities entities, IMapper mapper)
         {
             this._entities = entities;
             this._mapper = mapper;
         }
 
-        public async Task<ResponseAPI<string>> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<string>> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 var productExists = await _entities.ProductService.GetProductByCodeMedicineOrName(request.CodeMedicine, request.Name);
-                
+
                 // Kiểm tra sản phẩm tồn tại
                 if (productExists != null)
                 {

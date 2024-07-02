@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,6 @@ namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
         public string Message { get; set; } = string.Empty;
 
         public T? Obj { get; set; }
+        public ValidationNotify<T> ValidationNotify { get; set; }
     }
 }

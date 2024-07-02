@@ -9,5 +9,6 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.RoleDTOs
     public class ListRoleDTO
     {
         public string RoleName { get; set; }
+        public string RoleNormalizedName { get; set; }
     }
 }

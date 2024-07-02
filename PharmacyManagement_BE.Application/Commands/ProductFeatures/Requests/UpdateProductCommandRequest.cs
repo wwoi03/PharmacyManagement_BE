@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests
 {
-    public class CreateProductCommandRequest : IRequest<ResponseAPI<string>>
+    public class UpdateProductCommandRequest : IRequest<ResponseAPI<string>>
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string CodeMedicine { get; set; }
         public string? Specifications { get; set; }

@@ -47,7 +47,7 @@ namespace PharmacyManagement_BE.Application.Queries.CategoryFeatures.Handlers
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return new ResponseErrorAPI<List<CategoryResponse>>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<List<CategoryResponse>>(StatusCodes.Status500InternalServerError);
             }
         }
 

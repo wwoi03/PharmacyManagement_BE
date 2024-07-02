@@ -12,9 +12,24 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class ProductSupportService : RepositoryService<ProductSupport>, IProductSupportService
     {
+        private readonly PharmacyManagementContext _context;
+
         public ProductSupportService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<bool> CreateRange(List<ProductSupport> productSupports)
+        {
+            try
+            {
+                await _context.ProductSupports.AddRangeAsync(productSupports);                
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

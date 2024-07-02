@@ -23,7 +23,6 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
 
         [HttpGet("GetStaffs")]
         //[Authorize(Policy = "StaffManager")]
-        [Authorize()]
         public async Task<IActionResult> Get()
         {
             try
@@ -65,8 +64,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateStaffCommandRequest request)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody] CreateStaffCommandRequest request)
         {
             try
             {
@@ -79,8 +78,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateStaffCommandRequest request)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update([FromBody] UpdateStaffCommandRequest request)
         {
             try
             {
@@ -93,8 +92,8 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteStaffCommandRequest request)
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete([FromBody] DeleteStaffCommandRequest request)
         {
             try
             {
