@@ -28,18 +28,38 @@ namespace PharmacyManagement_BE.Application.Commands.CategoryFeatures.Handlers
         {
             try
             {
+                // Valid
+                var validation = request.Valid();
+
                 // Kiểm tra danh mục tồn tại
                 var categoryExists = await _entities.CategoryService.GetCategoryByNameOrCode(request.Name, request.CodeCategory);
 
                 if (categoryExists != null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Loại sản phẩm đã tồn tại.");
+                {
+                    if (categoryExists.Name.Equals(request.Name))
+                    {
+                        validation.Obj = "name";
+                        validation.Message = "Tên loại sản phẩm đã tồn tại.";
+                    }
+                    else if (categoryExists.CodeCategory.Equals(request.CodeCategory))
+                    {
+                        validation.Obj = "codeCategory";
+                        validation.Message = "Mã loại sản phẩm đã tồn tại.";
+                    }
+                    
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status409Conflict, validation);
+                }
 
                 // Thêm loại sản phẩm
                 var category = _mapper.Map<Category>(request);
                 var result = _entities.CategoryService.Create(category);
 
                 if (!result)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Hiện tại không thể thêm loại sản phẩm này.");
+                {
+                    validation.Obj = "default";
+                    validation.Message = "Hiện tại không thể thêm loại sản phẩm này.";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, validation);
+                }
 
                 // SaveChange
                 _entities.SaveChange();

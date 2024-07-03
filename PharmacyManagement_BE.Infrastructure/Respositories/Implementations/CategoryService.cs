@@ -146,6 +146,37 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 })
                 .FirstOrDefault();
         }
+
+        public async Task<List<ListCategoryByLevelDTO>> GetCategoriesByLevel()
+        {
+            return _context.Categories
+                .Where(c => c.ParentCategoryId == null)
+                .Select(c => new ListCategoryByLevelDTO
+                {
+                    Id = c.Id,
+                    CodeCategory = c.CodeCategory,
+                    CategoryName = c.Name,
+                    Children = _context.Categories
+                        .Where(c2 => c2.ParentCategoryId == c.Id)
+                        .Select(c2 => new ListCategoryByLevelDTO
+                        {
+                            Id = c2.Id,
+                            CodeCategory = c2.CodeCategory,
+                            CategoryName = c2.Name,
+                            Children = _context.Categories
+                                .Where(c3 => c3.ParentCategoryId == c2.Id)
+                                .Select(c3 => new ListCategoryByLevelDTO
+                                {
+                                    Id = c3.Id,
+                                    CodeCategory = c3.CodeCategory,
+                                    CategoryName = c3.Name,
+                                })
+                                .ToList()
+                        })
+                        .ToList()
+                })
+                .ToList();
+        }
         #endregion EF & LinQ
     }
 }

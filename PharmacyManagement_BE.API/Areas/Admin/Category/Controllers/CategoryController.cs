@@ -75,6 +75,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
             }
         }
 
+        [HttpGet("GetCategoriesByLevel")]
+        public async Task<IActionResult> GetCategoriesByLevel()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetCategoriesByLevelQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] CreateCategoryCommandRequest request)
         {
@@ -123,6 +137,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
             try
             {
                 var result = await _mediator.Send(new GetCategoryDetailsQueryRequest { CategoryId = categoryId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetCategoryByCode")]
+        public async Task<IActionResult> GetCategoryByCode([FromQuery] string codeCategory)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetCategoryByCodeQueryRequest { CodeCategory = codeCategory });
                 return Ok(result);
             }
             catch (Exception ex)
