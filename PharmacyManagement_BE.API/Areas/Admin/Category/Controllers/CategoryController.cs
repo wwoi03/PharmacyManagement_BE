@@ -144,5 +144,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetCategoryByCode")]
+        public async Task<IActionResult> GetCategoryByCode([FromQuery] string codeCategory)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetCategoryByCodeQueryRequest { CodeCategory = codeCategory });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
