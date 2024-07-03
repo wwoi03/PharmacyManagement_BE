@@ -75,6 +75,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
             }
         }
 
+        [HttpGet("GetCategoriesByLevel")]
+        public async Task<IActionResult> GetCategoriesByLevel()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetCategoriesByLevelQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] CreateCategoryCommandRequest request)
         {
