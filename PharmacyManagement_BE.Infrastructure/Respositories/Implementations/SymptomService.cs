@@ -26,13 +26,13 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             var checkCode = await Context.Symptoms.AnyAsync(r => r.CodeSymptom.ToUpper() == Code.ToUpper() && (Id == null || r.Id != Id));
 
             if (checkCode)
-                return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, "Mã triệu chứng đã tồn tại, vui lòng kiểm tra lại");
+                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Mã triệu chứng đã tồn tại, vui lòng kiểm tra lại");
 
             //Kiểm tra tồn tại tên
             var checkName = await Context.Symptoms.AnyAsync(r => r.Name.ToUpper() == Name.ToUpper() && (Id == null || r.Id != Id));
 
             if (checkName)
-                return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, "Tên triệu chứng đã tồn tại, vui lòng kiểm tra lại");
+                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Tên triệu chứng đã tồn tại, vui lòng kiểm tra lại");
 
             return new ResponseSuccessAPI<string>();
         }

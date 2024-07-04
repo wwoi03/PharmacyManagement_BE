@@ -54,7 +54,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Thêm loại bệnh thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK ,"Thêm loại bệnh thành công.");
             }
             catch (Exception){
                 return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");

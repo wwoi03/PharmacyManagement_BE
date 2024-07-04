@@ -24,13 +24,13 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             var checkCode = await Context.Supports.AnyAsync(r => r.CodeSupport.ToUpper() == Code.ToUpper() && (Id == null || r.Id != Id));
 
             if (checkCode)
-                return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, "Mã hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại");
+                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Mã hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại");
 
             //Kiểm tra tồn tại tên
             var checkName = await Context.Supports.AnyAsync(r => r.Name.ToUpper() == Name.ToUpper() && (Id == null || r.Id != Id));
 
             if (checkName)
-                return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, "Tên hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại");
+                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Tên hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại");
 
             return new ResponseSuccessAPI<string>();
         }
