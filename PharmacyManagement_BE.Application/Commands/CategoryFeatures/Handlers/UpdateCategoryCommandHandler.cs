@@ -28,20 +28,37 @@ namespace PharmacyManagement_BE.Application.Commands.CategoryFeatures.Handlers
         {
             try
             {
+                // Valid
+                var validation = request.Valid();
+
                 // Kiểm tra danh mục tồn tại
                 var category = await _entities.CategoryService.GetById(request.Id);
 
                 if (category == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, $"Loại sản phẩm có mã {request.Id} không tồn tại.");
+                {
+                    validation.Obj = "default";
+                    validation.Message = $"Loại sản phẩm có mã {request.Id} không tồn tại.";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, validation);
+                }
 
                 // Kiểm tra danh mục trùng lặp
                 var checkName = await _entities.CategoryService.GetCategoryByName(request.Name);
+
                 if (checkName != null && !category.Name.Equals(request.Name) && checkName.Name.Equals(request.Name))
-                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, $"Loại sản phẩm có tên {request.Name} đã tồn tại.");
+                {
+                    validation.Obj = "name";
+                    validation.Message = $"Loại sản phẩm có tên {request.Name} đã tồn tại.";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, validation);
+                }
 
                 var checkCode = await _entities.CategoryService.GetCategoryByCode(request.CodeCategory);
+
                 if (checkCode != null && !category.CodeCategory.Equals(request.CodeCategory) && checkCode.CodeCategory.Equals(request.CodeCategory))
-                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, $"Loại sản phẩm có mã {request.CodeCategory} đã tồn tại.");
+                {
+                    validation.Obj = "codeCategory";
+                    validation.Message = $"Loại sản phẩm có mã {request.CodeCategory} đã tồn tại.";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, validation);
+                }
 
                 // Cập nhật loại sản phẩm
                 _mapper.Map(request, category);

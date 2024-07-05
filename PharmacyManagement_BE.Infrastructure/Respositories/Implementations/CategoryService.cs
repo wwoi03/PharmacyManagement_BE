@@ -140,6 +140,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     Id = c.Id,
                     CodeCategory = c.CodeCategory,
                     CategoryName = c.Name,
+                    ParentCategoryCode = _context.Categories.FirstOrDefault(i => i.Id == c.ParentCategoryId).CodeCategory,
                     ParentCategoryId = c.ParentCategoryId,
                     ParentCategoryName = _context.Categories.FirstOrDefault(i => i.Id == c.ParentCategoryId).Name,
                     NumberChildren = _context.Categories.Count(child => child.ParentCategoryId == c.Id)  // Đếm số lượng danh mục con
