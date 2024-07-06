@@ -11,6 +11,6 @@ namespace PharmacyManagement_BE.Application.Queries.ShipmentFeatures.Requests
 {
     public class GetShipmentsByBranchQueryRequest : IRequest<ResponseAPI<List<ShipmentResponse>>>
     {
-        public Guid BranchId { get; set; }
+        //public Guid BranchId { get; set; }
     }
 }
