@@ -36,10 +36,17 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
 
                 if (!validation.IsSuccessed)
                     return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+                
+                //B2: kiểm tra  tồn tại
+                var checkExit = await _entities.SymptomService.CheckExit(request.CodeSymptom, request.Name, request.Id);
+
+                if (!checkExit.IsSuccessed)
+                    return checkExit;
 
                 //Gán giá trị thay đổi
                 symptom.Name = request.Name;
                 symptom.Description = request.Description;
+                symptom.CodeSymptom = request.CodeSymptom;
 
                 // Cập nhật lại triệu chứng
                 var status = _entities.SymptomService.Update(symptom);

@@ -26,29 +26,30 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
 
         public async Task<ResponseAPI<string>> Handle(UpdateDiseaseCommandRequest request, CancellationToken cancellationToken)
         {
-            //Kiểm tra tồn tại
-            var disease = await _entities.DiseaseService.GetById(request.Id);
-
-            if(disease == null)
-                return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
-
-            //B1: kiểm tra giá trị đầu vào
-            var validation = request.IsValid();
-
-            if (!validation.IsSuccessed)
-                return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
-
-            //B2: kiểm tra bệnh đã tồn tại
-            var diseaseExit = await _entities.DiseaseService.CheckExit(request.Name, request.Description);
-
-            if (diseaseExit)
-                return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Bệnh đã tồn tại.");
-
             try
             {
+                //Kiểm tra tồn tại
+                var disease = await _entities.DiseaseService.GetById(request.Id);
+
+                if (disease == null)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
+
+                //B1: kiểm tra giá trị đầu vào
+                var validation = request.IsValid();
+
+                if (!validation.IsSuccessed)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+
+                //B2: kiểm tra bệnh đã tồn tại
+                var diseaseExit = await _entities.DiseaseService.CheckExit(request.CodeDisease, request.Name, request.Id);
+
+                if (!diseaseExit.IsSuccessed)
+                    return diseaseExit;
+
                 //Gán giá trị thay đổi
                 disease.Name = request.Name;
                 disease.Description = request.Description;
+                disease.CodeDisease = request.CodeDisease;
 
                 // Cập nhật lại bệnh
                 var status = _entities.DiseaseService.Update(disease);
@@ -60,7 +61,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Cập nhật loại bệnh thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Cập nhật loại bệnh thành công.");
             }
             catch (Exception)
             {

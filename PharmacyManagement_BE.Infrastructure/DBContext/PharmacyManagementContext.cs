@@ -28,8 +28,9 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
             {
                 //optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ConnectionString"));
                 //optionsBuilder.UseSqlServer("Data Source=dev-mssql-db.lizai.co;Initial Catalog=dev-intern-project-database;User Id=intern;Password=LizAI.I@54321;");
-                //optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
-                optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
+                //optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
+                //optionsBuilder.UseSqlServer("Data Source=MATINCUAANSHAFO\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
+                //optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
             }
         }
 

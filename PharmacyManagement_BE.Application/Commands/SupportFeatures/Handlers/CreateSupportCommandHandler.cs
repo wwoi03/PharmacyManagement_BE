@@ -34,10 +34,10 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                     return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
                 // Không kiểm tra tên hỗ trợ của thuốc vì hỗ trợ của thuốc có thể có nhiều tên trùng nhau
-                var checkExit = await _entities.SupportService.CheckExit(request.Name, request.Description);
+                var checkExit = await _entities.SupportService.CheckExit(request.CodeSupport, request.Name);
 
-                if (checkExit)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Tên hỗ trợ của thuốc đã tồn tại.");
+                if (!checkExit.IsSuccessed)
+                    return checkExit;
 
                 // Chuyển đổi request sang dữ liệu
                 var createSupport = _mapper.Map<Support>(request);
