@@ -33,7 +33,7 @@ namespace PharmacyManagement_BE.Application.Queries.OrderFeatures.Handlers
                 var validation = await _entities.OrderService.GetById(request.Id);
 
                 if (validation == null)
-                    return new ResponseErrorAPI<OrderDTO>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
+                    return new ResponseSuccessAPI<OrderDTO>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
 
                 var order = _mapper.Map<OrderDTO>(validation);
 

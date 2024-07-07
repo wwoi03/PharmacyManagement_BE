@@ -32,12 +32,12 @@ namespace PharmacyManagement_BE.Application.Commands.IngredientFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
                 //B2: kiểm tra thành phần đã tồn tại
                 var checkExit = await _entities.IngredientService.CheckExit(request.CodeIngredient, request.Name);
 
-                if (!checkExit.IsSuccessed)
+                if (!checkExit.ValidationNotify.IsSuccessed)
                     return checkExit;
 
                 // Chuyển đổi request sang dữ liệu
@@ -53,7 +53,7 @@ namespace PharmacyManagement_BE.Application.Commands.IngredientFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Thêm loại thành phần thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm loại thành phần thành công.");
             }
             catch (Exception)
             {

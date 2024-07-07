@@ -32,7 +32,7 @@ namespace PharmacyManagement_BE.Application.Queries.SymptomFeatures.Handlers
                 var validation = await _entities.SymptomService.GetById(request.Id);
 
                 if (validation == null)
-                    return new ResponseErrorAPI<SymptomDTO>(StatusCodes.Status404NotFound, "Triệu chứng không tồn tại.");
+                    return new ResponseSuccessAPI<SymptomDTO>(StatusCodes.Status404NotFound, "Triệu chứng không tồn tại.");
 
                 var Symptom = _mapper.Map<SymptomDTO>(validation);
 

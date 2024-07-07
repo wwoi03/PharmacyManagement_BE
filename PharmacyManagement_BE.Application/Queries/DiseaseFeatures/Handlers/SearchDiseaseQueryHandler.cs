@@ -32,16 +32,12 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<List<DiseaseDTO>>(StatusCodes.Status400BadRequest, validation.Message);
 
 
                 // Tìm kiếm bệnh theo tên gần đúng
                 var listDisease = await _entities.DiseaseService.Search(request.KeyWord, cancellationToken);
-
-                ////Kiểm tra danh sách
-                //if (listDisease == null || listDisease.Count == 0)
-                //    return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy loại bệnh");
-
+ 
                 //Gán giá trị response
                 var response = _mapper.Map<List<DiseaseDTO>>(listDisease);
 

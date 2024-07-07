@@ -32,7 +32,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 var disease = await _entities.DiseaseService.GetById(request.Id);
 
                 if (disease == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
 
                 //B1: kiểm tra giá trị đầu vào
                 var validation = request.IsValid();
@@ -43,7 +43,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 //B2: kiểm tra bệnh đã tồn tại
                 var diseaseExit = await _entities.DiseaseService.CheckExit(request.CodeDisease, request.Name, request.Id);
 
-                if (!diseaseExit.IsSuccessed)
+                if (!diseaseExit.ValidationNotify.IsSuccessed)
                     return diseaseExit;
 
                 //Gán giá trị thay đổi

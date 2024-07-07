@@ -35,10 +35,6 @@ namespace PharmacyManagement_BE.Application.Queries.SymptomFeatures.Handlers
                 //Gán danh sách triệu chứng thành response
                 var response = _mapper.Map<List<SymptomDTO>>(listSymptom);
 
-                ////Kiểm tra danh sách
-                //if (response == null || response.Count == 0)
-                //    return new ResponseErrorAPI<List<SymptomDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy danh sách triệu chứng");
-
                 //Trả về danh sách
                 return new ResponseSuccessAPI<List<SymptomDTO>>(StatusCodes.Status200OK, "Danh sách triệu chứng", response);
             }

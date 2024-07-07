@@ -28,13 +28,13 @@ namespace PharmacyManagement_BE.Application.Commands.OrderFeatures.Handlers
                 var order = await _entities.OrderService.GetById(request.Id);
 
                 if (order == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
 
                 //Kiểm tra giá trị đầu vào
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
                 //Gán giá trị thay đổi => check hủy đơn => không được đổi sang trạng thái khác => làm sau => lười
                 order.Status = request.type.ToString();

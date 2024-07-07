@@ -33,7 +33,7 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
                 // Không kiểm tra tên triệu chứng
                 var checkExit = await _entities.SymptomService.CheckExit(request.CodeSymptom, request.Name);
@@ -54,7 +54,7 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Thêm triệu chứng thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Thêm triệu chứng thành công.");
             }
             catch (Exception)
             {

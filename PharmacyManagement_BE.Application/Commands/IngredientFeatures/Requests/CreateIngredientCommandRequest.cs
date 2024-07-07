@@ -21,13 +21,13 @@ namespace PharmacyManagement_BE.Application.Commands.IngredientFeatures.Requests
             CodeIngredient = CheckInput.CheckInputCode(CodeIngredient);
 
             if (string.IsNullOrWhiteSpace(Name))
-                return new ValidationNotifyError<string>("Vui lòng nhập tên thành phần.");
+                return new ValidationNotifyError<string>("Vui lòng nhập tên thành phần.", "name");
 
             if (string.IsNullOrWhiteSpace(CodeIngredient))
-                return new ValidationNotifyError<string>("Vui lòng nhập mã thành phần.");
+                return new ValidationNotifyError<string>("Vui lòng nhập mã thành phần.", "codeIngredient");
 
             if (!CheckInput.IsAlphaNumeric(CodeIngredient))
-                return new ValidationNotifyError<string>("Mã thành phần không hợp lệ, vui lòng kiểm tra lại");
+                return new ValidationNotifyError<string>("Mã thành phần không hợp lệ, vui lòng kiểm tra lại", "codeIngredient");
 
             return new ValidationNotifySuccess<string>();
         }

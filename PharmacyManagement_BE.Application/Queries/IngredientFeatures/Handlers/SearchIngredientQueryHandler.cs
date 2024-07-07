@@ -32,7 +32,7 @@ namespace PharmacyManagement_BE.Application.Queries.IngredientFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<List<IngredientDTO>>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<List<IngredientDTO>>(StatusCodes.Status400BadRequest, validation.Message);
 
                 // Tìm kiếm bệnh theo tên gần đúng
                 var listIngredient = await _entities.IngredientService.Search(request.KeyWord, cancellationToken);

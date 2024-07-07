@@ -33,7 +33,7 @@ namespace PharmacyManagement_BE.Application.Queries.IngredientFeatures.Handlers
                 var validation = await _entities.IngredientService.GetById(request.Id);
 
                 if (validation == null)
-                    return new ResponseErrorAPI<IngredientDTO>(StatusCodes.Status404NotFound, "Thành phần không tồn tại.");
+                    return new ResponseSuccessAPI<IngredientDTO>(StatusCodes.Status404NotFound, "Thành phần không tồn tại.");
 
                 var ingredient = _mapper.Map<IngredientDTO>(validation);
 

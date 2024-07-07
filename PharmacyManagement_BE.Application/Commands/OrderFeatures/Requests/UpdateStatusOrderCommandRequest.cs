@@ -18,7 +18,7 @@ namespace PharmacyManagement_BE.Application.Commands.OrderFeatures.Requests
         public ValidationNotify<string> IsValid()
         {
             if (!Enum.IsDefined(typeof(OrderType), type))
-                return new ValidationNotifyError<string>("Vui lòng chọn trạng thái đơn hàng.");
+                return new ValidationNotifyError<string>("Vui lòng chọn trạng thái đơn hàng.", "status");
 
             return new ValidationNotifySuccess<string>();
 

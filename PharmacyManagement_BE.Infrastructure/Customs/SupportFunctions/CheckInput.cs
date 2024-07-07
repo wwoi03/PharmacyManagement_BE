@@ -35,7 +35,7 @@ namespace PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions
             input = input.Trim();
 
             // Kiểm tra xem input chỉ chứa chữ cái và số và không chứa khoảng trắng ở giữa
-            return Regex.IsMatch(input, @"^[a-zA-Z0-9]+$");
+            return Regex.IsMatch(input, @"^[a-zA-Z0-9.-]+$");
         }
     }
 }

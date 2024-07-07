@@ -28,7 +28,7 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 var support = await _entities.SupportService.GetById(request.Id);
 
                 if (support == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Không tìm thấy hỗ trợ của thuốc.");
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Không tìm thấy hỗ trợ của thuốc.");
 
                 //Xóa hỗ trợ của thuốc
                 var deleteSupport = _entities.SupportService.Delete(support);
@@ -40,7 +40,7 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 // lưu vào database
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Xóa hỗ trợ của thuốc thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Xóa hỗ trợ của thuốc thành công.");
             }
             catch (Exception)
             {

@@ -33,13 +33,15 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
                 //B2: kiểm tra bệnh đã tồn tại
                 var checkExit = await _entities.DiseaseService.CheckExit(request.CodeDisease, request.Name);
 
-                if (!checkExit.IsSuccessed)
+                if (!checkExit.ValidationNotify.IsSuccessed)
+                {
                     return checkExit;
+                }
 
                 // Chuyển đổi request sang dữ liệu
                 var createDisease = _mapper.Map<Disease>(request);

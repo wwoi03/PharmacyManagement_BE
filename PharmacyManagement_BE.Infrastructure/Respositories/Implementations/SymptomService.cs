@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.SymptomDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
 using System;
@@ -22,19 +23,33 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
         public async Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid? Id )
         {
+            ValidationNotify<string> validation = new ValidationNotifySuccess<string>();
+            int status = StatusCodes.Status200OK;
+
             //Kiểm tra tồn tại mã code 
             var checkCode = await Context.Symptoms.AnyAsync(r => r.CodeSymptom.ToUpper() == Code.ToUpper() && (Id == null || r.Id != Id));
 
             if (checkCode)
-                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Mã triệu chứng đã tồn tại, vui lòng kiểm tra lại");
+            {
+                validation = new ValidationNotifyError<string>();
+                validation.Obj = "codeSymptom";
+                validation.Message = "Mã triệu chứng đã tồn tại, vui lòng kiểm tra lại";
+                status = StatusCodes.Status409Conflict;
+
+            }
 
             //Kiểm tra tồn tại tên
             var checkName = await Context.Symptoms.AnyAsync(r => r.Name.ToUpper() == Name.ToUpper() && (Id == null || r.Id != Id));
 
             if (checkName)
-                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Tên triệu chứng đã tồn tại, vui lòng kiểm tra lại");
+            {
+                validation = new ValidationNotifyError<string>();
+                validation.Obj = "name";
+                validation.Message = "Tên triệu chứng đã tồn tại, vui lòng kiểm tra lại";
+                status = StatusCodes.Status409Conflict;
+            }
 
-            return new ResponseSuccessAPI<string>();
+            return new ResponseSuccessAPI<string>(status,validation);
         }
 
         public async Task<List<Symptom>> Search(string KeyWord, CancellationToken cancellationToken)
