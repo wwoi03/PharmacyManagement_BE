@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.DTOs.Responses;
 using PharmacyManagement_BE.Application.Queries.ShipmentFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,20 @@ namespace PharmacyManagement_BE.Application.Queries.ShipmentFeatures.Handlers
             try
             {
                 // kiểm tra chi nhánh tồn tại
-                var branchExists = await _entities.BranchService.GetById(request.BranchId);
+                var branchId = await _entities.AccountService.GetBranchId();
+                var branchExists = await _entities.BranchService.GetById(branchId); ;
 
                 if (branchExists == null)
-                    return new ResponseErrorAPI<List<ShipmentResponse>>(StatusCodes.Status404NotFound, "Chi nhánh không tồn tại.");
+                {
+                    var validation = new ValidationNotifyError<string>()
+                    {
+                        Obj = "default",
+                        Message = "Chi nhánh không tồn tại."
+                    };
+                    return new ResponseSuccessAPI<List<ShipmentResponse>>(StatusCodes.Status404NotFound, validation);
+                }
 
-                var shipmentDTOs = await _entities.ShipmentService.GetShipmentsByBranch(request.BranchId);
+                var shipmentDTOs = await _entities.ShipmentService.GetShipmentsByBranch(branchId);
                 var response = _mapper.Map<List<ShipmentResponse>>(shipmentDTOs);
 
                 return new ResponseSuccessAPI<List<ShipmentResponse>>(StatusCodes.Status200OK, response);

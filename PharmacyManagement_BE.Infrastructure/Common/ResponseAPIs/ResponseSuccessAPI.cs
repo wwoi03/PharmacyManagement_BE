@@ -32,7 +32,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
             Obj = obj;
         }
 
-        public ResponseSuccessAPI(int code, string message, ValidationNotify<T> validationNotify)
+        public ResponseSuccessAPI(int code, string message, ValidationNotify<string> validationNotify)
         {
             IsSuccessed = true;
             Code = code;
@@ -55,7 +55,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
             Obj = obj;
         }
 
-        public ResponseSuccessAPI(int code, ValidationNotify<T> validationNotify)
+        public ResponseSuccessAPI(int code, ValidationNotify<string> validationNotify)
         {
             IsSuccessed = true;
             Code = code;

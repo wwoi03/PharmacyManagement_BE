@@ -15,6 +15,6 @@ namespace PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs
         public string Message { get; set; } = string.Empty;
 
         public T? Obj { get; set; }
-        public ValidationNotify<T> ValidationNotify { get; set; }
+        public ValidationNotify<string> ValidationNotify { get; set; }
     }
 }
