@@ -50,12 +50,12 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
             }
         }
 
-        [HttpPost("Details")]
-        public async Task<IActionResult> Details(GetStaffByIdQueryRequest request)
+        [HttpGet("Details")]
+        public async Task<IActionResult> Details([FromQuery] Guid staffId)
         {
             try
             {
-                var result = await _mediator.Send(request);
+                var result = await _mediator.Send(new GetStaffByIdQueryRequest { Id = staffId });
                 return Ok(result);
             }
             catch (Exception ex)
@@ -93,11 +93,11 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
         }
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete([FromBody] DeleteStaffCommandRequest request)
+        public async Task<IActionResult> Delete([FromBody] Guid staffId)
         {
             try
             {
-                var result = await _mediator.Send(request);
+                var result = await _mediator.Send(new DeleteStaffCommandRequest { Id = staffId});
                 return Ok(result);
             }
             catch (Exception ex)

@@ -12,9 +12,16 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class SupplierService : RepositoryService<Supplier>, ISupplierService
     {
+        private readonly PharmacyManagementContext _context;
+
         public SupplierService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<Supplier?> GetSupplierByCode(string codeSupplier)
+        {
+            return _context.Suppliers.FirstOrDefault(s => s.CodeSupplier.Equals(codeSupplier));
         }
     }
 }

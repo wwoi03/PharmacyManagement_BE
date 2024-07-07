@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.AccountDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.AccountFeatures.Requests
 {
-    public class SignInCommandRequest : IRequest<ResponseAPI<string>>
+    public class SignInCommandRequest : IRequest<ResponseAPI<SignInDTO>>
     {
         public string UserName { get; set; }
         public string Password { get; set; }
