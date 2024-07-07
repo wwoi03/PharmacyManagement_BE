@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Application.Commands.CategoryFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.IngredientFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.RoleFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests;
@@ -12,8 +13,9 @@ using PharmacyManagement_BE.Application.Commands.SymptomFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.UserFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Requests;
 using PharmacyManagement_BE.Application.DTOs.Responses;
-using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.IngredientDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupportDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.SymptomDTOs;
@@ -22,6 +24,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
+using PharmacyManagement_BE.Application.Commands.CommentFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -90,6 +95,21 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Category, CreateCategoryCommandRequest>().ReverseMap();
             CreateMap<Category, UpdateCategoryCommandRequest>().ReverseMap();
             #endregion Category
+
+            #region Ingredient
+            CreateMap<CreateIngredientCommandRequest, Ingredient>().ReverseMap();
+            CreateMap<Ingredient, IngredientDTO>().ReverseMap();
+            #endregion Ingredient
+
+            #region Comment
+            CreateMap<Comment, CommentDTO>().ReverseMap();
+            CreateMap<Comment, CreateReplyCommentCommandRequest>().ReverseMap();
+            #endregion Comment
+
+            #region Order
+            CreateMap<Order, OrderDTO>().ReverseMap();
+            #endregion Order
+
         }
     }
 }

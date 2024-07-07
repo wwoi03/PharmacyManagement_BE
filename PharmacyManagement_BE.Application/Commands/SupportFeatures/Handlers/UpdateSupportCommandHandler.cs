@@ -36,10 +36,17 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
 
                 if (!validation.IsSuccessed)
                     return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+               
+                //B2: kiểm tra  tồn tại
+                var checkExit = await _entities.SupportService.CheckExit(request.CodeSupport, request.Name, request.Id);
+
+                if (!checkExit.IsSuccessed)
+                    return checkExit;
 
                 //Gán giá trị thay đổi
                 support.Name = request.Name;
                 support.Description = request.Description;
+                support.CodeSupport = request.CodeSupport;
 
                 // Cập nhật lại hỗ trợ của thuốc
                 var status = _entities.SupportService.Update(support);

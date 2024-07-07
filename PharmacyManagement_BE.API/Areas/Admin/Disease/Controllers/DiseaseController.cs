@@ -93,7 +93,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
         }
 
         [HttpGet("SearchDisease")]
-        public async Task<IActionResult> Search([FromQuery]SearchDiseasesQueryRequest request)
+        public async Task<IActionResult> Search([FromQuery]SearchDiseaseQueryRequest request)
         {
             try
             {

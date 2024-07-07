@@ -23,14 +23,14 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
 
         public async Task<ResponseAPI<string>> Handle(DeleteDiseaseCommandRequest request, CancellationToken cancellationToken)
         {
-            //Kiểm tra tồn tại
-            var disease = await _entities.DiseaseService.GetById(request.Id);
-
-            if (disease == null)
-                return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
-
             try
             {
+                //Kiểm tra tồn tại
+                var disease = await _entities.DiseaseService.GetById(request.Id);
+
+                if (disease == null)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
+
                 // Cập nhật lại bệnh
                 var status = _entities.DiseaseService.Delete(disease);
 

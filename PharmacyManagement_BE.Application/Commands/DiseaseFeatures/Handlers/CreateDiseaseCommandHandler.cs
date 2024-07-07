@@ -36,10 +36,10 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                     return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
                 //B2: kiểm tra bệnh đã tồn tại
-                var checkExit = await _entities.DiseaseService.CheckExit(request.Name, request.Description);
+                var checkExit = await _entities.DiseaseService.CheckExit(request.CodeDisease, request.Name);
 
-                if (checkExit)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, "Bệnh đã tồn tại.");
+                if (!checkExit.IsSuccessed)
+                    return checkExit;
 
                 // Chuyển đổi request sang dữ liệu
                 var createDisease = _mapper.Map<Disease>(request);
@@ -54,7 +54,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Thêm loại bệnh thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK ,"Thêm loại bệnh thành công.");
             }
             catch (Exception){
                 return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");

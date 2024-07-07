@@ -2,8 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using PharmacyManagement_BE.Application.DTOs.Responses.DiseaseResponses;
 using PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
@@ -34,8 +34,8 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
                 var listDisease = await _entities.DiseaseService.GetAll();
 
                 //Kiểm tra danh sách
-                if (listDisease == null || listDisease.Count == 0)
-                    return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy danh sách bệnh");
+                //if (listDisease == null || listDisease.Count == 0)
+                //    return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy danh sách bệnh");
 
                 //Gán danh sách bệnh thành response
                 var response = _mapper.Map<List<DiseaseDTO>>(listDisease);

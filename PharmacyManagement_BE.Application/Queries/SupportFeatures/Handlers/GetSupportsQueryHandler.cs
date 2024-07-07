@@ -35,9 +35,9 @@ namespace PharmacyManagement_BE.Application.Queries.SupportFeatures.Handlers
                 //Gán danh sách hỗ trợ của thuốc thành response
                 var response = _mapper.Map<List<SupportDTO>>(listSupport);
 
-                //Kiểm tra danh sách
-                if (response == null || response.Count == 0)
-                    return new ResponseErrorAPI<List<SupportDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy danh sách hỗ trợ của thuốc");
+                ////Kiểm tra danh sách
+                //if (response == null || response.Count == 0)
+                //    return new ResponseErrorAPI<List<SupportDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy danh sách hỗ trợ của thuốc");
 
                 //Trả về danh sách
                 return new ResponseSuccessAPI<List<SupportDTO>>(StatusCodes.Status200OK, "Danh sách hỗ trợ của thuốc", response);

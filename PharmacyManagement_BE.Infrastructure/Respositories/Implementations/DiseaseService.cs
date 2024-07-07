@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
@@ -11,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
@@ -25,16 +27,27 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
         }
 
-        public async Task<bool> CheckExit(string name, string description)
+        public async Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid? Id )
         {
-            return await Context.Symptoms.AnyAsync
-                (r => r.Name.ToUpper().Replace(" ", "") == name.ToUpper().Replace(" ", "") &&
-                r.Description.ToUpper().Replace(" ", "") == description.ToUpper().Replace(" ", ""));
+            //Kiểm tra tồn tại mã code 
+            var checkCode = await Context.Diseases.AnyAsync(r => r.CodeDisease.ToUpper() == Code.ToUpper() && (Id == null || r.Id != Id));
+
+            if (checkCode)
+                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Mã bệnh đã tồn tại, vui lòng kiểm tra lại");
+
+            //Kiểm tra tồn tại tên
+            var checkName = await Context.Diseases.AnyAsync(r => r.Name.ToUpper() == Name.ToUpper() && (Id == null || r.Id != Id));
+
+            if (checkName)
+                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Tên bệnh đã tồn tại, vui lòng kiểm tra lại");
+
+            return new ResponseSuccessAPI<string>();
         }
         public async Task<List<Disease>> Search(string KeyWord, CancellationToken cancellationToken)
         {
-             return await Context.Diseases.Where
-             (d => EF.Functions.Like(d.Name.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
+            return await Context.Diseases.Where
+             (d => EF.Functions.Like(d.CodeDisease.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
+             EF.Functions.Like(d.Name.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%") || //<=== Hoặc nè, không thấy rồi bắt bẻ tui đi nha
              EF.Functions.Like(d.Description.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%"))
              .ToListAsync(cancellationToken);
         }
