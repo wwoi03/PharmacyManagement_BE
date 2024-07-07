@@ -53,7 +53,7 @@ namespace PharmacyManagement_BE.Application.Commands.IngredientFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Thêm loại thành phần thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Thêm loại thành phần thành công.");
             }
             catch (Exception)
             {

@@ -58,7 +58,7 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Cập nhật hỗ trợ của thuốc thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Cập nhật hỗ trợ của thuốc thành công.");
             }
             catch (Exception)
             {

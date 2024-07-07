@@ -54,7 +54,7 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Thêm triệu chứng thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Thêm triệu chứng thành công.");
             }
             catch (Exception)
             {

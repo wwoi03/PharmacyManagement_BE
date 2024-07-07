@@ -41,7 +41,7 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
                 // lưu vào database
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Xóa triệu chứng thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Xóa triệu chứng thành công.");
             }
             catch (Exception)
             {

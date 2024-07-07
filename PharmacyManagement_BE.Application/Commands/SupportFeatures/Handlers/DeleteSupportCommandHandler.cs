@@ -40,7 +40,7 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 // lưu vào database
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Xóa hỗ trợ của thuốc thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Xóa hỗ trợ của thuốc thành công.");
             }
             catch (Exception)
             {

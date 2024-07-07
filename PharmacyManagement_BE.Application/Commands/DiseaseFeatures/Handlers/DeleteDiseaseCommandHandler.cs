@@ -41,7 +41,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Xóa loại bệnh thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Xóa loại bệnh thành công.");
             }
             catch (Exception)
             {
