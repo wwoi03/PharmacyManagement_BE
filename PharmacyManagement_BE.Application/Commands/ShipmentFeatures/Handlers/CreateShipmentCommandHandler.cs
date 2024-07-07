@@ -34,18 +34,13 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Handlers
                 if (supplier == null)
                     return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Nhà cung cấp không tồn tại.");
 
-                // Kiểm tra Chi nhánh tồn tại
-                var branch = await _entities.BranchService.GetById(request.BranchId);
-
-                if (branch == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Chi nhánh không tồn tại.");
-
                 // Cập nhật đơn hàng mới
                 Shipment shipment = new Shipment();
                 _mapper.Map(request, shipment);
+                shipment.Id = Guid.NewGuid();
                 shipment.UpdatedTime = DateTime.Now;
-                shipment.UpdatedTime = DateTime.Now;
-                shipment.ImportDate = DateTime.Now;
+                shipment.CreatedTime = DateTime.Now;
+                shipment.BranchId = await _entities.AccountService.GetBranchId();
                 shipment.StaffId = await _entities.AccountService.GetAccountId();
 
                 var result = _entities.ShipmentService.Create(shipment);
@@ -56,7 +51,7 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Handlers
                 // SaveChange
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm mới đơn hàng có mã {shipment.Id} thành công");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm mới đơn hàng có mã {shipment.Id} thành công", shipment.Id.ToString());
             }
             catch (Exception ex)
             {
