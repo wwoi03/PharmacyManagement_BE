@@ -10,6 +10,7 @@ namespace PharmacyManagement_BE.Application.DTOs.Responses
     {
         public Guid Id { get; set; }
         public DateTime ImportDate { get; set; }
+        public string CodeShipment { get; set; }
         public string Note { get; set; }
         public string Status { get; set; }
         public string SupplierName { get; set; }

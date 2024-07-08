@@ -21,8 +21,8 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests
         public string Gender { get; set; }
         public DateTime Birthday { get; set; }
         public string Address { get; set; }
-        public string Image { get; set; }
-        public Guid BranchId { get; set; }
+        public string? Image { get; set; }
+        public Guid? BranchId { get; set; }
         public List<string> Roles { get; set; }
 
         public ValidationNotify<string> IsValid()
