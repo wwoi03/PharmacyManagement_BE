@@ -42,10 +42,12 @@ namespace PharmacyManagement_BE.Application.Queries.StaffFeatures.Handlers
 
                 // Lấy danh sách role của nhân viên
                 var userRoles = await _userManager.GetRolesAsync(userExists);
+                var allRoles = _roleManager.Roles.ToList();
+                var currentNormalizedRoleNames = allRoles.Where(role => userRoles.Contains(role.Name)).Select(role => role.NormalizedName).ToList();
 
                 // Chuyển đổi thông tin trả về view
                 var response = _mapper.Map<StaffResponse>(userExists);
-                response.Roles = (List<string>)userRoles;
+                response.Roles = (List<string>)currentNormalizedRoleNames;
 
                 return new ResponseSuccessAPI<StaffResponse>(StatusCodes.Status200OK, response);
             }
