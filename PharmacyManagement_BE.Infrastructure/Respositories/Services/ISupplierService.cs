@@ -10,6 +10,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface ISupplierService : IRepositoryService<Supplier>
     {
-
+        Task<Supplier?> GetSupplierByCode(string codeSupplier);
     }
 }

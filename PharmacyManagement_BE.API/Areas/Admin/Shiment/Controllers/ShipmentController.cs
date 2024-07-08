@@ -48,7 +48,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
         }
 
         [HttpPost("SearchShipments")]
-        public async Task<IActionResult> SearchShipments(SearchShipmentsQueryRequest request)
+        public async Task<IActionResult> SearchShipments([FromBody] SearchShipmentsQueryRequest request)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
         }
 
         [HttpPost("GetCostStatisticShipment")]
-        public async Task<IActionResult> GetCostStatisticShipment(GetCostStatisticsShipmentQueryRequest request)
+        public async Task<IActionResult> GetCostStatisticShipment([FromBody] GetCostStatisticsShipmentQueryRequest request)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
         }
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete(Guid shipmentId)
+        public async Task<IActionResult> Delete([FromQuery] Guid shipmentId)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> Update(UpdateShipmentCommandRequest request)
+        public async Task<IActionResult> Update([FromBody] UpdateShipmentCommandRequest request)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(CreateShipmentCommandRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateShipmentCommandRequest request)
         {
             try
             {
