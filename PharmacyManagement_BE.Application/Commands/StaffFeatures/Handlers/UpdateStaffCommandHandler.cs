@@ -102,10 +102,20 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 }
 
                 // cập nhật mật khẩu
-                if (!(await _userManager.CheckPasswordAsync(staff, request.Password)))
+                if (!string.IsNullOrEmpty(request.Password))
                 {
-                    var token = await _userManager.GeneratePasswordResetTokenAsync(staff);
-                    var passwordChangeResult = await _userManager.ResetPasswordAsync(staff, token, request.Password);
+                    if (!(await _userManager.CheckPasswordAsync(staff, request.Password)))
+                    {
+                        var token = await _userManager.GeneratePasswordResetTokenAsync(staff);
+                        var passwordChangeResult = await _userManager.ResetPasswordAsync(staff, token, request.Password);
+
+                        if (!passwordChangeResult.Succeeded)
+                        {
+                            validation.Obj = "password";
+                            validation.Message = "Mật khẩu phải từ 8 ký tự trở lên, có ít nhất 1 chữ hoa, 1 chữ thường và 1 ký tự đặc biệt.";
+                            return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
+                        }
+                    }
                 }
 
                 // Thêm role mới và xóa role cũ cho tài khoản
