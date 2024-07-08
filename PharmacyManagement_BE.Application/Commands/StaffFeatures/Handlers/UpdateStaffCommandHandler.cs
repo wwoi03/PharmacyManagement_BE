@@ -38,7 +38,7 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, validation.Message);
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
 
                 // Kiểm tra nhân viên tồn tại
                 var userExists = await _userManager.FindByIdAsync(request.Id.ToString());
@@ -56,18 +56,6 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                     return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
                 }
 
-                // Kiểm tra quyền hợp lệ
-                foreach (var roleName in request.Roles)
-                {
-                    var role = await _roleManager.FindByNameAsync(roleName);
-                    if (role == null)
-                    {
-                        validation.Obj = "roles";
-                        validation.Message = $"Vai trò với ID {roleName} không tồn tại.";
-                        return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
-                    }
-                }
-
                 // Kiểm tra chi nhánh
                 if (request.BranchId != null)
                 {
@@ -77,6 +65,18 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                     {
                         validation.Obj = "default";
                         validation.Message = "Chi nhánh không tồn tại.";
+                        return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
+                    }
+                }
+
+                // Kiểm tra quyền hợp lệ
+                foreach (var normalRoleName in request.Roles)
+                {
+                    var role = await _roleManager.FindByNameAsync(normalRoleName);
+                    if (role == null)
+                    {
+                        validation.Obj = "roles";
+                        validation.Message = $"Vai trò với ID {normalRoleName} không tồn tại.";
                         return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
                     }
                 }
@@ -109,9 +109,11 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Handlers
                 }
 
                 // Thêm role mới và xóa role cũ cho tài khoản
-                var currentRoles = await _userManager.GetRolesAsync(staff);
-                var rolesToAdd = request.Roles.Except(currentRoles).ToList();
-                var rolesToRemove = currentRoles.Except(request.Roles).ToList();
+                var currentRolesName = await _userManager.GetRolesAsync(staff);
+                var allRoles = _roleManager.Roles.ToList();
+                var currentNormalizedRoleNames = allRoles.Where(role => currentRolesName.Contains(role.Name)).Select(role => role.NormalizedName).ToList();
+                var rolesToAdd = request.Roles.Except(currentNormalizedRoleNames).ToList();
+                var rolesToRemove = currentNormalizedRoleNames.Except(request.Roles).ToList();
                 await _userManager.RemoveFromRolesAsync(staff, rolesToRemove);
                 await _userManager.AddToRolesAsync(staff, rolesToAdd);
 
