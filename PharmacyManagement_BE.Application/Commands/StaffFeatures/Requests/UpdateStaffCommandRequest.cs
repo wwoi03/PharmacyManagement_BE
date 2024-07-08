@@ -14,8 +14,8 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests
         public Guid Id { get; set; }
         public string FullName { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
+        public string? Password { get; set; }
+        public string? ConfirmPassword { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
@@ -31,12 +31,14 @@ namespace PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests
                 return new ValidationNotifyError<string>("Vui lòng nhập họ và tên.", "fullName");
             if (string.IsNullOrEmpty(UserName))
                 return new ValidationNotifyError<string>("Vui lòng tên đăng nhập.", "userName");
-            if (string.IsNullOrEmpty(Password))
-                return new ValidationNotifyError<string>("Vui lòng nhập mật khẩu.", "password");
-            if (string.IsNullOrEmpty(ConfirmPassword))
-                return new ValidationNotifyError<string>("Vui lòng xác nhận mật khẩu.", "confirmPassword");
-            if (!Password.Equals(ConfirmPassword))
-                return new ValidationNotifyError<string>("Mật khẩu xác nhận không chính xác.", "confirmPassword");
+            if (!string.IsNullOrEmpty(Password))
+            {
+                if (string.IsNullOrEmpty(ConfirmPassword))
+                    return new ValidationNotifyError<string>("Vui lòng xác nhận mật khẩu.", "confirmPassword");
+
+                if (!Password.Equals(ConfirmPassword))
+                    return new ValidationNotifyError<string>("Mật khẩu xác nhận không chính xác.", "confirmPassword");
+            }
             if (string.IsNullOrEmpty(PhoneNumber))
                 return new ValidationNotifyError<string>("Vui lòng nhập số điện thoại.", "phoneNumber");
             if (string.IsNullOrEmpty(Email))
