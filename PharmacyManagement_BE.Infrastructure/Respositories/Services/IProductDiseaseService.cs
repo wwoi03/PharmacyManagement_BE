@@ -11,5 +11,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface IProductDiseaseService : IRepositoryService<ProductDisease>
     {
         Task<bool> CreateRange(List<ProductDisease> productDiseases);
+        Task<ProductDisease> GetProductDisease(Guid productId, Guid diseaseId);
+        Task<List<ProductDisease>> GetAllByDisease(Guid diseaseId);
     }
 }

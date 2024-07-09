@@ -27,6 +27,12 @@ using System.Threading.Tasks;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
 using PharmacyManagement_BE.Application.Commands.CommentFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
+using PharmacyManagement_BE.Application.Commands.ProductDiseaseFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDiseaseDTOs;
+using PharmacyManagement_BE.Application.Commands.DiseaseSymptomFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductSupportDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseSymptomDTOs;
+using PharmacyManagement_BE.Application.Commands.ProductSupportFeatures.Requests;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -109,6 +115,21 @@ namespace PharmacyManagement_BE.Application.Extentions
             #region Order
             CreateMap<Order, OrderDTO>().ReverseMap();
             #endregion Order
+
+            #region ProductDisease
+            CreateMap<CreateProductDiseaseCommandRequest, ProductDisease>().ReverseMap();
+            CreateMap<ProductDiseaseDTO, ProductDisease>().ReverseMap();
+            #endregion ProductDisease
+
+            #region DiseaseSymptom
+            CreateMap<CreateDiseaseSymptomCommandRequest, DiseaseSymptom>().ReverseMap();
+            CreateMap<DiseaseSymptomDTO, DiseaseSymptom>().ReverseMap();
+            #endregion DiseaseSymptom
+
+            #region ProductSupport
+            CreateMap<CreateProductSupportCommandRequest, ProductSupport>().ReverseMap();
+            CreateMap<ProductSupportDTO, ProductSupport>().ReverseMap();
+            #endregion ProductSupport
 
         }
     }

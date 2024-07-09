@@ -11,5 +11,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface IProductSupportService : IRepositoryService<ProductSupport>
     {
         Task<bool> CreateRange(List<ProductSupport> productSupports);
+        Task<List<ProductSupport>> GetAllBySupport(Guid supportId);
+        Task<ProductSupport> GetProductSupport(Guid supportId, Guid productId);
     } 
 }

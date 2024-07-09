@@ -1,8 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PharmacyManagement_BE.Application.Commands.DiseaseSymptomFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.ProductSupportFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.SupportFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests;
+using PharmacyManagement_BE.Application.Queries.DiseaseSymptomFeatures.Requests;
+using PharmacyManagement_BE.Application.Queries.ProductSupportFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.SupportFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Support.Controllers
@@ -92,6 +96,47 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Support.Controllers
 
         [HttpGet("SearchSupport")]
         public async Task<IActionResult> Search([FromQuery] SearchSupportQueryRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // quan hệ Product support
+        [HttpPost("CreateProductSupport")]
+        public async Task<IActionResult> CreateProductSupport(CreateProductSupportCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteProductSupport")]
+        public async Task<IActionResult> DeleteProductSupport(DeleteProductSupportCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetSupportProducts")]
+        public async Task<IActionResult> GetSupportProducts([FromQuery] GetSupportProductsQueryRequest request)
         {
             try
             {

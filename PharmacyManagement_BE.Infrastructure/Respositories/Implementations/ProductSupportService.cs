@@ -1,4 +1,5 @@
-﻿using PharmacyManagement_BE.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
@@ -30,6 +31,18 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             {
                 return false;
             }
+        }
+        public async Task<ProductSupport> GetProductSupport(Guid supportId, Guid productId)
+        {
+            return await _context.ProductSupports.FirstOrDefaultAsync(r => r.ProductId == productId && r.SupportId == supportId);
+        }
+
+        public async Task<List<ProductSupport>> GetAllBySupport(Guid supportId)
+        {
+            return await _context.ProductSupports
+                .Include(r => r.Product)
+                .Include(r => r.Support)
+                .Where(r => r.SupportId == supportId).ToListAsync();
         }
     }
 }

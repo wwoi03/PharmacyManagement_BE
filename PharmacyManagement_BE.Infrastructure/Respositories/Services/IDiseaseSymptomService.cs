@@ -10,6 +10,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IDiseaseSymptomService : IRepositoryService<DiseaseSymptom>
     {
-
+        Task<DiseaseSymptom> GetDiseaseSymptom(Guid symptomId, Guid diseaseId);
+        Task<List<DiseaseSymptom>> GetAllByDisease(Guid diseaseId);
+        Task<List<DiseaseSymptom>> GetAllBySymptom(Guid symptomId);
     }
 }

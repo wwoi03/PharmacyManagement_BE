@@ -1,4 +1,6 @@
-﻿using PharmacyManagement_BE.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
@@ -30,6 +32,19 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             {
                 return false;
             }
+        }
+
+        public async Task<ProductDisease> GetProductDisease(Guid productId, Guid diseaseId)
+        {
+            return await _context.ProductDiseases.FirstOrDefaultAsync(r => r.ProductId == productId && r.DiseaseId == diseaseId);      
+        }
+
+        public async Task<List<ProductDisease>> GetAllByDisease(Guid diseaseId)
+        {
+            return await _context.ProductDiseases
+                .Include(r => r.Product)
+                .Include(r => r.Disease)
+                .Where(r => r.DiseaseId == diseaseId).ToListAsync();
         }
     }
 }
