@@ -36,7 +36,7 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 // Không kiểm tra tên hỗ trợ của thuốc vì hỗ trợ của thuốc có thể có nhiều tên trùng nhau
                 var checkExit = await _entities.SupportService.CheckExit(request.CodeSupport, request.Name);
 
-                if (!checkExit.IsSuccessed)
+                if (!checkExit.ValidationNotify.IsSuccessed)
                     return checkExit;
 
                 // Chuyển đổi request sang dữ liệu
@@ -52,7 +52,7 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Thêm hỗ trợ của thuốc thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm hỗ trợ của thuốc thành công.");
             }
             catch (Exception)
             {

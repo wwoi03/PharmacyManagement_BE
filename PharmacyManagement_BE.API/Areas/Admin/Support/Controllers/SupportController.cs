@@ -39,7 +39,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Support.Controllers
         }
 
         [HttpDelete("DeleteSupport")]
-        public async Task<IActionResult> Delete(DeleteSupportCommandRequest request)
+        public async Task<IActionResult> Delete([FromQuery] DeleteSupportCommandRequest request)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Support.Controllers
             }
         }
         [HttpDelete("DeleteProductSupport")]
-        public async Task<IActionResult> DeleteProductSupport(DeleteProductSupportCommandRequest request)
+        public async Task<IActionResult> DeleteProductSupport([FromQuery] DeleteProductSupportCommandRequest request)
         {
             try
             {

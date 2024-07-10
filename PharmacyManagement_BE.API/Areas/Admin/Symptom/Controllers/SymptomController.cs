@@ -38,7 +38,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Symptom.Controllers
         }
 
         [HttpDelete("DeleteSymptom")]
-        public async Task<IActionResult> Delete(DeleteSymptomCommandRequest request)
+        public async Task<IActionResult> Delete([FromQuery] DeleteSymptomCommandRequest request)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Symptom.Controllers
             }
         }
         [HttpDelete("DeleteDiseaseSymptom")]
-        public async Task<IActionResult> DeleteDiseaseSymptom(DeleteDiseaseSymptomCommandRequest request)
+        public async Task<IActionResult> DeleteDiseaseSymptom([FromQuery] DeleteDiseaseSymptomCommandRequest request)
         {
             try
             {

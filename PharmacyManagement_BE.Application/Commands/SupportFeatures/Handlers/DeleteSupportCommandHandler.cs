@@ -34,7 +34,7 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 var deleteSupport = _entities.SupportService.Delete(support);
 
                 //Kiểm tra trạng thái xóa
-                if (!deleteSupport == false)
+                if (deleteSupport == false)
                     return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Xóa hỗ trợ của thuốc thất bại, vui lòng thử lại sau.");
 
                 // lưu vào database

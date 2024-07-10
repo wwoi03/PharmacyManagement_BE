@@ -55,7 +55,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
         }
 
         [HttpDelete ("DeleteDisease")]
-        public async Task<IActionResult> Delete(DeleteDiseaseCommandRequest request)
+        public async Task<IActionResult> Delete([FromQuery]DeleteDiseaseCommandRequest request)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
             }
         }
         [HttpDelete("DeleteProductDisease")]
-        public async Task<IActionResult> DeleteProductDisease(DeleteProductDiseaseCommandRequest request)
+        public async Task<IActionResult> DeleteProductDisease([FromQuery] DeleteProductDiseaseCommandRequest request)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
             }
         }
         [HttpDelete("DeleteDiseaseSymptom")]
-        public async Task<IActionResult> DeleteDiseaseSymptom(DeleteDiseaseSymptomCommandRequest request)
+        public async Task<IActionResult> DeleteDiseaseSymptom([FromQuery] DeleteDiseaseSymptomCommandRequest request)
         {
             try
             {

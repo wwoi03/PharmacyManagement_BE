@@ -35,7 +35,7 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
                 var deleteSymptom = _entities.SymptomService.Delete(symptom);
 
                 //Kiểm tra trạng thái xóa
-                if (!deleteSymptom == false)
+                if (deleteSymptom == false)
                     return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Xóa triệu chứng thất bại, vui lòng thử lại sau.");
 
                 // lưu vào database
