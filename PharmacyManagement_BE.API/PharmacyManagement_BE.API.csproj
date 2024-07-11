@@ -14,4 +14,8 @@
     <ProjectReference Include="..\PharmacyManagement_BE.Application\PharmacyManagement_BE.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Photos\" />
+  </ItemGroup>
+
 </Project>

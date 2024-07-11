@@ -27,8 +27,8 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests
         public string? BrandOrigin { get; set; }
         public string? AgeOfUse { get; set; }
         public Guid? CategoryId { get; set; }
-        public string Image { get; set; }
-        public List<string> Images { get; set; }
+        public string? Image { get; set; }
+        public List<string>? Images { get; set; }
         public List<Guid>? ProductIngredients { get; set; }
         public List<Guid>? ProductSupports { get; set; }
         public List<Guid>? ProductDiseases { get; set; }
