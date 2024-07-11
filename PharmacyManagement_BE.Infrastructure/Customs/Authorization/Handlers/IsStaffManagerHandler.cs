@@ -44,10 +44,12 @@ namespace PharmacyManagement_BE.Infrastructure.Customs.Authorization.Handlers
 
                 if (user != null)
                 {
-                    var roles = await _userManager.GetRolesAsync(user);
+                    var currentRolesName = await _userManager.GetRolesAsync(user);
+                    var allRoles = _roleManager.Roles.ToList();
+                    var currentNormalizedRoleNames = allRoles.Where(role => currentRolesName.Contains(role.Name)).Select(role => role.NormalizedName.ToUpper()).ToList();
 
                     // Kiểm tra Role
-                    if (roles.Contains(requirement.Role))
+                    if (currentNormalizedRoleNames.Contains(requirement.Role.ToUpper()))
                         context.Succeed(requirement);
                 }
             }
