@@ -47,7 +47,6 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Upload.UploadControllers
             }
             catch (Exception)
             {
-                // Nếu có lỗi xảy ra, trả về tên của tệp tin mặc định
                 return Ok(new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Lỗi hệ thống"));
             }
         }
