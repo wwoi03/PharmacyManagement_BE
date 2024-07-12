@@ -39,8 +39,15 @@ namespace PharmacyManagement_BE.Application.Commands.ProductSupportFeatures.Hand
                 if (product == null)
                     return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Sản phẩm không tồn tại.");
 
+                //Kiểm tra tồn tại
+                var checkExit = await _entities.ProductSupportService.CheckExit(request.ProductId, request.SupportId);
+
+                if (!checkExit.ValidationNotify.IsSuccessed)
+                    return checkExit;
+
                 // Chuyển đổi request sang dữ liệu
                 var create = _mapper.Map<ProductSupport>(request);
+
 
                 // Tạo bệnh mới
                 var status = _entities.ProductSupportService.Create(create);

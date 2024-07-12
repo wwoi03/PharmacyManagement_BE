@@ -13,5 +13,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<DiseaseSymptom> GetDiseaseSymptom(Guid symptomId, Guid diseaseId);
         Task<List<DiseaseSymptom>> GetAllByDisease(Guid diseaseId);
         Task<List<DiseaseSymptom>> GetAllBySymptom(Guid symptomId);
+        Task<ResponseAPI<string>> CheckExit(Guid diseaseId, Guid symptomId);
     }
 }

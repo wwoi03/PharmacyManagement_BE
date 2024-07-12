@@ -5,6 +5,7 @@ using PharmacyManagement_BE.Infrastructure.Respositories.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,18 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<List<T>> GetAll()
         {
             return await Context.Set<T>().ToListAsync();
+        }
+
+        public async Task<List<T>> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = Context.Set<T>();
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<T> GetById(Guid? id)

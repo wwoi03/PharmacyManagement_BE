@@ -39,6 +39,12 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseSymptomFeatures.Hand
                 if (disease == null)
                     return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
 
+                //Kiểm tra tồn tại
+                var checkExit = await _entities.DiseaseSymptomService.CheckExit(request.DiseaseId, request.SymptomId);
+
+                if (!checkExit.ValidationNotify.IsSuccessed)
+                    return checkExit;
+
                 // Chuyển đổi request sang dữ liệu
                 var create = _mapper.Map<DiseaseSymptom>(request);
 

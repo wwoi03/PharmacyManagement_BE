@@ -30,7 +30,7 @@ namespace PharmacyManagement_BE.Application.Queries.OrderFeatures.Handlers
             try
             {
                 //Lấy danh sách đơn hàng
-                var listOrder = await _entities.OrderService.GetAll();
+                var listOrder = await _entities.OrderService.GetAllIncluding(r=> r.Customer , r=> r.PaymentMethod);
 
                 //Gán danh sách đơn hàng thành response
                 var response = _mapper.Map<List<OrderDTO>>(listOrder);
