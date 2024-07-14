@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using PharmacyManagement_BE.API.Configs;
 using PharmacyManagement_BE.Application.Extentions;
@@ -21,7 +23,6 @@ builder.Services.AddCors(options =>
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
-
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -68,6 +69,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -75,6 +77,13 @@ app.UseEndpoints(endpoints =>
 {
     app.UseMiddleware<TokenValidationExtention>();
     app.MapControllers();
+});
+
+// Setup upload image
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Photos")),
+    RequestPath = "/Photos"
 });
 
 app.Run();

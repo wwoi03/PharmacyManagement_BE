@@ -12,6 +12,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
     [Route("api/[area]/[controller]")]
     [ApiController]
     [Area("Admin")]
+    [Authorize(Policy = "StaffManager")]
     public class StaffController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,7 +23,6 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Staff.Controllers
         }
 
         [HttpGet("GetStaffs")]
-        //[Authorize(Policy = "StaffManager")]
         public async Task<IActionResult> Get()
         {
             try

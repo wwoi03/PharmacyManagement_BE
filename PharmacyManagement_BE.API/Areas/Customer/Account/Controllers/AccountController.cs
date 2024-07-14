@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PharmacyManagement_BE.Application.Commands.AccountEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Customer.Account.Controllers
@@ -18,8 +19,8 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Account.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("SignIn")]
-        public async Task<IActionResult> SignIn(SignInRequest request)
+        [HttpPut("SignIn")]
+        public async Task<IActionResult> SignIn([FromBody] SignInCommandRequest request)
         {
             try
             {
