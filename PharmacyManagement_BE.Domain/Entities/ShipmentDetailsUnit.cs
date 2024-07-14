@@ -17,5 +17,7 @@ namespace PharmacyManagement_BE.Domain.Entities
         public Guid UnitId { get; set; }
         public Unit Unit { get; set; } = null!;
         public decimal SalePrice { get; set; }
+        public int Level { get; set; }
+        public int UnitCount { get; set; }
     }
 }
