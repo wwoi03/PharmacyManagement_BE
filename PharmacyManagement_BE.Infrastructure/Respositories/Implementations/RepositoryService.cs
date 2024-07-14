@@ -38,6 +38,25 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return await query.ToListAsync();
         }
 
+        public async Task<T> GetByIdIncluding(Guid? id, params Expression<Func<T, object>>[] includeProperties)
+        {
+            // Kiểm tra nếu id không tồn tại thì trả về null
+            if (!id.HasValue)
+            {
+                return null;
+            }
+
+            // Lấy các thuộc tính include
+            IQueryable<T> query = Context.Set<T>();
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            // Lấy đối tượng theo id sử dụng 
+            return await query.FirstOrDefaultAsync(x => EF.Property<Guid>(x, "Id") == id);
+        }
+
         public async Task<T> GetById(Guid? id)
         {
             return await Context.Set<T>().FindAsync(id);

@@ -13,6 +13,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<T> GetById(Guid? id);
         Task<List<T>> GetAll();
         Task<List<T>> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties);
+        Task<T> GetByIdIncluding(Guid? id, params Expression<Func<T, object>>[] includeProperties);
         bool Create(T entity);
         bool Update(T entity);
         bool Delete(T entity);
