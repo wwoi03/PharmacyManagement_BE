@@ -38,5 +38,7 @@ namespace PharmacyManagement_BE.Domain.Entities
 
         [StringLength(100)]
         public string? ProductionBatch { get; set; }
+
+        public Guid UnitId { get; set; }
     }
 }
