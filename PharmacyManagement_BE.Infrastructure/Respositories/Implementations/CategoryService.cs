@@ -178,6 +178,18 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 })
                 .ToList();
         }
+
+        public async Task<List<SelectCategoryDTO>> GetCategoriesSelect()
+        {
+            return _context.Categories
+                .Select(i => new SelectCategoryDTO
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    CodeCategory = i.CodeCategory,
+                })
+                .ToList();
+        }
         #endregion EF & LinQ
     }
 }
