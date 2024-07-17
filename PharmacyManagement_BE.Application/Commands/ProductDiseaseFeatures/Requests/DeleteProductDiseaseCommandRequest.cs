@@ -10,7 +10,7 @@ namespace PharmacyManagement_BE.Application.Commands.ProductDiseaseFeatures.Requ
 {
     public class DeleteProductDiseaseCommandRequest : IRequest<ResponseAPI<string>>
     {
-        public Guid ProductId { get; set; }
         public Guid DiseaseId { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

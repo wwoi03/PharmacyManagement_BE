@@ -10,7 +10,7 @@ namespace PharmacyManagement_BE.Application.Commands.ProductSupportFeatures.Requ
 {
     public class DeleteProductSupportCommandRequest : IRequest<ResponseAPI<string>>
     {
-        public Guid SupportId { get; set; }
         public Guid ProductId { get; set; }
+        public Guid SupportId { get; set; }
     }
 }
