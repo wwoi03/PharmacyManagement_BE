@@ -1,4 +1,5 @@
 ﻿using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupplierDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
@@ -22,6 +23,18 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<Supplier?> GetSupplierByCode(string codeSupplier)
         {
             return _context.Suppliers.FirstOrDefault(s => s.CodeSupplier.Equals(codeSupplier));
+        }
+
+        public async Task<List<SelectSupplierDTO>> GetSuppliersSelect()
+        {
+            return _context.Suppliers
+                .Select(s => new SelectSupplierDTO
+                {
+                    Id = s.Id,
+                    CodeSupplier = s.CodeSupplier,
+                    Name = s.Name,
+                })
+                .ToList();
         }
     }
 }

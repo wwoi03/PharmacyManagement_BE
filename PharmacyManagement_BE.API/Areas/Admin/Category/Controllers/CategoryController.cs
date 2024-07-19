@@ -158,5 +158,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Category.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetCategoriesSelect")]
+        public async Task<IActionResult> GetCategoriesSelect()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetCategoriesSelectQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

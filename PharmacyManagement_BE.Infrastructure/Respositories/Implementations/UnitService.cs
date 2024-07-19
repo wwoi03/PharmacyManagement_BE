@@ -12,9 +12,16 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class UnitService : RepositoryService<Unit>, IUnitService
     {
+        private readonly PharmacyManagementContext _context;
+
         public UnitService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<Unit?> GetUnitByNameOrCode(string name = "", string code = "")
+        {
+            return _context.Units.FirstOrDefault(i => i.NameDetails.Equals(name) || i.Name.Equals(code));
         }
     }
 }

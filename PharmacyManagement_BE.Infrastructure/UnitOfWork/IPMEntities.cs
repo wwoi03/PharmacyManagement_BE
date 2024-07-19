@@ -25,7 +25,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
         IProductImageService ProductImageService { get; set; }
         IProductSupportService ProductSupportService { get; set; }
         IProductIngredientService ProductIngredientService { get; set; }
-        IShipmentDetailsUnitService ProductUnitService { get; set; }
+        IShipmentDetailsUnitService ShipmentDetailsUnitService { get; set; }
         IPromotionHistoryService PromotionHistoryService { get; set; }
         IPromotionProductService PromotionProductService { get; set; }
         IPromotionProgramService PromotionProgramService { get; set; }

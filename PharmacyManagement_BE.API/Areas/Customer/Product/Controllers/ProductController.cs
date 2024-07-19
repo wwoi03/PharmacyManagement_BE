@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.DTOs.Requests;
+using PharmacyManagement_BE.Application.Queries.ProductEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Domain.Roles;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.Securitys;
@@ -44,6 +45,20 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
             {
                 //var result = await _mediator.Send(new GetAllProductQueryRequest());
                 return Ok("Thành công");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetSellingProductByMonth")]
+        public async Task<IActionResult> GetSellingProductByMonth()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSellingProductByMonthQueryRequest());
+                return Ok(result);
             }
             catch (Exception ex)
             {

@@ -125,6 +125,23 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return _context.ShipmentDetails.Where(s => s.ShipmentId == shipmentId).ToList();
         }
 
+        public async Task<DetailsShipmentDTO?> GetShipmentDetails(Guid shipmentId)
+        {
+            return _context.Shipments
+                .Where(i => i.Id == shipmentId)
+                .Select(i => new DetailsShipmentDTO
+                {
+                    ShipmentId = i.Id,
+                    CodeShipment = i.CodeShipment,
+                    ImportDate = i.ImportDate,
+                    Note = i.Note,
+                    Status = i.Status,
+                    SupplierId = i.SupplierId,
+                    BranchId = i.BranchId
+
+                }).FirstOrDefault();
+        }
+
         /*public async Task<List<ShipmentDTO>> SearchShipments(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName)
         {
             return _context.Shipments
