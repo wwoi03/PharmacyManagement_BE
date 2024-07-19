@@ -10,6 +10,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IUnitService : IRepositoryService<Unit>
     {
-
+        Task<Unit?> GetUnitByNameOrCode(string name = "", string code = "");
     }
 }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Handlers
 {
-    internal class CreateShipmentDetailsCommandHandler : IRequestHandler<CreateShipmentDetailsCommandRequest, ResponseAPI<ShipmentDetailsRequest>>
+    internal class CreateShipmentDetailsCommandHandler : IRequestHandler<CreateShipmentDetailsCommandRequest, ResponseAPI<string>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
@@ -25,50 +25,102 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Han
             this._mapper = mapper;
         }
 
-        public async Task<ResponseAPI<ShipmentDetailsRequest>> Handle(CreateShipmentDetailsCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<string>> Handle(CreateShipmentDetailsCommandRequest request, CancellationToken cancellationToken)
         {
             try
             {
+                // Kiểm tra thông tin
+                var validation = request.IsValid();
+
+                if (!validation.IsSuccessed)
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
+
                 // Kiểm tra chi tiết đơn hàng tồn tại
                 var shipment = await _entities.ShipmentService.GetById(request.ShipmentId);
 
                 if (shipment == null)
-                    return new ResponseErrorAPI<ShipmentDetailsRequest>(StatusCodes.Status404NotFound, $"Đơn hàng có mã {request.ShipmentId} không tồn tại.");
-
-                // Kiểm tra ràng buộc
-                foreach (var item in request.ShipmentDetails)
                 {
-                    // Kiểm tra chi tiết đơn hàng tồn tại
-                    var product = await _entities.ProductService.GetById(item.ProductId);
+                    validation.Obj = "shipmentId";
+                    validation.Message = $"Đơn hàng có mã {request.ShipmentId} không tồn tại.";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, validation);
+                }
 
-                    if (product == null)
-                        return new ResponseErrorAPI<ShipmentDetailsRequest>(StatusCodes.Status404NotFound, $"Sản phẩm có mã {item.ProductId} không tồn tại.", item);
+                // Kiểm tra sản phẩm tồn tại
+                var product = await _entities.ProductService.GetById(request.ProductId);
+
+                if (product == null)
+                {
+                    validation.Obj = "productId";
+                    validation.Message = $"Sản phẩm có mã {request.ProductId} không tồn tại.";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, validation);
                 }
 
                 // Thêm chi tiết đơn hàng
-                var shipmentDetails = _mapper.Map<List<ShipmentDetails>>(request.ShipmentDetails);
-
-                foreach (var item in shipmentDetails)
-                {
-                    item.ShipmentId = request.ShipmentId;
-                }
-
-                var result = await _entities.ShipmentDetailsService.CreateRangeShipmentDetails(shipmentDetails);
+                var shipmentDetails = _mapper.Map<ShipmentDetails>(request);
+                shipmentDetails.Id = Guid.NewGuid();
+                var result = _entities.ShipmentDetailsService.Create(shipmentDetails);
 
                 if (!result)
-                    return new ResponseErrorAPI<ShipmentDetailsRequest>(StatusCodes.Status422UnprocessableEntity, "Vui lòng kiểm tra kỹ các chi tiết đơn hàng.");
+                {
+                    validation.Obj = "default";
+                    validation.Message = "Vui lòng kiểm tra kỹ các chi tiết đơn hàng.";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status422UnprocessableEntity, validation);
+                }
+
+                // Thêm giá bán
+                if (request.ShipmentDetailsUnits != null && request.ShipmentDetailsUnits.Count > 0)
+                {
+                    foreach (var item in request.ShipmentDetailsUnits)
+                    {
+                        var unitResult = await _entities.UnitService.GetUnitByNameOrCode(item.UnitName, item.CodeUnit);
+                        var unitId = Guid.NewGuid();
+
+                        if (item.Level == 1)
+                        {
+                            request.UnitId = unitId;
+                        }
+
+                        if (unitResult != null)
+                        {
+                            unitId = unitResult.Id;
+                            
+                        } 
+                        else
+                        {
+                            var unit = new Domain.Entities.Unit
+                            {
+                                Id = unitId,
+                                Name = item.UnitName,
+                                NameDetails = item.CodeUnit,
+                                UnitType = "PM_UNIT_PRODUCT"
+                            };
+
+                            _entities.UnitService.Create(unit);
+                        }
+
+                        var shipmentDetailsUnit = new ShipmentDetailsUnit
+                        {
+                            UnitId = unitId,
+                            ShipmentDetailsId = shipmentDetails.Id,
+                            Level = item.Level,
+                            SalePrice = item.SalePrice,
+                            UnitCount = item.UnitCount,
+                        };
+
+                        _entities.ShipmentDetailsUnitService.Create(shipmentDetailsUnit);
+                    }
+                }
 
                 // SaveChange
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<ShipmentDetailsRequest>(StatusCodes.Status200OK, "Thêm chi tiết các đơn hàng thành công");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm chi tiết các đơn hàng thành công");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return new ResponseErrorAPI<ShipmentDetailsRequest>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
-            throw new NotImplementedException();
         }
     }
 }

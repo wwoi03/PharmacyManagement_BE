@@ -8,8 +8,8 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitDT
 {
     public class ShipmentDetailsUnitDTO
     {
-        public Guid UnitId { get; set; }
-        public string CodeUnit { get; set; }
+        public Guid? UnitId { get; set; }
+        public string? CodeUnit { get; set; }
         public string UnitName { get; set; }
         public decimal SalePrice { get; set; }
         public int UnitCount { get; set; }
