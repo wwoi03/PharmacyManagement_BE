@@ -143,7 +143,7 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
                 // SaveChange
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm sản phẩm có mã {request.CodeMedicine} thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm sản phẩm có mã {request.CodeMedicine} thành công.", product.Id.ToString());
             }
             catch (Exception ex)
             {

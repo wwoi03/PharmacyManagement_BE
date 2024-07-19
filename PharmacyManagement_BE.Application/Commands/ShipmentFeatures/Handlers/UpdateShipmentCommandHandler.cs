@@ -40,12 +40,15 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Handlers
                 if (supplier == null)
                     return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Nhà cung cấp không tồn tại.");
 
-                // Kiểm tra Chi nhánh tồn tại
-                var branch = await _entities.BranchService.GetById(request.BranchId);
+                if (request.BranchId != null)
+                {
+                    // Kiểm tra Chi nhánh tồn tại
+                    var branch = await _entities.BranchService.GetById(request.BranchId);
 
-                if (branch == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Chi nhánh không tồn tại.");
-
+                    if (branch == null)
+                        return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Chi nhánh không tồn tại.");
+                }
+                
                 // Cập nhật đơn hàng mới
                 _mapper.Map(request, shipment);
                 shipment.UpdatedTime = DateTime.Now;

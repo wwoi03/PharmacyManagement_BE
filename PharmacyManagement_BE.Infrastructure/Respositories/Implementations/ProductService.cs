@@ -67,7 +67,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return _context.Products.FirstOrDefault(i => i.CodeMedicine.Equals(codeMedicine) || i.Name.Equals(name));
         }
 
-        public async Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year)
+        /*public async Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@Month", month);
@@ -116,6 +116,23 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             }
 
             return result;
+        }*/
+
+        public async Task<List<SelectProductDTO>> GetProductsSelect()
+        {
+            return _context.Products
+                .Select(p => new SelectProductDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    CodeMedicine = p.CodeMedicine,
+                })
+                .ToList();
+        }
+
+        public Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year)
+        {
+            throw new NotImplementedException();
         }
         #endregion EF & LinQ
     }

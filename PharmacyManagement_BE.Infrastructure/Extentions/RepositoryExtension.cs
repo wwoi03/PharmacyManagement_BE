@@ -28,6 +28,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
             services.AddTransient<IDiseaseSymptomService, DiseaseSymptomService>();
             services.AddTransient<IIngredientService, IngredientService>();
             services.AddTransient<IOrderDetailsService, OrderDetailsService>();
+            services.AddTransient<IOrderDetailsService, OrderDetailsService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPaymentMethodService, PaymentMethodService>();
             services.AddTransient<IProductDiseaseService, ProductDiseaseService>();

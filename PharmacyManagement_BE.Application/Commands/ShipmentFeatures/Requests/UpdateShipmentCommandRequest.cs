@@ -11,6 +11,7 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentFeatures.Requests
     public class UpdateShipmentCommandRequest : IRequest<ResponseAPI<string>>
     {
         public Guid ShipmentId { get; set; }
+        public string CodeShipment { get; set; }
         public DateTime ImportDate { get; set; }
         public string Note { get; set; }
         public string Status { get; set; }

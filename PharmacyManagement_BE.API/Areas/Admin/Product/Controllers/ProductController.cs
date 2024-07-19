@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests;
 using PharmacyManagement_BE.Application.DTOs.Requests;
+using PharmacyManagement_BE.Application.Queries.ProductFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
@@ -83,6 +84,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
             try
             {
                 var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetProductsSelect")]
+        public async Task<IActionResult> GetProductsSelect()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetProductSelectQueryRequest());
                 return Ok(result);
             }
             catch (Exception ex)
