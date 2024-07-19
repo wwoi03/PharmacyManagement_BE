@@ -31,5 +31,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Supplier.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("GetSuppliersSelect")]
+        public async Task<IActionResult> GetSuppliersSelect()
+        {
+            try
+            {
+                var result = await mediator.Send(new GetSupplierSelectQueryRequest());
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
         public IProductImageService ProductImageService { get; set; }
         public IProductSupportService ProductSupportService { get; set; }
         public IProductIngredientService ProductIngredientService { get; set; }
-        public IShipmentDetailsUnitService ProductUnitService { get; set; }
+        public IShipmentDetailsUnitService ShipmentDetailsUnitService { get; set; }
         public IPromotionHistoryService PromotionHistoryService { get; set; }
         public IPromotionProductService PromotionProductService { get; set; }
         public IPromotionProgramService PromotionProgramService { get; set; }
@@ -63,7 +63,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
             IProductImageService productImageService,
             IProductIngredientService productIngredientService,
             IProductSupportService productSupportService,
-            IShipmentDetailsUnitService productUnitService,
+            IShipmentDetailsUnitService shipmentDetailsUnitService,
             IPromotionHistoryService promotionHistoryService,
             IPromotionProductService promotionProductService,
             IPromotionProgramService promotionProgramService,
@@ -99,7 +99,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
             this.PromotionHistoryService = promotionHistoryService;
             this.ProductIngredientService = productIngredientService;
             this.ProductSupportService = productSupportService;
-            this.ProductUnitService = productUnitService;
+            this.ShipmentDetailsUnitService = shipmentDetailsUnitService;
             this.PromotionProductService = promotionProductService;
             this.PromotionProgramService = promotionProgramService;
             this.PromotionService = promotionService;

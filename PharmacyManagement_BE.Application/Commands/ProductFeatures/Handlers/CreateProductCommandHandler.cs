@@ -49,30 +49,39 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
                     return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Loại sản phẩm không tồn tại");
 
                 // Kiểm tra thành phần sản phẩm tồn tại
-                foreach (var item in request.ProductIngredients)
+                if (request.ProductIngredients != null && request.ProductIngredients.Count > 0)
                 {
-                    var ingredient = await _entities.IngredientService.GetById(item);
+                    foreach (var item in request.ProductIngredients)
+                    {
+                        var ingredient = await _entities.IngredientService.GetById(item);
 
-                    if (ingredient == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Thành phần có mã {item} không tồn tại");
+                        if (ingredient == null)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Thành phần có mã {item} không tồn tại");
+                    }
                 }
 
                 // Kiểm tra hỗ trợ sản phẩm tồn tại
-                foreach (var item in request.ProductSupports)
+                if (request.ProductSupports != null && request.ProductSupports.Count > 0)
                 {
-                    var support = await _entities.SupportService.GetById(item);
+                    foreach (var item in request.ProductSupports)
+                    {
+                        var support = await _entities.SupportService.GetById(item);
 
-                    if (support == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Hỗ trợ có mã {item} không tồn tại");
+                        if (support == null)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Hỗ trợ có mã {item} không tồn tại");
+                    }
                 }
 
                 // Kiểm tra loại bệnh tồn tại
-                foreach (var item in request.ProductDiseases)
+                if (request.ProductDiseases != null && request.ProductDiseases.Count > 0)
                 {
-                    var disease = await _entities.DiseaseService.GetById(item);
+                    foreach (var item in request.ProductDiseases)
+                    {
+                        var disease = await _entities.DiseaseService.GetById(item);
 
-                    if (disease == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Loại bệnh có mã {item} không tồn tại");
+                        if (disease == null)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Loại bệnh có mã {item} không tồn tại");
+                    }
                 }
 
                 // Thêm sản phẩm
@@ -134,12 +143,12 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
                 // SaveChange
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm sản phẩm có mã {request.CodeMedicine} thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm sản phẩm có mã {request.CodeMedicine} thành công.", product.Id.ToString());
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

@@ -73,6 +73,7 @@ namespace PharmacyManagement_BE.Application.Extentions
 
             #region ShipmentDetails
             CreateMap<ShipmentDetails, UpdateShipmentDetailsCommandRequest>().ReverseMap();
+            CreateMap<ShipmentDetails, CreateShipmentDetailsCommandRequest>().ReverseMap();
             CreateMap<ShipmentDetails, ShipmentDetailsRequest>().ReverseMap();
             #endregion ShipmentDetails
 

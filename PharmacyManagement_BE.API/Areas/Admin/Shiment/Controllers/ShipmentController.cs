@@ -116,5 +116,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Shiment.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("Details")]
+        public async Task<IActionResult> Details([FromQuery] Guid shipmentId)
+        {
+            try
+            {
+                var result = await mediator.Send(new GetShipmentDetailsQueryRequest { ShipmentId = shipmentId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

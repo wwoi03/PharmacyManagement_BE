@@ -43,7 +43,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Upload.UploadControllers
                 }
 
                 // Trả về tên của tệp tin đã được lưu trữ thành công
-                return Ok(new ResponseSuccessAPI<string>(StatusCodes.Status200OK, fileName));
+                return Ok(new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm thành công", fileName));
             }
             catch (Exception)
             {
