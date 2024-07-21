@@ -138,7 +138,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     Status = i.Status,
                     SupplierId = i.SupplierId,
                     BranchId = i.BranchId
-
                 }).FirstOrDefault();
         }
 
