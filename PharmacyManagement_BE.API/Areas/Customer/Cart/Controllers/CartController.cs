@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.CartEcommerceFeatures.Requests;
-using PharmacyManagement_BE.Application.Commands.CartFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.CartEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 
@@ -21,12 +20,12 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Cart.Controllers
             _mediator = mediator;
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteCartCommandRequest request)
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete([FromQuery] Guid cartId)
         {
             try
             {
-                var result = await _mediator.Send(request);
+                var result = await _mediator.Send(new DeleteCartCommandRequest { CartId = cartId });
                 return Ok(result);
             }
             catch (Exception ex)
