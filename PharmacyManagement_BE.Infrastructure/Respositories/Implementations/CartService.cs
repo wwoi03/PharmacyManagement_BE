@@ -29,12 +29,12 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 .Include(i => i.Unit)
                 .Select(i => new ItemCartDTO
                 {
-                    CardId = i.Id,
+                    CartId = i.Id,
                     ProductId = i.ProductId,
                     UnitId = i.UnitId,
                     ProductName = i.Product.Name,
                     ProductImage = i.Product.Image,
-                    UnitName = i.Unit.Name,
+                    UnitName = i.Unit.NameDetails,
                     Quantity = i.Quantity,
                 })
                 .ToList();

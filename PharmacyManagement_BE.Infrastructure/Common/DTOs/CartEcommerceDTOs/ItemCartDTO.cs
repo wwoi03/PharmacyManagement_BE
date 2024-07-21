@@ -8,7 +8,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.CartEcommerceDTOs
 {
     public class ItemCartDTO
     {
-        public Guid CardId { get; set; }
+        public Guid CartId { get; set; }
         public Guid ProductId { get; set; }
         public Guid UnitId { get; set; }
         public string ProductName { get; set; }
