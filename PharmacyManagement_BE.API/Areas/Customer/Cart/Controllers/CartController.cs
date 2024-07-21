@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.CartFeatures.Requests;
+using PharmacyManagement_BE.Application.Queries.CartEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 
 namespace PharmacyManagement_BE.API.Areas.Customer.Cart.Controllers
@@ -25,6 +26,20 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Cart.Controllers
             try
             {
                 var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetCart")]
+        public async Task<IActionResult> GetCart()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetCartQueryRequest());
                 return Ok(result);
             }
             catch (Exception ex)
