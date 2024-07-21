@@ -13,7 +13,7 @@ namespace PharmacyManagement_BE.Application.Commands.OrderFeatures.Requests
     public class UpdateStatusOrderCommandRequest : IRequest<ResponseAPI<string>>
     {
         public Guid Id { get; set; }
-        public OrderType type { get; set; }
+        public int type { get; set; }
 
         public ValidationNotify<string> IsValid()
         {

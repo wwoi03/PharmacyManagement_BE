@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.OrderFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.OrderFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests;
+using PharmacyManagement_BE.Domain.Types;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Order.Controllers
 {
@@ -60,6 +61,14 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Order.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        //Lấy trạng thái đơn hàng
+        [HttpGet("GetOrderStatuses")]
+        public IActionResult GetOrderStatusEnum()
+        {
+            var values = Enum.GetNames(typeof(OrderType));
+            return Ok(values);
         }
 
     }

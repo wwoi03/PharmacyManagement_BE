@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Commands.OrderFeatures.Requests;
+using PharmacyManagement_BE.Domain.Types;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
@@ -36,7 +37,12 @@ namespace PharmacyManagement_BE.Application.Commands.OrderFeatures.Handlers
                 if (!validation.IsSuccessed)
                     return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
 
-                //Gán giá trị thay đổi => check hủy đơn => không được đổi sang trạng thái khác => làm sau => lười
+                //Kiểm tra điều kiện
+                var checkStatus = _entities.OrderService.CheckUpdateStatus(order, (OrderType)request.type);
+                
+                if (!checkStatus)
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, "Vi phạm điều kiện ràng buột trạng thái của đơn hàng!");
+
                 order.Status = request.type.ToString();
 
                 // Cập nhật lại đơn hàng

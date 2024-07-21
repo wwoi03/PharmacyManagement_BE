@@ -138,7 +138,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
             }
         }
         [HttpGet("GetProductDiseases")]
-        public async Task<IActionResult> GetProductDiseases([FromQuery] GetDiseaseSymptomsQueryRequest request)
+        public async Task<IActionResult> GetProductDiseases([FromQuery] GetDiseaseProductsQueryRequest request)
         {
             try
             {

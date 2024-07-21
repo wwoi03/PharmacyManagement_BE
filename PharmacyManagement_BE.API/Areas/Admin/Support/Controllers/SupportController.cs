@@ -135,7 +135,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Support.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("GetSupportProducts")]
+        [HttpGet("GetProductSupports")]
         public async Task<IActionResult> GetSupportProducts([FromQuery] GetSupportProductsQueryRequest request)
         {
             try

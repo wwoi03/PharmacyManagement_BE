@@ -58,6 +58,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
                .HasKey(o => new { o.OrderId, o.ShipmentDetailsId, o.UnitId });
             modelBuilder.Entity<ShipmentDetailsUnit>()
                .HasKey(o => new { o.ShipmentDetailsId, o.UnitId });
+
         }
 
         #region DbSet
