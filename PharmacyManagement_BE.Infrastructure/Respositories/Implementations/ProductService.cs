@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
+<<<<<<< HEAD
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitDTOs;
+=======
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductIngredientDTOs;
+>>>>>>> s1-hao-final-BE
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.DBContext.Dapper;
@@ -27,8 +31,55 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             this._dapperContext = dapperContext;
         }
 
-        #region EF & LinQ
-        public async Task<List<ListProductDTO>> SearchProducts(string ContentStr, string CategoryName)
+        public async Task<ProductEcommerceDTO>  GetProductWithDetails(Guid productId)
+        {
+
+            return _context.Products
+                .Where(p => p.Id == productId)
+                .Select(  p => new ProductEcommerceDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    CodeMedicine = p.CodeMedicine,
+                    Specifications = p.Specifications,
+                    ShortDescription = p.ShortDescription,
+                    Description = p.Description,
+                    Uses = p.Uses,
+                    HowToUse = p.HowToUse,
+                    SideEffects = p.SideEffects,
+                    Warning = p.Warning,
+                    Preserve = p.Preserve,
+                    Dosage = p.Dosage,
+                    Contraindication = p.Contraindication,
+                    DosageForms = p.DosageForms,
+                    RegistrationNumber = p.RegistrationNumber,
+                    BrandOrigin = p.BrandOrigin,
+                    AgeOfUse = p.AgeOfUse,
+                    CategoryId = p.CategoryId,
+                    Image = p.Image,
+                    ProductIngredients =  _context.ProductIngredients.Where(pi => pi.ProductId == productId)
+                        .Include(pi => pi.Ingredient)
+                        .Include(pi => pi.Unit)
+                        .Select( pi => new DetailsProductIngredientDTO
+                        {
+                            ProductId = pi.ProductId,
+                            IngredientId = pi.IngredientId,
+                            IngredientName = pi.Ingredient.Name,
+                            CodeIngredient = pi.Ingredient.CodeIngredient,
+                            Content = pi.Content,
+                            UnitId = pi.UnitId,
+                            UnitName = pi.Unit.Name,
+                        })
+                        .ToList(),
+                    ProductSupports =  _context.ProductSupports.Where(ps => ps.ProductId == p.Id).Select(ps => ps.SupportId).ToList(),
+                    ProductDiseases =  _context.ProductDiseases.Where(pd => pd.ProductId == p.Id).Select(pd => pd.DiseaseId).ToList()
+                })
+                .FirstOrDefault();
+        }
+    
+
+    #region EF & LinQ
+    public async Task<List<ListProductDTO>> SearchProducts(string ContentStr, string CategoryName)
         {
             return _context.Products
                 .Include(i => i.Category)

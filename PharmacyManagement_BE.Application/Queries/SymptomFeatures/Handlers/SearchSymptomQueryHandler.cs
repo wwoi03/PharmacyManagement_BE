@@ -32,15 +32,11 @@ namespace PharmacyManagement_BE.Application.Queries.SymptomFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<List<SymptomDTO>>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<List<SymptomDTO>>(StatusCodes.Status400BadRequest, validation.Message);
 
                 // Tìm kiếm triệu chứng theo tên gần đúng
                 var listSymptom = await _entities.SymptomService.Search(request.KeyWord, cancellationToken);
-                
-                ////Kiểm tra danh sách
-                //if (listSymptom == null || listSymptom.Count == 0)
-                //    return new ResponseErrorAPI<List<SymptomDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy triệu chứng");
-
+              
                 //Gán giá trị response
                 var response = _mapper.Map<List<SymptomDTO>>(listSymptom);
 

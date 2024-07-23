@@ -29,18 +29,18 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 var support = await _entities.SupportService.GetById(request.Id);
 
                 if (support == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Hỗ trợ của thuốc không tồn tại.");
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Hỗ trợ của thuốc không tồn tại.");
 
                 //Kiểm tra giá trị đầu vào
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
                
                 //B2: kiểm tra  tồn tại
                 var checkExit = await _entities.SupportService.CheckExit(request.CodeSupport, request.Name, request.Id);
 
-                if (!checkExit.IsSuccessed)
+                if (!checkExit.ValidationNotify.IsSuccessed)
                     return checkExit;
 
                 //Gán giá trị thay đổi
@@ -58,7 +58,7 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Cập nhật hỗ trợ của thuốc thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Cập nhật hỗ trợ của thuốc thành công.");
             }
             catch (Exception)
             {

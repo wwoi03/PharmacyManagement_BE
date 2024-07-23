@@ -30,12 +30,10 @@ namespace PharmacyManagement_BE.Application.Queries.OrderFeatures.Handlers
             try
             {
                 //Kiểm tra tồn tại
-                var validation = await _entities.OrderService.GetById(request.Id);
+                var order = await _entities.OrderService.GetOrderById(request.Id);
 
-                if (validation == null)
-                    return new ResponseErrorAPI<OrderDTO>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
-
-                var order = _mapper.Map<OrderDTO>(validation);
+                if (order == null)
+                    return new ResponseSuccessAPI<OrderDTO>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");
 
                 return new ResponseSuccessAPI<OrderDTO>(StatusCodes.Status200OK, "Thông tin đơn hàng", order);
             }

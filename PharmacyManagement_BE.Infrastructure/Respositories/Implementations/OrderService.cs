@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using AutoMapper;
+using Dapper;
+using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Types;
@@ -22,11 +24,13 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
     {
         private readonly PharmacyManagementContext _context;
         private readonly PMDapperContext _dapperContext;
+        private readonly IMapper _mapper;
 
-        public OrderService(PharmacyManagementContext context,PMDapperContext dapperContext) : base(context)
+        public OrderService(PharmacyManagementContext context, PMDapperContext dapperContext, IMapper mapper) : base(context)
         {
             this._context = context;
             this._dapperContext = dapperContext;
+            this._mapper = mapper;
         }
 
         public async Task<List<Order>> GetAllOrderByStaffId(Guid id)
@@ -261,6 +265,48 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return listOrder;
         }
         #endregion Dapper
+
+        public async Task<OrderDTO> GetOrderById(Guid Id)
+        {
+            //Lấy danh sách chi tiết đơn hàng
+            List<OrderDetailsDTO> orderDetails =  _mapper.Map<List<OrderDetailsDTO>>(await _context.OrderDetails
+                .Include(r => r.ShipmentDetails)
+                    .ThenInclude(s => s.Product)
+                .Where(x => x.OrderId == Id).ToListAsync());
+
+            //Lấy thông tin order
+            OrderDTO order = _mapper.Map<OrderDTO>(await _context.Orders
+                .Include(r => r.PaymentMethod)
+                .FirstOrDefaultAsync(x => x.Id == Id));
+
+            //Gán OrderDetails
+            order.OrderDetails = orderDetails;
+
+            //Trả về kết quả
+            return order;
+        }
+
+        public bool CheckUpdateStatus(Order order, OrderType status)
+        {
+            OrderType currentStatus = (OrderType)Enum.Parse(typeof(OrderType), order.Status);
+            int a = (int)currentStatus;
+            int b = (int)status;
+
+            //Kiểm tra trạng thái của đơn hàng
+            //Trạng thái không được phép quay ngược
+            if ((int)currentStatus >= (int)status)
+                return false;
+            //Khách hàng yêu cầu hủy thì Cửa hàng không được yêu cầu hủy
+            if (((int)currentStatus == 4 || (int)currentStatus == 5) && (int)status == 6 )
+                return false;
+            //Tình trạng đơn hàng không được nhảy bước
+            if ((int)currentStatus + 1 != (int)status && ((int)status !=4 && (int)status != 6))
+                return false;
+            //Đã giao không thể hủy hàng
+            if ((int)currentStatus == 3)
+                return false;
+            return true;
+        }
     }
 }
 

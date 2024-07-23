@@ -34,7 +34,7 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
                 var validation = await _entities.DiseaseService.GetById(request.Id);
 
                 if(validation == null)
-                    return new ResponseErrorAPI<DiseaseDTO>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
+                    return new ResponseSuccessAPI<DiseaseDTO>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
 
                 var disease = _mapper.Map<DiseaseDTO>(validation);
 

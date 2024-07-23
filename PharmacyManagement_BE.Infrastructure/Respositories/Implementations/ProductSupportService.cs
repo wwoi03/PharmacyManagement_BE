@@ -1,5 +1,8 @@
-﻿using PharmacyManagement_BE.Domain.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
 using System;
@@ -30,6 +33,36 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             {
                 return false;
             }
+        }
+        public async Task<ProductSupport> GetProductSupport(Guid supportId, Guid productId)
+        {
+            return await _context.ProductSupports.FirstOrDefaultAsync(r => r.ProductId == productId && r.SupportId == supportId);
+        }
+
+        public async Task<List<ProductSupport>> GetAllBySupport(Guid supportId)
+        {
+            return await _context.ProductSupports
+                .Include(r => r.Product)
+                .Include(r => r.Support)
+                .Where(r => r.SupportId == supportId).ToListAsync();
+        }
+
+        public async Task<ResponseAPI<string>> CheckExit(Guid productId, Guid supportId)
+        {
+            ValidationNotify<string> validation = new ValidationNotifySuccess<string>();
+            int status = StatusCodes.Status200OK;
+
+            //Kiểm tra tồn tại mã code 
+            var checkExit = await Context.ProductSupports.AnyAsync(r => r.ProductId == productId && r.SupportId == supportId);
+
+            if (checkExit)
+            {
+                validation = new ValidationNotifyError<string>();
+                validation.Message = "Quan hệ đã tồn tại";
+                status = StatusCodes.Status409Conflict;
+            }
+
+            return new ResponseSuccessAPI<string>(status, validation);
         }
     }
 }

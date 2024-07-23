@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.DiseaseSymptomFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.ProductDiseaseFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.StaffFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Requests;
+using PharmacyManagement_BE.Application.Queries.DiseaseSymptomFeatures.Requests;
+using PharmacyManagement_BE.Application.Queries.ProductDiseaseFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
 {
@@ -51,7 +55,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
         }
 
         [HttpDelete ("DeleteDisease")]
-        public async Task<IActionResult> Delete(DeleteDiseaseCommandRequest request)
+        public async Task<IActionResult> Delete([FromQuery]DeleteDiseaseCommandRequest request)
         {
             try
             {
@@ -94,6 +98,87 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
 
         [HttpGet("SearchDisease")]
         public async Task<IActionResult> Search([FromQuery]SearchDiseaseQueryRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // quan hệ DiseaseProducts
+        [HttpPost("CreateProductDisease")]
+        public async Task<IActionResult> CreateProductDisease(CreateProductDiseaseCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteProductDisease")]
+        public async Task<IActionResult> DeleteProductDisease([FromQuery] DeleteProductDiseaseCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetProductDiseases")]
+        public async Task<IActionResult> GetProductDiseases([FromQuery] GetDiseaseProductsQueryRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        // quan hệ Disease symptom
+        [HttpPost("CreateDiseaseSymptom")]
+        public async Task<IActionResult> CreateDiseaseSymptom(CreateDiseaseSymptomCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteDiseaseSymptom")]
+        public async Task<IActionResult> DeleteDiseaseSymptom([FromQuery] DeleteDiseaseSymptomCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetDiseaseSymptoms")]
+        public async Task<IActionResult> GetDiseaseSymptoms([FromQuery] GetDiseaseSymptomsQueryRequest request)
         {
             try
             {

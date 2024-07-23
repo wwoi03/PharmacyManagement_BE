@@ -28,7 +28,7 @@ namespace PharmacyManagement_BE.Application.Commands.IngredientFeatures.Handlers
                 var ingredient = await _entities.IngredientService.GetById(request.Id);
 
                 if (ingredient == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Thành phần không tồn tại.");
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Thành phần không tồn tại.");
 
                 // xóa Thành phần
                 var status = _entities.IngredientService.Delete(ingredient);
@@ -40,7 +40,7 @@ namespace PharmacyManagement_BE.Application.Commands.IngredientFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Xóa thành phần thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Xóa thành phần thành công.");
             }
             catch (Exception)
             {
