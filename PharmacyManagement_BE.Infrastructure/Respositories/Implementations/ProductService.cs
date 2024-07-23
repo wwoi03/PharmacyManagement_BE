@@ -3,11 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
-<<<<<<< HEAD
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitDTOs;
-=======
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductIngredientDTOs;
->>>>>>> s1-hao-final-BE
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.DBContext.Dapper;

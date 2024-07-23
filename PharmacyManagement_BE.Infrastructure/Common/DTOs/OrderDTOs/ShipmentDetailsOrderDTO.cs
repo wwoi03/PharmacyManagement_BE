@@ -12,7 +12,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs
     {
         public Guid Id { get; set; }
         public Guid ProductId { get; set; }
-        public DetailsProductDTO? Product { get; set; }
+        public ProductOrderDTO? Product { get; set; }
         public Guid UnitId { get; set; }
     }
 }

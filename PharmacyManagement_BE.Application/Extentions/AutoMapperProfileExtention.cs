@@ -46,6 +46,7 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Product, CreateProductCommandRequest>().ReverseMap();
             CreateMap<Product, UpdateProductCommandRequest>().ReverseMap();
             CreateMap<Product, DetailsProductDTO>().ReverseMap();
+            CreateMap<Product, ProductOrderDTO>().ReverseMap();
             #endregion Product 
 
             #region Customer
