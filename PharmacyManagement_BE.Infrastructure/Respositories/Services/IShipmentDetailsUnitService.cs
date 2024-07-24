@@ -12,5 +12,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface IShipmentDetailsUnitService : IRepositoryService<ShipmentDetailsUnit>
     {
         Task<List<ShipmentDetailsUnitDTO>> GetShipmentDetailsBestest(Guid productId);
+        Task<ShipmentDetailsUnitDTO?> GetShipmentDetailsUnit(Guid shipmentDetailsId, Guid unitId);
     }
 }

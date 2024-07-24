@@ -30,21 +30,17 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 .Include(i => i.Unit)
                 .ToList();
 
-            var cartDtos = carts.Select(i => new ItemCartDTO
+            var cartDtos = carts.Select(i =>
             {
-                CartId = i.Id,
-                ProductId = i.ProductId,
-                UnitId = i.UnitId,
-                ProductName = i.Product.Name,
-                ProductImage = i.Product.Image,
-                UnitName = i.Unit.NameDetails,
-                Quantity = i.Quantity,
-                ShipmentDetailsUnits = _context.ShipmentDetailsUnit
-                    .Where(sdu => sdu.ShipmentDetailsId == _context.ShipmentDetails
-                        .Where(sd => sd.ProductId == i.ProductId)
-                        .OrderByDescending(sd => sd.ImportPrice)
-                        .Select(sd => sd.Id)
-                        .FirstOrDefault())
+                // Retrieve the ShipmentDetailsId based on the highest ImportPrice
+                var shipmentDetailsId = _context.ShipmentDetails
+                    .Where(sd => sd.ProductId == i.ProductId)
+                    .OrderByDescending(sd => sd.ImportPrice)
+                    .Select(sd => sd.Id)
+                    .FirstOrDefault();
+
+                var shipmentDetailsUnits = _context.ShipmentDetailsUnit
+                    .Where(sdu => sdu.ShipmentDetailsId == shipmentDetailsId)
                     .Select(sdu => new ShipmentDetailsUnitDTO
                     {
                         UnitId = sdu.Unit.Id,
@@ -55,10 +51,24 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                         Level = sdu.Level
                     })
                     .OrderBy(sdu => sdu.Level)
-                    .ToList()
+                    .ToList();
+
+                return new ItemCartDTO
+                {
+                    CartId = i.Id,
+                    ProductId = i.ProductId,
+                    UnitId = i.UnitId,
+                    ProductName = i.Product.Name,
+                    ProductImage = i.Product.Image,
+                    UnitName = i.Unit.NameDetails,
+                    Quantity = i.Quantity,
+                    ShipmentDetailsId = shipmentDetailsId,
+                    ShipmentDetailsUnits = shipmentDetailsUnits
+                };
             }).ToList();
 
             return cartDtos;
         }
+
     }
 }

@@ -24,9 +24,9 @@ namespace PharmacyManagement_BE.Application.Commands.PaymentFeatures.Handlers
         {
             try
             {
-                var response = await _entities.VnPayService.CreatePaymentUrl(request.Model, request.Context);
+                //var response = await _entities.VnPayService.CreatePaymentUrl(request.Model, request.Context);
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, null, response);
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK);
             }
             catch (Exception ex)
             {
