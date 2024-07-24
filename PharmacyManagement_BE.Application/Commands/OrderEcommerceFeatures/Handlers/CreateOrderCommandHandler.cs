@@ -85,6 +85,8 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                 }
 
                 // Tạo chi tiết đơn hàng
+                decimal totalPrice = 0;
+
                 foreach (var item in request.Products)
                 {
                     var shipmentDetailsUnit = await _entities.ShipmentDetailsUnitService.GetShipmentDetailsUnit(item.ShipmentDetailsId, item.UnitId);
@@ -99,6 +101,8 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                         Status = null
                     };
 
+                    totalPrice += orderDetails.TotalPrice;
+
                     _entities.OrderDetailsService.Create(orderDetails);
                 }
 
@@ -111,6 +115,10 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                     {
                         var paymentInfor = new PaymentInformationDTO
                         {
+                            OrderType = "Đặt hàng",
+                            Amount = totalPrice,
+                            OrderDescription = order.Note != null ? order.Note : "",
+                            Name = order.OrdererName,
 
                         };
 
