@@ -129,7 +129,7 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                 }
 
                 // SaveChange
-                _entities.SaveChange();
+                //_entities.SaveChange();
 
                 return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Đặt hàng thành công.");
             }

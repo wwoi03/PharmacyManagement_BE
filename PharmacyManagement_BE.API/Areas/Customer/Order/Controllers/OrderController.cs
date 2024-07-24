@@ -18,14 +18,14 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Order.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("CreateOrder")]
-        public async Task<IActionResult> CreateOrder(CreateOrderCommandRequest request)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(CreateOrderCommandRequest request)
         {
             try
             {
                 request.Context = HttpContext;
                 var result = await _mediator.Send(request);
-                return Ok(result.Obj);
+                return Ok(result);
             }
             catch (Exception ex)
             {
