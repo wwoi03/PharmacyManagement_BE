@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitEcommerceDTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,6 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.CartEcommerceDTOs
         public string ProductImage { get; set; }
         public string UnitName { get; set; }
         public int Quantity { get; set; }
+        public List<ShipmentDetailsUnitDTO> ShipmentDetailsUnits { get; set; }
     }
 }
