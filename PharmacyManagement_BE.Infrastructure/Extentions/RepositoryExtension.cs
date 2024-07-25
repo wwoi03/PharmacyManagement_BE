@@ -50,6 +50,7 @@ namespace PharmacyManagement_BE.Infrastructure.Extentions
             services.AddTransient<IUnitService, UnitService>();
             services.AddTransient<IVoucherHistoryService, VoucherHistoryService>();
             services.AddTransient<IVoucherService, VoucherService>();
+            services.AddTransient<IVnPayService, VnPayService>();
         }
     }
 }
