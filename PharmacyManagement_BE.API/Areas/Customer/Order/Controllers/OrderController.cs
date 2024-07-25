@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.PaymentEcommerceFeatures.Requests;
+using System.Web;
 
 namespace PharmacyManagement_BE.API.Areas.Customer.Order.Controllers
 {
@@ -26,14 +27,6 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Order.Controllers
             {
                 request.Context = HttpContext;
                 var result = await _mediator.Send(request);
-
-                /*if (result.IsSuccessed)
-                {
-                    if (result.Code == 200 && result.Obj != null)
-                    {
-                        return Redirect(result.Obj);
-                    }
-                }*/
                 return Ok(result);
             }
             catch (Exception ex)
@@ -48,8 +41,17 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Order.Controllers
             try
             {
                 var result = await _mediator.Send(new PaymentCallbackCommandRequest { Collections = Request.Query });
-                //return Redirect("http://localhost:4200/ecommerce/checkout");
-                return Ok(result);
+
+                // Chuyển đổi result thành query parameters
+                var queryString = HttpUtility.ParseQueryString(string.Empty);
+                foreach (var property in result.Obj.GetType().GetProperties())
+                {
+                    queryString[property.Name] = property.GetValue(result.Obj)?.ToString();
+                }
+
+                var url = "http://localhost:4200/ecommerce/checkout?" + queryString.ToString();
+                HttpContext.Response.Redirect(url);
+                return new EmptyResult();
             }
             catch (Exception ex)
             {
