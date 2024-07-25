@@ -75,6 +75,8 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                 // Tạo đơn hàng
                 var order = _mapper.Map<Order>(request);
                 order.Id = Guid.NewGuid();
+                order.CodeOrder = DateTime.Now.Ticks.ToString();
+                order.CustomerId = customerId;
                 var orderCreateResult = _entities.OrderService.Create(order);
 
                 if (!orderCreateResult)
@@ -93,6 +95,8 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
 
                     var orderDetails = new OrderDetails
                     {
+                        Id = Guid.NewGuid(),
+                        OrderId = order.Id.Value,
                         ShipmentDetailsId = item.ShipmentDetailsId,
                         UnitId = item.UnitId,
                         Quantity = item.Quantity,
@@ -106,6 +110,9 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                     _entities.OrderDetailsService.Create(orderDetails);
                 }
 
+                // SaveChange
+                _entities.SaveChange();
+
                 // Tạo cổng thanh toán
                 var paymentMethod = await _entities.PaymentMethodService.GetById(request.PaymentMethodId);
 
@@ -116,10 +123,10 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                         var paymentInfor = new PaymentInformationDTO
                         {
                             OrderType = "Đặt hàng",
+                            CodeOrder = order.CodeOrder,
                             Amount = totalPrice,
                             OrderDescription = order.Note != null ? order.Note : "",
                             Name = order.OrdererName,
-
                         };
 
                         var paymentUrl = await _entities.VnPayService.CreatePaymentUrl(paymentInfor, request.Context);
@@ -127,9 +134,6 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                         return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, null, paymentUrl);
                     }
                 }
-
-                // SaveChange
-                //_entities.SaveChange();
 
                 return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Đặt hàng thành công.");
             }
