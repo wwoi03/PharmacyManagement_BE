@@ -57,6 +57,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
              EF.Functions.Like(d.Name.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%"))
              .ToListAsync(cancellationToken);
         }
+
+        public async Task<Ingredient> FindByCode(string code)
+        {
+            return await Context.Ingredients.FirstOrDefaultAsync(r => r.CodeIngredient == code);
+        }
     }
 }
 

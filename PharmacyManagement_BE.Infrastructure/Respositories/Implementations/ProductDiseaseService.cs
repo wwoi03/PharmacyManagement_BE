@@ -48,7 +48,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 .Include(r => r.Disease)
                 .Where(r => r.DiseaseId == diseaseId).ToListAsync();
         }
-        public async Task<ResponseAPI<string>> CheckExit(Guid productId, Guid diseaseId)
+        public async Task<ResponseAPI<string>> CheckExit(Guid? productId, Guid? diseaseId)
         {
             ValidationNotify<string> validation = new ValidationNotifySuccess<string>();
             int status = StatusCodes.Status200OK;

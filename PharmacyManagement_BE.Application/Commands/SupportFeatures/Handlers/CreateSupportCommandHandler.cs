@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Commands.SupportFeatures.Requests;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupportDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
 {
-    internal class CreateSupportCommandHandler : IRequestHandler<CreateSupportCommandRequest, ResponseAPI<string>>
+    internal class CreateSupportCommandHandler : IRequestHandler<CreateSupportCommandRequest, ResponseAPI<SupportDTO>>
     {
         private readonly IPMEntities _entities;
         private readonly IMapper _mapper;
@@ -24,20 +26,20 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
             this._mapper = mapper;
         }
 
-        public async Task<ResponseAPI<string>> Handle(CreateSupportCommandRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<SupportDTO>> Handle(CreateSupportCommandRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 //Kiểm tra dữ liệu đầu vào
                 var validation = request.IsValid();
                 if (!validation.IsSuccessed)
-                    return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<SupportDTO>(StatusCodes.Status400BadRequest, validation.Message);
 
                 // Không kiểm tra tên hỗ trợ của thuốc vì hỗ trợ của thuốc có thể có nhiều tên trùng nhau
                 var checkExit = await _entities.SupportService.CheckExit(request.CodeSupport, request.Name);
 
                 if (!checkExit.ValidationNotify.IsSuccessed)
-                    return checkExit;
+                    return new ResponseSuccessAPI<SupportDTO>(StatusCodes.Status409Conflict, checkExit.ValidationNotify);
 
                 // Chuyển đổi request sang dữ liệu
                 var createSupport = _mapper.Map<Support>(request);
@@ -47,16 +49,19 @@ namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Handlers
 
                 //Kiểm tra trạng thái
                 if (status == false)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm hỗ trợ của thuốc thất bại, vui lòng thử lại sau.");
+                    return new ResponseErrorAPI<SupportDTO>(StatusCodes.Status500InternalServerError, "Thêm hỗ trợ của thuốc thất bại, vui lòng thử lại sau.");
 
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm hỗ trợ của thuốc thành công.");
+                //Lấy Id vừa tạo
+                var support = _mapper.Map<SupportDTO>(await _entities.SupportService.FindByCode(createSupport.CodeSupport));
+
+                return new ResponseSuccessAPI<SupportDTO>(StatusCodes.Status200OK, "Thêm hỗ trợ của thuốc thành công.", support);
             }
             catch (Exception)
             {
-                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<SupportDTO>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
         }
 

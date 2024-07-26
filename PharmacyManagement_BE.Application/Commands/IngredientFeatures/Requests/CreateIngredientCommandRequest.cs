@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.IngredientDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.IngredientFeatures.Requests
 {
-    public class CreateIngredientCommandRequest : IRequest<ResponseAPI<string>>
+    public class CreateIngredientCommandRequest : IRequest<ResponseAPI<IngredientDTO>>
     {
         public string Name { get; set; }
         public string CodeIngredient { get; set; }

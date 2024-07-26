@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupportDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Requests
 {
-    public class CreateSupportCommandRequest : IRequest<ResponseAPI<string>>
+    public class CreateSupportCommandRequest : IRequest<ResponseAPI<SupportDTO>>
     {
         public string Name { get; set; }
         public string? Description { get; set; }

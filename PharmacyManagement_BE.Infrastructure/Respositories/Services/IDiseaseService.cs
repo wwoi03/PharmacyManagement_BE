@@ -1,4 +1,5 @@
 ﻿using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     {
          Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid?Id = null);
          Task<List<Disease>> Search(string KeyWord, CancellationToken cancellationToken);
+        Task<Disease> FindByCode(string code);
     }
 }

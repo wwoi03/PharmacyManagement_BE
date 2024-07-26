@@ -12,5 +12,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     {
         Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid? Id = null);
         Task<List<Support>> Search(string KeyWord, CancellationToken cancellationToken);
+        Task<Support> FindByCode(string code);
     }
 }

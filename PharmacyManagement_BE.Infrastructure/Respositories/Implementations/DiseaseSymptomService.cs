@@ -41,7 +41,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return await Context.DiseaseSymptoms.FirstOrDefaultAsync(r => r.SymptomId == symptomId && r.DiseaseId == diseaseId);
         }
 
-        public async Task<ResponseAPI<string>> CheckExit(Guid diseaseId, Guid symptomId)
+        public async Task<ResponseAPI<string>> CheckExit(Guid? diseaseId, Guid? symptomId)
         {
             ValidationNotify<string> validation = new ValidationNotifySuccess<string>();
             int status = StatusCodes.Status200OK;

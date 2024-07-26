@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc.Filters;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.SymptomDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Requests
 {
-    public class CreateSymptomCommandRequest : IRequest<ResponseAPI<string>>
+    public class CreateSymptomCommandRequest : IRequest<ResponseAPI<SymptomDTO>>
     {
 
         public string Name { get; set; }

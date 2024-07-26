@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.DBContext;
@@ -66,7 +67,12 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
              EF.Functions.Like(d.Description.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%"))
              .ToListAsync(cancellationToken);
         }
-           
+        
+        public async Task<Disease> FindByCode (string code)
+        {
+            Disease i = await Context.Diseases.FirstOrDefaultAsync(r => r.CodeDisease == code);
+            return i;
+        }
 
     }
 }

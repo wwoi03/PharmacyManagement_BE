@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
@@ -13,10 +14,11 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests
 {
     public class CreateDiseaseCommandRequest : IRequest<ResponseAPI<string>>
     {
-
         public string Name { get; set; }
         public string Description { get; set; }
         public string CodeDisease { get; set; }
+        public List<Guid?>? SymptomId { get; set; } = null;
+        public List<Guid?>? ProductId { get; set; } = null;
 
         public ValidationNotify<string> IsValid()
         {
