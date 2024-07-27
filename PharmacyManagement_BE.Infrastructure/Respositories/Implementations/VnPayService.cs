@@ -80,9 +80,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             var vnpResponseCode = vnPay.GetResponseData("vnp_ResponseCode");
             var vnpSecureHash = collection.FirstOrDefault(k => k.Key == "vnp_SecureHash").Value; //hash của dữ liệu trả về
             var orderInfo = vnPay.GetResponseData("vnp_OrderInfo");
+            var paymentAmount = vnPay.GetResponseData("vnp_Amount");
 
-            var checkSignature =
-                vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
+            var checkSignature = vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
 
             if (!checkSignature)
                 return new PaymentResponseDTO()
@@ -96,7 +96,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 PaymentMethod = "VnPay",
                 OrderDescription = orderInfo,
                 OrderId = orderId.ToString(),
+                CodeOrder = orderId.ToString(),
                 PaymentId = vnPayTranId.ToString(),
+                PaymentAmount = decimal.Parse(paymentAmount),
                 TransactionId = vnPayTranId.ToString(),
                 Token = vnpSecureHash,
                 VnPayResponseCode = vnpResponseCode
@@ -177,19 +179,46 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
         public bool ValidateSignature(string inputHash, string secretKey)
         {
-            var rspRaw = GetResponseData();
-            var myChecksum = HmacSha512(secretKey, rspRaw);
+            string rspRaw = GetResponseData();
+            string myChecksum = HmacSha512(secretKey, rspRaw);
             return myChecksum.Equals(inputHash, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        private string GetResponseData()
+        {
+
+            StringBuilder data = new StringBuilder();
+            if (_responseData.ContainsKey("vnp_SecureHashType"))
+            {
+                _responseData.Remove("vnp_SecureHashType");
+            }
+            if (_responseData.ContainsKey("vnp_SecureHash"))
+            {
+                _responseData.Remove("vnp_SecureHash");
+            }
+            foreach (KeyValuePair<string, string> kv in _responseData)
+            {
+                if (!String.IsNullOrEmpty(kv.Value))
+                {
+                    data.Append(WebUtility.UrlEncode(kv.Key) + "=" + WebUtility.UrlEncode(kv.Value) + "&");
+                }
+            }
+            //remove last '&'
+            if (data.Length > 0)
+            {
+                data.Remove(data.Length - 1, 1);
+            }
+            return data.ToString();
         }
 
         private string HmacSha512(string key, string inputData)
         {
             var hash = new StringBuilder();
-            var keyBytes = Encoding.UTF8.GetBytes(key);
-            var inputBytes = Encoding.UTF8.GetBytes(inputData);
+            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+            byte[] inputBytes = Encoding.UTF8.GetBytes(inputData);
             using (var hmac = new HMACSHA512(keyBytes))
             {
-                var hashValue = hmac.ComputeHash(inputBytes);
+                byte[] hashValue = hmac.ComputeHash(inputBytes);
                 foreach (var theByte in hashValue)
                 {
                     hash.Append(theByte.ToString("x2"));
@@ -197,33 +226,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             }
 
             return hash.ToString();
-        }
-
-        private string GetResponseData()
-        {
-            var data = new StringBuilder();
-            if (_responseData.ContainsKey("vnp_SecureHashType"))
-            {
-                _responseData.Remove("vnp_SecureHashType");
-            }
-
-            if (_responseData.ContainsKey("vnp_SecureHash"))
-            {
-                _responseData.Remove("vnp_SecureHash");
-            }
-
-            foreach (var (key, value) in _responseData.Where(kv => !string.IsNullOrEmpty(kv.Value)))
-            {
-                data.Append(WebUtility.UrlEncode(key) + "=" + WebUtility.UrlEncode(value) + "&");
-            }
-
-            //remove last '&'
-            if (data.Length > 0)
-            {
-                data.Remove(data.Length - 1, 1);
-            }
-
-            return data.ToString();
         }
     }
 

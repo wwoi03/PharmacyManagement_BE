@@ -8,11 +8,11 @@ namespace PharmacyManagement_BE.Domain.Types
 {
     public enum OrderType
     {
-        OrderWaitingConfirmation,
-        OrderBeingPrepared,
-        OrderBeingDelivered,
-        OrderDelivered,
-        RequestCancelOrder,
+        OrderWaitingConfirmation, // Đang xử lý/chờ xác nhận
+        OrderBeingPrepared, // Đang chuẩn bị hàng
+        OrderBeingDelivered, // Đang giao
+        OrderDelivered, // Đã giao 
+        RequestCancelOrder, 
         CancellationOrderApproved,
         StoreCanceledOrder
     }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Domain.Entities
 {
-    public class Order : BaseEntity<Guid?>
+    public class Order : BaseEntity<Guid>
     {
         [Required]
         public Guid CustomerId { get; set; }
