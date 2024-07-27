@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Domain.Types;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.PaymentEcommerceDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
@@ -72,31 +73,28 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                 // Tính tiền giảm giá
 
 
-                // Tạo đơn hàng
+                // Tạo chi tiết đơn hàng
                 var order = _mapper.Map<Order>(request);
                 order.Id = Guid.NewGuid();
-                order.CodeOrder = DateTime.Now.Ticks.ToString();
-                order.CustomerId = customerId;
-                var orderCreateResult = _entities.OrderService.Create(order);
-
-                if (!orderCreateResult)
-                {
-                    validation.Message = $"Có lỗi xảy ra trong quá trình đặt hàng, vui lòng thử lại sau.";
-                    validation.Obj = "default";
-                    return new ResponseSuccessAPI<string>(StatusCodes.Status409Conflict, validation);
-                }
-
-                // Tạo chi tiết đơn hàng
                 decimal totalPrice = 0;
 
                 foreach (var item in request.Products)
                 {
                     var shipmentDetailsUnit = await _entities.ShipmentDetailsUnitService.GetShipmentDetailsUnit(item.ShipmentDetailsId, item.UnitId);
+                    var card = await _entities.CartService.GetById(item.CartId);
+
+                    // Kiểm tra sản phẩm trong giỏ hàng tồn tại
+                    if (card == null)
+                    {
+                        validation.Message = $"Sản phẩm có mã {item.CartId} không tồn tại trong hệ thống.";
+                        validation.Obj = "default";
+                        return new ResponseSuccessAPI<string>(StatusCodes.Status409Conflict, validation);
+                    }
 
                     var orderDetails = new OrderDetails
                     {
                         Id = Guid.NewGuid(),
-                        OrderId = order.Id.Value,
+                        OrderId = order.Id,
                         ShipmentDetailsId = item.ShipmentDetailsId,
                         UnitId = item.UnitId,
                         Quantity = item.Quantity,
@@ -107,7 +105,26 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
 
                     totalPrice += orderDetails.TotalPrice;
 
+                    // Thêm sản chi tiết sản phẩm
                     _entities.OrderDetailsService.Create(orderDetails);
+
+                    // Xóa sản phẩm trong giỏ hàng
+                    _entities.CartService.Delete(card);
+                }
+
+                // Tạo đơn hàng
+                order.CodeOrder = DateTime.Now.Ticks.ToString();
+                order.CustomerId = customerId;
+                order.OrderDate = DateTime.Now;
+                order.Status = OrderType.OrderWaitingConfirmation.ToString();
+                order.FinalAmount = totalPrice;
+                var orderCreateResult = _entities.OrderService.Create(order);
+
+                if (!orderCreateResult)
+                {
+                    validation.Message = $"Có lỗi xảy ra trong quá trình đặt hàng, vui lòng thử lại sau.";
+                    validation.Obj = "default";
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status409Conflict, validation);
                 }
 
                 // SaveChange
