@@ -73,23 +73,9 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                 // Tính tiền giảm giá
 
 
-                // Tạo đơn hàng
+                // Tạo chi tiết đơn hàng
                 var order = _mapper.Map<Order>(request);
                 order.Id = Guid.NewGuid();
-                order.CodeOrder = DateTime.Now.Ticks.ToString();
-                order.CustomerId = customerId;
-                order.OrderDate = DateTime.Now;
-                order.Status = OrderType.OrderWaitingConfirmation.ToString();
-                var orderCreateResult = _entities.OrderService.Create(order);
-
-                if (!orderCreateResult)
-                {
-                    validation.Message = $"Có lỗi xảy ra trong quá trình đặt hàng, vui lòng thử lại sau.";
-                    validation.Obj = "default";
-                    return new ResponseSuccessAPI<string>(StatusCodes.Status409Conflict, validation);
-                }
-
-                // Tạo chi tiết đơn hàng
                 decimal totalPrice = 0;
 
                 foreach (var item in request.Products)
@@ -108,7 +94,7 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                     var orderDetails = new OrderDetails
                     {
                         Id = Guid.NewGuid(),
-                        OrderId = order.Id.Value,
+                        OrderId = order.Id,
                         ShipmentDetailsId = item.ShipmentDetailsId,
                         UnitId = item.UnitId,
                         Quantity = item.Quantity,
@@ -126,6 +112,20 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                     _entities.CartService.Delete(card);
                 }
 
+                // Tạo đơn hàng
+                order.CodeOrder = DateTime.Now.Ticks.ToString();
+                order.CustomerId = customerId;
+                order.OrderDate = DateTime.Now;
+                order.Status = OrderType.OrderWaitingConfirmation.ToString();
+                order.FinalAmount = totalPrice;
+                var orderCreateResult = _entities.OrderService.Create(order);
+
+                if (!orderCreateResult)
+                {
+                    validation.Message = $"Có lỗi xảy ra trong quá trình đặt hàng, vui lòng thử lại sau.";
+                    validation.Obj = "default";
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status409Conflict, validation);
+                }
 
                 // SaveChange
                 _entities.SaveChange();

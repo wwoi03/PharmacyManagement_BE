@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.PaymentEcommerceFeatures.Requests;
+using PharmacyManagement_BE.Application.Queries.OrderEcommerceFeatures.Request;
 using System.Web;
 
 namespace PharmacyManagement_BE.API.Areas.Customer.Order.Controllers
@@ -54,6 +55,20 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Order.Controllers
                 var url = "http://localhost:4200/ecommerce/checkout?" + queryString.ToString();
                 HttpContext.Response.Redirect(url);
                 return new EmptyResult();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetMyOrders")]
+        public async Task<IActionResult> GetMyOrders()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetOrdersQueryRequest());
+                return Ok(result);
             }
             catch (Exception ex)
             {

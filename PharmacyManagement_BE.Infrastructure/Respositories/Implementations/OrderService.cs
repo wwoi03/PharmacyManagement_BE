@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Types;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderEcommerceDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
@@ -38,6 +40,52 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<Order?> GetOrderByCode(string codeOrder)
         {
             return _context.Orders.FirstOrDefault(i => i.CodeOrder.Equals(codeOrder));
+        }
+
+        public async Task<List<ItemOrderDTO>> GetMyOrders(Guid customerId)
+        {
+            // Lấy danh sách đơn hàng của khách hàng
+            var orders = _context.Orders
+                .Where(x => x.CustomerId == customerId)
+                .OrderByDescending(x => x.OrderDate)
+                .ToList();
+
+            // thông tin đơn hàng
+            var result = orders.Select(order =>
+            {
+                // Lấy sản phẩm đầu tiên
+                var firstOrderDetails = _context.OrderDetails
+                    .Where(item => item.OrderId == order.Id)
+                    .Include(item => item.ShipmentDetails)
+                    .Include(item => item.ShipmentDetails.Product)
+                    .FirstOrDefault();
+
+                // Lấy đơn vị
+                var unitOrderDetails = _context.Units
+                    .FirstOrDefault(item => item.Id == firstOrderDetails.UnitId);
+
+                // tính số lượng sản phẩm của đơn hàng
+                var productQuantity = _context.OrderDetails
+                    .Where(item => item.OrderId == order.Id)
+                    .Count();
+
+                return new ItemOrderDTO
+                {
+                    OrderId = order.Id, // Hoặc sử dụng orderId nếu thực sự cần thiết
+                    OrderDate = order.OrderDate,
+                    CodeOrder = order.CodeOrder,
+                    Status = order.Status,
+                    FinalAmount = order.FinalAmount,
+                    ProductQuantity = productQuantity,
+                    NameFirstProduct = firstOrderDetails.ShipmentDetails.Product.Name,
+                    ImageFirstProduct = firstOrderDetails.ShipmentDetails.Product.Image,
+                    PriceFirstProduct = firstOrderDetails.PricePerUnit,
+                    QuantityFirstProduct = firstOrderDetails.Quantity,
+                    UnitFirstProduct = unitOrderDetails.NameDetails
+                };
+            }).ToList();
+            
+            return result;
         }
         #endregion EF
 
@@ -267,6 +315,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             return listOrder;
         }
+
         #endregion Dapper
     }
 }
