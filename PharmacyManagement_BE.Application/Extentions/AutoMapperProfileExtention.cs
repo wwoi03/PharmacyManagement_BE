@@ -34,6 +34,8 @@ using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductSupportDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseSymptomDTOs;
 using PharmacyManagement_BE.Application.Commands.ProductSupportFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
+using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers;
+using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -128,11 +130,13 @@ namespace PharmacyManagement_BE.Application.Extentions
             #region ProductDisease
             CreateMap<CreateProductDiseaseCommandRequest, ProductDisease>().ReverseMap();
             CreateMap<ProductDiseaseDTO, ProductDisease>().ReverseMap();
+            CreateMap<createProductDisease, ProductDisease>().ReverseMap();
             #endregion ProductDisease
 
             #region DiseaseSymptom
             CreateMap<CreateDiseaseSymptomCommandRequest, DiseaseSymptom>().ReverseMap();
             CreateMap<DiseaseSymptomDTO, DiseaseSymptom>().ReverseMap();
+            CreateMap<createDiseaseSymptom, DiseaseSymptom>().ReverseMap();
             #endregion DiseaseSymptom
 
             #region ProductSupport

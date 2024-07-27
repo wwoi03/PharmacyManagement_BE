@@ -8,6 +8,7 @@ using PharmacyManagement_BE.Application.Commands.ProductDiseaseFeatures.Requests
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
@@ -18,16 +19,6 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
 {
-    class createDiseaseSymptom { 
-        public Guid? DiseaseId { get; set; }
-        public Guid? SymptomId { get; set; }
-    }
-
-    class createProductDisease
-    {
-        public Guid? DiseaseId { get; set; }
-        public Guid? ProductId { get; set; }
-    }
 
     internal class CreateDiseaseCommandHandler : IRequestHandler<CreateDiseaseCommandRequest, ResponseAPI<string>>
     {
@@ -45,7 +36,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
         {
             try
             {
-                
+
                 //B1: kiểm tra giá trị đầu vào
                 var validation = request.IsValid();
 
@@ -63,7 +54,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 createDisease.CreatedTime = DateTime.Now;
 
                 // Tạo bệnh mới
-                var status =  _entities.DiseaseService.Create(createDisease);
+                var status = _entities.DiseaseService.Create(createDisease);
 
                 //Kiểm tra trạng thái
                 if (status == false)
@@ -73,128 +64,27 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 _entities.SaveChange();
 
                 //Lấy Id vừa tạo
-                var disease = _mapper.Map <DiseaseDTO>(await _entities.DiseaseService.FindByCode(createDisease.CodeDisease));
+                var disease = _mapper.Map<DiseaseDTO>(await _entities.DiseaseService.FindByCode(createDisease.CodeDisease));
 
+                //Hàm khởi tạo qhe
+                CreateRelationShip createRelationShip = new CreateRelationShip(_entities, _mapper);
 
                 if (request.ProductId != null)
                 {
-                    await CreateProductDisease(request.ProductId, disease.Id);
+                    await createRelationShip.CreateProductDisease(request.ProductId, disease.Id);
                 }
                 if (request.SymptomId != null)
                 {
-                    await CreateDiseaseSymptom(request.SymptomId, disease.Id);
+                    await createRelationShip.CreateDiseaseSymptom(request.SymptomId, disease.Id, 1);
                 }
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK ,"Thêm loại bệnh thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm loại bệnh thành công.");
             }
-            catch (Exception){
-                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
-            }
-        }
-
-        public async Task<ResponseAPI<string>> CreateDiseaseSymptom(List<Guid?>? SymptomId, Guid DiseaseId)
-        {
-            try
-            {
-                foreach (var item in SymptomId)
-                {
-                    
-                    var request = new createDiseaseSymptom()
-                    {
-                        DiseaseId = DiseaseId,
-                        SymptomId = item,
-                    };
-
-                    //B1: kiểm tra giá trị đầu 
-                    var symptom = await _entities.SymptomService.GetById(request.SymptomId);
-
-                    if (symptom == null)
-                        return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Triệu chứng không tồn tại.");
-
-                    var disease = await _entities.DiseaseService.GetById(request.DiseaseId);
-
-                    if (disease == null)
-                        return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
-
-                    //Kiểm tra tồn tại
-                    var checkExit = await _entities.DiseaseSymptomService.CheckExit(request.DiseaseId, request.SymptomId);
-
-                    if (!checkExit.ValidationNotify.IsSuccessed)
-                        return checkExit;
-
-                    // Chuyển đổi request sang dữ liệu
-                    var create = _mapper.Map<DiseaseSymptom>(request);
-
-                    // Tạo bệnh mới
-                    var status = _entities.DiseaseSymptomService.Create(create);
-
-                    //Kiểm tra trạng thái
-                    if (status == false)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm triệu chứng liên quan thất bại, vui lòng thử lại sau.");
-
-                    //Lưu vào CSDL
-                    _entities.SaveChange();
-
-                }
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm triệu chứng liên quan thành công.");
-            }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
-
-        }
-
-        public async Task<ResponseAPI<string>> CreateProductDisease(List<Guid?>? ProductId, Guid DiseaseId)
-        {
-            try
-            {
-                foreach (var item in ProductId)
-                {
-                    var request = new createProductDisease()
-                    {
-                        DiseaseId = DiseaseId,
-                        ProductId = item,
-                    };
-
-                    //B1: kiểm tra giá trị đầu 
-                    var product = await _entities.ProductService.GetById(request.ProductId);
-
-                    if (product == null)
-                        return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Thuốc không tồn tại.");
-
-                    var disease = await _entities.DiseaseService.GetById(request.DiseaseId);
-
-                    if (disease == null)
-                        return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
-
-                    //Kiểm tra tồn tại
-                    var checkExit = await _entities.ProductDiseaseService.CheckExit(request.ProductId, request.DiseaseId);
-
-                    if (!checkExit.ValidationNotify.IsSuccessed)
-                        return checkExit;
-
-                    // Chuyển đổi request sang dữ liệu
-                    var create = _mapper.Map<ProductDisease>(request);
-
-                    // Tạo bệnh mới
-                    var status = _entities.ProductDiseaseService.Create(create);
-
-                    //Kiểm tra trạng thái
-                    if (status == false)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm thuốc liên quan thất bại, vui lòng thử lại sau.");
-
-                    //Lưu vào CSDL
-                    _entities.SaveChange();
-
-                }
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm thuốc liên quan thành công.");
-            }
-            catch (Exception ex)
-            {
-                return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
-            }
-
         }
     }
+      
 }

@@ -13,12 +13,13 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Requests
 {
-    public class CreateSymptomCommandRequest : IRequest<ResponseAPI<SymptomDTO>>
+    public class CreateSymptomCommandRequest : IRequest<ResponseAPI<string>>
     {
 
         public string Name { get; set; }
         public string Description { get; set; }
         public string CodeSymptom { get; set; }
+        public List<Guid?>? DiseaseId { get; set; }
 
         public ValidationNotify<string> IsValid()
         {
