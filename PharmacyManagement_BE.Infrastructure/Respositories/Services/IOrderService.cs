@@ -17,5 +17,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<List<StatisticDTO>> StatisticOrder(TimeType type);
         Task<List<StatisticDTO>> StatisticRevenue(TimeType type);
         Task<List<OrderDTO>> GetRequestCancellations();
+        Task<Order?> GetOrderByCode(string codeOrder); 
     }
 }

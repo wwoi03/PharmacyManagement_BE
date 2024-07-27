@@ -29,10 +29,17 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             this._dapperContext = dapperContext;
         }
 
+        #region EF
         public async Task<List<Order>> GetAllOrderByStaffId(Guid id)
         {
             return _context.Orders.Where(x => x.StaffId == id).ToList();
         }
+
+        public async Task<Order?> GetOrderByCode(string codeOrder)
+        {
+            return _context.Orders.FirstOrDefault(i => i.CodeOrder.Equals(codeOrder));
+        }
+        #endregion EF
 
         #region Dapper
         // Thống kê đơn hàng

@@ -42,6 +42,8 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Order.Controllers
             {
                 var result = await _mediator.Send(new PaymentCallbackCommandRequest { Collections = Request.Query });
 
+                var updatePaymentStatusOrder = await _mediator.Send(new UpdatePaymentStatusOrderCommandRequest { PaymentResponse = result.Obj });
+
                 // Chuyển đổi result thành query parameters
                 var queryString = HttpUtility.ParseQueryString(string.Empty);
                 foreach (var property in result.Obj.GetType().GetProperties())

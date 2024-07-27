@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Domain.Types;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.PaymentEcommerceDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
@@ -77,6 +78,8 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                 order.Id = Guid.NewGuid();
                 order.CodeOrder = DateTime.Now.Ticks.ToString();
                 order.CustomerId = customerId;
+                order.OrderDate = DateTime.Now;
+                order.Status = OrderType.OrderWaitingConfirmation.ToString();
                 var orderCreateResult = _entities.OrderService.Create(order);
 
                 if (!orderCreateResult)
@@ -92,6 +95,15 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                 foreach (var item in request.Products)
                 {
                     var shipmentDetailsUnit = await _entities.ShipmentDetailsUnitService.GetShipmentDetailsUnit(item.ShipmentDetailsId, item.UnitId);
+                    var card = await _entities.CartService.GetById(item.CartId);
+
+                    // Kiểm tra sản phẩm trong giỏ hàng tồn tại
+                    if (card == null)
+                    {
+                        validation.Message = $"Sản phẩm có mã {item.CartId} không tồn tại trong hệ thống.";
+                        validation.Obj = "default";
+                        return new ResponseSuccessAPI<string>(StatusCodes.Status409Conflict, validation);
+                    }
 
                     var orderDetails = new OrderDetails
                     {
@@ -107,8 +119,13 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
 
                     totalPrice += orderDetails.TotalPrice;
 
+                    // Thêm sản chi tiết sản phẩm
                     _entities.OrderDetailsService.Create(orderDetails);
+
+                    // Xóa sản phẩm trong giỏ hàng
+                    _entities.CartService.Delete(card);
                 }
+
 
                 // SaveChange
                 _entities.SaveChange();
