@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Queries.OrderFeatures.Requests;
+using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
@@ -29,8 +30,11 @@ namespace PharmacyManagement_BE.Application.Queries.OrderFeatures.Handlers
         {
             try
             {
+                //Lấy Branch của nhân viên
+                var branch = await _entities.AccountService.GetBranchId();
+
                 //Kiểm tra tồn tại
-                var order = await _entities.OrderService.GetOrderById(request.Id);
+                var order = await _entities.OrderService.GetOrderByBranch(request.Id, branch);
 
                 if (order == null)
                     return new ResponseSuccessAPI<OrderDTO>(StatusCodes.Status404NotFound, "Đơn hàng không tồn tại.");

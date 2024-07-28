@@ -47,7 +47,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<Guid> GetBranchId()
         {
             await GetUserAsync();
-            _staff = (Staff)_user;
+            if (_staff == null)
+            {
+                _staff = (Staff)_user;
+            }
+
             return (Guid)(_staff != null ? _staff.BranchId : Guid.Empty);
         }
     }

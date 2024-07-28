@@ -5,6 +5,7 @@ using PharmacyManagement_BE.Application.Commands.OrderFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.OrderFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests;
 using PharmacyManagement_BE.Domain.Types;
+using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Order.Controllers
 {
@@ -15,10 +16,12 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Order.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IPMEntities entities;
 
-        public OrderController(IMediator mediator)
+        public OrderController(IMediator mediator, IPMEntities entities)
         {
             this._mediator = mediator;
+            this.entities = entities;
         }
 
         [HttpPut("UpdateOrder")]
@@ -50,11 +53,11 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Order.Controllers
         }
 
         [HttpGet("GetOrders")]
-        public async Task<IActionResult> GetOrders()
+        public async Task<IActionResult> GetOrders([FromQuery] GetOrdersQueryRequest request)
         {
             try
             {
-                var result = await _mediator.Send(new GetOrdersQueryRequest());
+                var result = await _mediator.Send(request);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -70,6 +73,5 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Order.Controllers
             var values = Enum.GetNames(typeof(OrderType));
             return Ok(values);
         }
-
     }
 }

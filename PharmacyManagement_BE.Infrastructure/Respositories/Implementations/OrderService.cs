@@ -2,9 +2,7 @@
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
-using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Types;
-using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
@@ -247,11 +245,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         }
 
         //Lấy danh sách yêu cầu hủy đơn
-        public async Task<List<OrderDTO>> GetRequestCancellations()
+        public async Task<List<OrderDTO>> GetCanceledOrder()
         {
             var parameters = new DynamicParameters();
             var listOrder = new List<OrderDTO>();
-            parameters.Add("@Status", OrderType.RequestCancelOrder);
+            parameters.Add("@Status", OrderType.CancellationOrderApproved);
 
             string sql = @"
                    SELECT *
@@ -266,7 +264,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         }
         #endregion Dapper
 
-        public async Task<OrderDTO> GetOrderById(Guid Id)
+        //Lấy chi tiết đơn hàng dựa vào branch và id order
+        public async Task<OrderDTO> GetOrderByBranch(Guid Id, Guid BranchId)
         {
             //Lấy danh sách chi tiết đơn hàng
             List<OrderDetailsDTO> orderDetails =  _mapper.Map<List<OrderDetailsDTO>>(await _context.OrderDetails
@@ -277,7 +276,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             //Lấy thông tin order
             OrderDTO order = _mapper.Map<OrderDTO>(await _context.Orders
                 .Include(r => r.PaymentMethod)
-                .FirstOrDefaultAsync(x => x.Id == Id));
+                .FirstOrDefaultAsync(x => x.Id == Id && x.BranchId == BranchId));
 
             //Gán OrderDetails
             order.OrderDetails = orderDetails;
@@ -286,13 +285,36 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return order;
         }
 
+        //Lấy danh sách Order dựa trên branch và status
+        public async Task<List<OrderDTO>> GetOrdersByBranch(Guid BranchId,OrderType type)
+        {
+
+            List<Order> listOrder = new List<Order>();
+
+            //Lấy toàn bộ danh sách
+            if(type == OrderType.GetAll)
+            {
+                listOrder = await _context.Orders.Where(r => r.BranchId == BranchId)
+                    .Include(r=> r.Customer).Include(r=> r.PaymentMethod)
+                    .ToListAsync();
+            }
+            else
+            {
+                listOrder = await _context.Orders.Where(r => r.BranchId == BranchId && r.Status == type.ToString())
+                    .Include(r => r.Customer).Include(r => r.PaymentMethod)
+                    .ToListAsync();
+            }
+            return _mapper.Map<List<OrderDTO>>(listOrder);
+        }
+
         public bool CheckUpdateStatus(Order order, OrderType status)
         {
             OrderType currentStatus = (OrderType)Enum.Parse(typeof(OrderType), order.Status);
-            int a = (int)currentStatus;
-            int b = (int)status;
 
             //Kiểm tra trạng thái của đơn hàng
+            //Trạng thái không lấy getall
+            if ((int)status == -1)
+                return false;
             //Trạng thái không được phép quay ngược
             if ((int)currentStatus >= (int)status)
                 return false;
@@ -300,7 +322,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             if (((int)currentStatus == 4 || (int)currentStatus == 5) && (int)status == 6 )
                 return false;
             //Tình trạng đơn hàng không được nhảy bước
-            if ((int)currentStatus + 1 != (int)status && ((int)status !=4 && (int)status != 6))
+            if ((int)currentStatus + 1 != (int)status && (int)status < 4)
                 return false;
             //Đã giao không thể hủy hàng
             if ((int)currentStatus == 3)

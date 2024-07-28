@@ -16,8 +16,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<List<Order>> GetAllOrderByStaffId(Guid id);
         Task<List<StatisticDTO>> StatisticOrder(TimeType type);
         Task<List<StatisticDTO>> StatisticRevenue(TimeType type);
-        Task<List<OrderDTO>> GetRequestCancellations();
-        Task<OrderDTO> GetOrderById(Guid Id);
+        Task<List<OrderDTO>> GetCanceledOrder();
+        Task<OrderDTO> GetOrderByBranch(Guid OrderId, Guid BranchId);
+        Task<List<OrderDTO>> GetOrdersByBranch(Guid BranchId, OrderType type);
         bool CheckUpdateStatus(Order order, OrderType status);
     }
 }

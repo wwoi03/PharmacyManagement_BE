@@ -41,7 +41,7 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
                 var revenue = await _entities.OrderService.StatisticOrder(request.Revenue);
 
                 //Lấy danh sách yêu cầu hủy
-                var listRequestCancellation = await _entities.OrderService.GetRequestCancellations();
+                var listRequestCancellation = await _entities.OrderService.GetCanceledOrder();
 
                 //Lấy danh sách cmt hỏi đáp
                 var listCommentQA = await _entities.CommentService.GetCustomerCommentQANoReplys();
