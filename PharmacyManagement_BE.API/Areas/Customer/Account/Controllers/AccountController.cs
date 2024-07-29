@@ -33,5 +33,20 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Account.Controllers
             }
             
         }
+
+        [HttpPut("SignUp")]
+        public async Task<IActionResult> SignUp([FromBody] SignUpCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }
