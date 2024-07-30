@@ -20,7 +20,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Statistic.Controllers
         }
 
         [HttpGet("Statistic")]
-        public async Task<IActionResult> Statistic([FromQuery] StatisticQueryRequest request)
+        public async Task<IActionResult> Statistic([FromQuery] StatisticOrderQueryRequest request)
         {
             try
             {

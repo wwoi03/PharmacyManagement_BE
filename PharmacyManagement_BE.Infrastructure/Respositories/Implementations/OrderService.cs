@@ -107,7 +107,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 string sql = @"
                 SELECT DISTINCT YEAR(OrderDate) 
                 FROM Orders
-                ORDER BY OrderYear ASC";
+                ORDER BY YEAR(OrderDate) ASC";
 
                 // Thực hiện truy vấn và lấy danh sách các năm
                 var years = _dapperContext.GetConnection.Query<int>(sql).ToList();
@@ -209,9 +209,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             {
 
                 string sql = @"
-                SELECT DISTINCT YEAR(PaymentDate) 
+                SELECT DISTINCT YEAR(OrderDate) 
                 FROM Orders
-                ORDER BY OrderYear ASC";
+                ORDER BY YEAR(OrderDate) ASC";
 
                 // Thực hiện truy vấn và lấy danh sách các năm
                 var years = _dapperContext.GetConnection.Query<int>(sql).ToList();
@@ -247,20 +247,51 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         //Lấy danh sách yêu cầu hủy đơn
         public async Task<List<OrderDTO>> GetCanceledOrder()
         {
-            var parameters = new DynamicParameters();
-            var listOrder = new List<OrderDTO>();
-            parameters.Add("@Status", OrderType.CancellationOrderApproved);
+            try
+            {
+                var parameters = new DynamicParameters();
+                var listOrder = new List<Order>();
+                parameters.Add("@Status", OrderType.CancellationOrderApproved.ToString());
 
-            string sql = @"
+                string sql = @"
                    SELECT *
                     FROM Orders 
                     WHERE Status = @Status";
 
-            // Thực hiện truy vấn và lấy kết quả
+                // Thực hiện truy vấn và lấy kết quả
 
-            listOrder = (await _dapperContext.GetConnection.QueryAsync<OrderDTO>(sql, parameters)).AsList<OrderDTO>();
+                listOrder = (await _dapperContext.GetConnection.QueryAsync<Order>(sql, parameters)).ToList();
 
-            return listOrder;
+                return _mapper.Map<List<OrderDTO>>(listOrder);
+            }catch(Exception ex)
+            {
+                return new List<OrderDTO>();
+            }
+        }
+
+        //Thống kê theo ngày thời gian thực
+        public async Task<GeneralStatisticsDTO> RealTimeStatistc()
+        {
+            //Đếm order
+            string sql = @"SELECT count (*) AS NumOrder
+            FROM Orders
+            WHERE CONVERT(date, CreatedTime) = CONVERT(date, GETDATE())";
+
+            int order = (await _dapperContext.GetConnection.QueryFirstAsync<int>(sql));
+
+            sql = @"SELECT ISNULL(SUM(PaymentAmount), 0) AS SalePrice
+            FROM Orders
+            WHERE CONVERT(date, PaymentDate) = CONVERT(date, GETDATE())";
+
+            decimal revenue = (await _dapperContext.GetConnection.QueryFirstAsync<decimal>(sql));
+
+            GeneralStatisticsDTO genStatistic = new GeneralStatisticsDTO()
+            {
+                NumOrder = order,
+                SalePrice = revenue,
+            };
+
+            return genStatistic;
         }
         #endregion Dapper
 

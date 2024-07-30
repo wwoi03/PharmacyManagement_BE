@@ -19,6 +19,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<List<OrderDTO>> GetCanceledOrder();
         Task<OrderDTO> GetOrderByBranch(Guid OrderId, Guid BranchId);
         Task<List<OrderDTO>> GetOrdersByBranch(Guid BranchId, OrderType type);
+        Task<GeneralStatisticsDTO> RealTimeStatistc();
         bool CheckUpdateStatus(Order order, OrderType status);
     }
 }

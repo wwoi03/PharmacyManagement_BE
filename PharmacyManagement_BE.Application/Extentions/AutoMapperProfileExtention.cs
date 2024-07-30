@@ -36,6 +36,7 @@ using PharmacyManagement_BE.Application.Commands.ProductSupportFeatures.Requests
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers;
 using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -143,6 +144,10 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<CreateProductSupportCommandRequest, ProductSupport>().ReverseMap();
             CreateMap<ProductSupportDTO, ProductSupport>().ReverseMap();
             #endregion ProductSupport
+
+            #region ProductEcommerce
+            CreateMap<ProductEcommerceDTO, Product>().ReverseMap();
+            #endregion ProductEcommerce 
 
         }
     }

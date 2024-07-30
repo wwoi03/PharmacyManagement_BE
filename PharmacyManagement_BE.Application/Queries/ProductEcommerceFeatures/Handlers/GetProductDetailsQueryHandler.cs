@@ -28,13 +28,10 @@ namespace PharmacyManagement_BE.Application.Queries.ProductEcommerceFeatures.Han
         {
             try
             {
-                var product = _entities.ProductService.GetByIdIncluding(request.ProductId);
-
-                //Gán danh sách bệnh thành response
-                var response = _mapper.Map<ProductEcommerceDTO>(product);
+                var product = await _entities.ProductService.GetProductWithDetails(request.ProductId);
 
                 //Trả về danh sách
-                return new ResponseSuccessAPI<ProductEcommerceDTO>(StatusCodes.Status200OK, "Thông tin sản phẩm", response);
+                return new ResponseSuccessAPI<ProductEcommerceDTO>(StatusCodes.Status200OK, "Thông tin sản phẩm", product);
             }
             catch (Exception)
             {

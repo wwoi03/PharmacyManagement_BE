@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs;
 
 namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
@@ -30,10 +31,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
         public async Task<ProductEcommerceDTO>  GetProductWithDetails(Guid productId)
         {
-
-            return _context.Products
+            try
+            {
+                return _context.Products
                 .Where(p => p.Id == productId)
-                .Select(  p => new ProductEcommerceDTO
+                .Select(p => new ProductEcommerceDTO
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -54,10 +56,10 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     AgeOfUse = p.AgeOfUse,
                     CategoryId = p.CategoryId,
                     Image = p.Image,
-                    ProductIngredients =  _context.ProductIngredients.Where(pi => pi.ProductId == productId)
+                    ProductIngredients = _context.ProductIngredients.Where(pi => pi.ProductId == productId)
                         .Include(pi => pi.Ingredient)
                         .Include(pi => pi.Unit)
-                        .Select( pi => new DetailsProductIngredientDTO
+                        .Select(pi => new DetailsProductIngredientDTO
                         {
                             ProductId = pi.ProductId,
                             IngredientId = pi.IngredientId,
@@ -68,10 +70,15 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                             UnitName = pi.Unit.Name,
                         })
                         .ToList(),
-                    ProductSupports =  _context.ProductSupports.Where(ps => ps.ProductId == p.Id).Select(ps => ps.SupportId).ToList(),
-                    ProductDiseases =  _context.ProductDiseases.Where(pd => pd.ProductId == p.Id).Select(pd => pd.DiseaseId).ToList()
+                    ProductSupports = _context.ProductSupports.Where(ps => ps.ProductId == p.Id).Select(ps => ps.SupportId).ToList(),
+                    ProductDiseases = _context.ProductDiseases.Where(pd => pd.ProductId == p.Id).Select(pd => pd.DiseaseId).ToList()
                 })
                 .FirstOrDefault();
+            }catch(Exception ex)
+            {
+                return new ProductEcommerceDTO();
+            }
+            
         }
     
 
@@ -177,11 +184,93 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 })
                 .ToList();
         }
+        #endregion EF & LinQ
 
+        #region Dapper
         public Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year)
         {
             throw new NotImplementedException();
         }
-        #endregion EF & LinQ
+
+        //lấy danh sách top 10 sản phẩm được ưa chuộn tính = View
+        public async Task<List<StatisticProductDTO>> GetTopView()
+        {
+            List<StatisticProductDTO> topView = new List<StatisticProductDTO>();
+
+            //truy vấn top 10
+            string sql = @"SELECT TOP 10 Id, Name, [View], CartView, Image
+                        FROM Products
+                        ORDER BY [View] DESC";
+
+            topView = (await _dapperContext.GetConnection.QueryAsync<StatisticProductDTO>(sql)).ToList();
+
+
+            return topView;
+        }
+
+        public async Task<List<StatisticProductOrderDTO>> GetTopCanceledProduct()
+        {
+            List<StatisticProductOrderDTO> cancel = new List<StatisticProductOrderDTO>();
+
+            //Truy vấn top 10 đơn bị hủy
+            string sql = @"SELECT TOP 10 
+                    P.Id, 
+                    P.Name,  
+                    P.CartView, 
+                    P.Image, 
+                    COUNT(O.Status) AS NumCanceled
+                FROM 
+                    Products AS P
+                    INNER JOIN ShipmentDetails AS S ON P.Id = S.ProductId
+                    INNER JOIN OrderDetails AS OD ON S.Id = OD.ShipmentDetailsId
+                    INNER JOIN Orders AS O ON OD.OrderId = O.Id
+                WHERE 
+                    O.Status = 'CancellationOrderApproved'
+                GROUP BY 
+                    P.Id, 
+                    P.Name, 
+                    P.[View], 
+                    P.CartView, 
+                    P.Image
+                ORDER BY 
+                    NumCanceled DESC";
+
+            cancel = (await _dapperContext.GetConnection.QueryAsync<StatisticProductOrderDTO>(sql)).ToList();
+
+            return cancel;
+        }
+
+        public async Task<List<StatisticProductOrderDTO>> GetTopSoldProduct()
+        {
+            List<StatisticProductOrderDTO> sold = new List<StatisticProductOrderDTO>();
+
+            //Truy vấn top 10 đơn bị hủy
+            string sql = @"SELECT TOP 10 
+                    P.Id, 
+                    P.Name,  
+                    P.CartView, 
+                    P.Image, 
+                    COUNT(O.Status) AS NumCanceled
+                FROM 
+                    Products AS P
+                    INNER JOIN ShipmentDetails AS S ON P.Id = S.ProductId
+                    INNER JOIN OrderDetails AS OD ON S.Id = OD.ShipmentDetailsId
+                    INNER JOIN Orders AS O ON OD.OrderId = O.Id
+                WHERE 
+                    O.Status = 'OrderDelivered'
+                GROUP BY 
+                    P.Id, 
+                    P.Name, 
+                    P.[View], 
+                    P.CartView, 
+                    P.Image
+                ORDER BY 
+                    NumCanceled DESC";
+
+            sold = (await _dapperContext.GetConnection.QueryAsync<StatisticProductOrderDTO>(sql)).ToList();
+
+            return sold;
+        }
+        #endregion Dapper
     }
 }
