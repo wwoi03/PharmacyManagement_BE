@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
-using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitEcommerceDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.DBContext.Dapper;
@@ -102,9 +102,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                         .ShipmentDetailsUnit
                         .Where(i => i.ShipmentDetailsId == item.ShipmentDetailsId)
                         .Join(_context.Units,
-                            sdu => sdu.UnitId,
+                            sduItem => sduItem.UnitId,
                             u => u.Id,
-                            (sdu, u) => new { shipmentDetailsUnit = sdu, unit = u })
+                            (sduItem, u) => new { shipmentDetailsUnit = sduItem, unit = u })
                         .Select(temp => new ShipmentDetailsUnitDTO
                         {
                             Id = temp.unit.Id,
@@ -130,9 +130,66 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 .ToList();
         }
 
-        public Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year)
+        public async Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year)
         {
-            throw new NotImplementedException();
+            var products = _context.Products
+                .Select(item => new ItemProductDTO
+                {
+                    ProductId = item.Id,
+                    ProductName = item.Name,
+                    Specifications = item.Specifications,
+                    ProductImage = item.Image,
+                })
+                .ToList();
+
+            var result = products.Select(item =>
+            {
+                // Lấy chi tiết đơn nhập
+                var shipmentDetails = _context.ShipmentDetails
+                    .Where(sdItem => sdItem.ProductId == item.ProductId
+                        /*&& sdItem.ExpirationDate > DateTime.Now*/)
+                    .OrderByDescending(sdItem => sdItem.ExpirationDate)
+                    .FirstOrDefault();
+
+                if (shipmentDetails == null)
+                    return null;
+
+                // Lấy đơn giá
+                var shipmentDetailsUnit = _context.ShipmentDetailsUnit
+                    .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
+                    .Select(sduItem => new ShipmentDetailsUnitDTO
+                    {
+                        UnitId = sduItem.Unit.Id,
+                        CodeUnit = sduItem.Unit.Name,
+                        UnitName = sduItem.Unit.NameDetails,
+                        SalePrice = sduItem.SalePrice,
+                        UnitCount = sduItem.UnitCount,
+                        Level = sduItem.Level
+                    })
+                    .OrderBy(sduItem => sduItem.Level)
+                    .ToList();
+
+                // Lấy giảm giá 
+                var promotion = _context.PromotionProducts
+                    .Where(promItem => promItem.ProductId == item.ProductId)
+                    .Include(promItem => promItem.Promotion)
+                    .FirstOrDefault(promItem => promItem.Promotion.EndDate > DateTime.Now);
+
+                return new ItemProductDTO
+                {
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    Specifications = item.Specifications,
+                    ProductImage = item.ProductImage,
+                    ShipmentDetailsId = shipmentDetails.Id,
+                    Discount = promotion?.Promotion?.DiscountValue ?? 0,
+                    ShipmentDetailsUnits = shipmentDetailsUnit,
+                };
+            })
+            .Where(item => item != null)
+            .ToList();
+
+            return result;
         }
         #endregion EF & LinQ
     }

@@ -1,4 +1,4 @@
-﻿using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitDTOs;
+﻿using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitEcommerceDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
