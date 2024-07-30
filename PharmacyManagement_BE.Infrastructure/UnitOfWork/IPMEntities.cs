@@ -42,6 +42,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
         IVoucherService VoucherService { get; set; }
         IProductService ProductService { get; set; }
         ITokenService TokenService { get; set; }
+        IVnPayService VnPayService { get; set; }
         int SaveChange();
     }
 }

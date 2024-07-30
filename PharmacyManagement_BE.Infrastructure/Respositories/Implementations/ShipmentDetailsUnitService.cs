@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
@@ -52,6 +53,23 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     ORDER BY sdu.Level";
 
             return (await _dapperContext.GetConnection.QueryAsync<ShipmentDetailsUnitDTO>(sql, parameters)).ToList();
+        }
+
+        public async Task<ShipmentDetailsUnitDTO?> GetShipmentDetailsUnit(Guid shipmentDetailsId, Guid unitId)
+        {
+            return _context.ShipmentDetailsUnit
+                .Where(i => i.ShipmentDetailsId == shipmentDetailsId && i.UnitId == unitId)
+                .Include(i => i.Unit)
+                .Select(i => new ShipmentDetailsUnitDTO
+                {
+                    UnitId = i.UnitId,
+                    CodeUnit = i.Unit.Name,
+                    UnitName = i.Unit.NameDetails,
+                    SalePrice = i.SalePrice,
+                    UnitCount = i.UnitCount,
+                    Level = i.Level,
+                })
+                .FirstOrDefault();
         }
     }
 }

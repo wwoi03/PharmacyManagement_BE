@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.CartEcommerceDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitEcommerceDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
@@ -23,11 +24,36 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
         public async Task<List<ItemCartDTO>> GetCart(Guid customerId)
         {
-            return _context.Carts
+            var carts = _context.Carts
                 .Where(i => i.CustomerId == customerId)
                 .Include(i => i.Product)
                 .Include(i => i.Unit)
-                .Select(i => new ItemCartDTO
+                .ToList();
+
+            var cartDtos = carts.Select(i =>
+            {
+                // Retrieve the ShipmentDetailsId based on the highest ImportPrice
+                var shipmentDetailsId = _context.ShipmentDetails
+                    .Where(sd => sd.ProductId == i.ProductId)
+                    .OrderByDescending(sd => sd.ImportPrice)
+                    .Select(sd => sd.Id)
+                    .FirstOrDefault();
+
+                var shipmentDetailsUnits = _context.ShipmentDetailsUnit
+                    .Where(sdu => sdu.ShipmentDetailsId == shipmentDetailsId)
+                    .Select(sdu => new ShipmentDetailsUnitDTO
+                    {
+                        UnitId = sdu.Unit.Id,
+                        CodeUnit = sdu.Unit.Name,
+                        UnitName = sdu.Unit.NameDetails,
+                        SalePrice = sdu.SalePrice,
+                        UnitCount = sdu.UnitCount,
+                        Level = sdu.Level
+                    })
+                    .OrderBy(sdu => sdu.Level)
+                    .ToList();
+
+                return new ItemCartDTO
                 {
                     CartId = i.Id,
                     ProductId = i.ProductId,
@@ -36,8 +62,13 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     ProductImage = i.Product.Image,
                     UnitName = i.Unit.NameDetails,
                     Quantity = i.Quantity,
-                })
-                .ToList();
+                    ShipmentDetailsId = shipmentDetailsId,
+                    ShipmentDetailsUnits = shipmentDetailsUnits
+                };
+            }).ToList();
+
+            return cartDtos;
         }
+
     }
 }
