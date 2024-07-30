@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.ProductEcommerceFeatures.Requests
 {
-    public class GetProductDetailsQueryRequest : IRequest<ResponseAPI<ProductEcommerceDTO>>
+    public class GetProductDetailsQueryRequest : IRequest<ResponseAPI<ProductDetailsEcommerceDTO>>
     {
-        public Guid ProductId { get; set; }
+        public Guid Id { get; set; }
     }
 }

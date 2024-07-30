@@ -27,7 +27,6 @@ using System.Threading.Tasks;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
 using PharmacyManagement_BE.Application.Commands.CommentFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
-<<<<<<< HEAD
 using PharmacyManagement_BE.Application.Commands.ProductDiseaseFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDiseaseDTOs;
 using PharmacyManagement_BE.Application.Commands.DiseaseSymptomFeatures.Requests;
@@ -38,9 +37,7 @@ using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers;
 using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
-=======
 using PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requests;
->>>>>>> master
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -128,7 +125,6 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<Order, CreateOrderCommandRequest>().ReverseMap();
             #endregion Order
-<<<<<<< HEAD
 
             #region OrderDetails
             CreateMap<OrderDetails, OrderDetailsDTO>().ReverseMap();
@@ -153,10 +149,10 @@ namespace PharmacyManagement_BE.Application.Extentions
 
             #region ProductEcommerce
             CreateMap<ProductEcommerceDTO, Product>().ReverseMap();
+            CreateMap<ProductDetailsEcommerceDTO, Product>().ReverseMap();
             #endregion ProductEcommerce 
 
-=======
->>>>>>> master
+
         }
     }
 }

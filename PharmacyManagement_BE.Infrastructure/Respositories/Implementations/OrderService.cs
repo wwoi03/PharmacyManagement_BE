@@ -1,11 +1,9 @@
-<<<<<<< HEAD
 ﻿using AutoMapper;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Domain.Types;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
-=======
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
@@ -14,7 +12,6 @@ using PharmacyManagement_BE.Domain.Types;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderEcommerceDTOs;
->>>>>>> master
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;

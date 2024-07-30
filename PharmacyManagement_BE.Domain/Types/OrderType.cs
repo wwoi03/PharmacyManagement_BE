@@ -8,7 +8,6 @@ namespace PharmacyManagement_BE.Domain.Types
 {
     public enum OrderType
     {
-<<<<<<< HEAD
         //Dành cho lấy danh sách
         GetAll = -1,
         //Khách hàng có thể tự hủy đơn
@@ -25,14 +24,6 @@ namespace PharmacyManagement_BE.Domain.Types
         CancellationOrderApproved = 5,
         //phía cửa hàng yêu cầu hủy
         StoreCanceledOrder = 6,
-=======
-        OrderWaitingConfirmation, // Đang xử lý/chờ xác nhận
-        OrderBeingPrepared, // Đang chuẩn bị hàng
-        OrderBeingDelivered, // Đang giao
-        OrderDelivered, // Đã giao 
-        RequestCancelOrder, 
-        CancellationOrderApproved,
-        StoreCanceledOrder
->>>>>>> master
+        
     }
 }

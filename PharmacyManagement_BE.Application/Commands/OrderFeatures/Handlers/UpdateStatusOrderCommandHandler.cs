@@ -43,7 +43,8 @@ namespace PharmacyManagement_BE.Application.Commands.OrderFeatures.Handlers
                 if (!checkStatus)
                     return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, "Vi phạm điều kiện ràng buột trạng thái của đơn hàng!");
 
-                order.Status = request.type.ToString();
+                OrderType type = (OrderType)request.type;
+                order.Status = type.ToString();
 
                 // Cập nhật lại đơn hàng
                 var status = _entities.OrderService.Update(order);
