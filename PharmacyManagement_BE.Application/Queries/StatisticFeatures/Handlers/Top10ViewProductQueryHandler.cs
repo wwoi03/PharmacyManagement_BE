@@ -30,7 +30,7 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
                 if (top10 == null)
                     return new ResponseErrorAPI<List<StatisticProductDTO>>(StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
 
-                return new ResponseSuccessAPI<List<StatisticProductDTO>>(StatusCodes.Status200OK, "Top 10 bán chạy", top10);
+                return new ResponseSuccessAPI<List<StatisticProductDTO>>(StatusCodes.Status200OK, "Top 10 lượt xem", top10);
             }
             catch (Exception)
             {

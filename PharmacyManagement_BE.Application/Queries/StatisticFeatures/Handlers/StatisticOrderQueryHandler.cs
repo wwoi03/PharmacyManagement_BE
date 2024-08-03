@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
 {
-    internal class StatisticOrderQueryHandler : IRequestHandler<StatisticOrderQueryRequest, ResponseAPI<List<StatisticDTO>>>
+    internal class StatisticOrderQueryHandler : IRequestHandler<StatisticOrderQueryRequest, ResponseAPI<List<StatisticOrderDTO>>>
     {
         private readonly IPMEntities _entities;
 
@@ -23,7 +23,7 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
             this._entities = entities;
         }
 
-        public async Task<ResponseAPI<List<StatisticDTO>>> Handle(StatisticOrderQueryRequest request, CancellationToken cancellationToken)
+        public async Task<ResponseAPI<List<StatisticOrderDTO>>> Handle(StatisticOrderQueryRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -32,10 +32,10 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
                 var validation = request.IsValid();
 
                 if (!validation.IsSuccessed)
-                    return new ResponseSuccessAPI<List<StatisticDTO>> (StatusCodes.Status400BadRequest, validation.Message);
+                    return new ResponseSuccessAPI<List<StatisticOrderDTO>> (StatusCodes.Status400BadRequest, validation.Message);
 
                 // Đơn hàng
-                var order = await _entities.OrderService.StatisticOrder(request.Order);
+                var order = await _entities.OrderService.StatisticOrder((TimeType)Enum.Parse(typeof(TimeType), request.TimeType), request.DateTime);
 
                 ////Lấy danh sách yêu cầu hủy
                 //var listRequestCancellation = await _entities.OrderService.GetCanceledOrder();
@@ -55,11 +55,11 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Handlers
                 //    GetCustomerCommentQAs = listCommentQA
                 //};
 
-                return new ResponseSuccessAPI<List<StatisticDTO>> (StatusCodes.Status200OK, "Thống kê", order);
+                return new ResponseSuccessAPI<List<StatisticOrderDTO>> (StatusCodes.Status200OK, "Thống kê", order);
             }
             catch (Exception)
             {
-                return new ResponseErrorAPI<List<StatisticDTO>> (StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
+                return new ResponseErrorAPI<List<StatisticOrderDTO>> (StatusCodes.Status500InternalServerError, "Lỗi hệ thống.");
             }
            
         }

@@ -38,6 +38,7 @@ namespace PharmacyManagement_BE.Application.Queries.OrderFeatures.Handlers
 
                 //Lấy Branch của nhân viên
                 var branch = await _entities.AccountService.GetBranchId();
+                
 
                 //Lấy danh sách đơn hàng
                 var listOrder = await _entities.OrderService.GetOrdersByBranch(branch, (OrderType)request.Type);
