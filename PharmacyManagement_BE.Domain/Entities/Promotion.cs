@@ -26,6 +26,8 @@ namespace PharmacyManagement_BE.Domain.Entities
         public DateTime EndDate { get; set; }
 
         [Required]
+        [StringLength(50)]
+        [Column(TypeName = "varchar(50)")]
         public PromotionType DiscountType { get; set; }
 
         [Required]

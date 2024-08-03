@@ -16,6 +16,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<List<ListProductDTO>> GetProducts();
         Task<Product?> GetProductByCodeMedicineOrName(string codeMedicine, string name);
         Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year);
+        Task<List<ItemProductDTO>> GetNewProducts();
+        Task<List<ItemProductDTO>> GetSaleProducts();
         Task<List<SelectProductDTO>> GetProductsSelect();
     }
 }

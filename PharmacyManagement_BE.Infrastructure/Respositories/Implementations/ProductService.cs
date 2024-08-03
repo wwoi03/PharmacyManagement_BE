@@ -67,57 +67,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return _context.Products.FirstOrDefault(i => i.CodeMedicine.Equals(codeMedicine) || i.Name.Equals(name));
         }
 
-        /*public async Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@Month", month);
-            parameters.Add("@Year", year);
-
-            var sql = @"
-                    SELECT 
-                        p.Id AS ProductId,
-                        sd.Id AS ShipmentDetailsId,
-                        p.Name AS ProductName,
-                        p.Specifications AS Specifications,
-                        p.Image AS ProductImage,
-                        pr.DiscountValue AS Discount
-                    FROM 
-	                    Products p
-	                    LEFT JOIN ShipmentDetails sd ON p.Id = sd.ProductId
-	                    LEFT JOIN PromotionProducts pp ON p.Id = pp.ProductId
-	                    LEFT JOIN Promotions pr ON pp.PromotionId = pr.Id
-                    WHERE 
-                        sd.ManufactureDate = (
-                            SELECT MAX(sd2.ManufactureDate)
-                            FROM ShipmentDetails sd2
-                            WHERE sd2.ProductId = p.Id
-                        )";
-
-            var result = (await _dapperContext.GetConnection.QueryAsync<ItemProductDTO>(sql, parameters)).ToList();
-
-            foreach (var item in result)
-            {
-                item.ShipmentDetailsUnits =
-                    _context
-                        .ShipmentDetailsUnit
-                        .Where(i => i.ShipmentDetailsId == item.ShipmentDetailsId)
-                        .Join(_context.Units,
-                            sduItem => sduItem.UnitId,
-                            u => u.Id,
-                            (sduItem, u) => new { shipmentDetailsUnit = sduItem, unit = u })
-                        .Select(temp => new ShipmentDetailsUnitDTO
-                        {
-                            Id = temp.unit.Id,
-                            Name = temp.unit.Name,
-                            SalePrice = temp.shipmentDetailsUnit.SalePrice
-
-                        })
-                        .ToList();
-            }
-
-            return result;
-        }*/
-
         public async Task<List<SelectProductDTO>> GetProductsSelect()
         {
             return _context.Products
@@ -132,27 +81,33 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
         public async Task<List<ItemProductDTO>> GetSellingProductByMonthYear(int month, int year)
         {
-            var products = _context.Products
-                .Select(item => new ItemProductDTO
+            var dateThreshold = DateTime.Now.AddDays(15);
+            var random = new Random();
+
+            // Lấy danh sách sản phẩm còn hạn trước 15 ngày
+            var products = _context.ShipmentDetails
+                .Where(sdItem => sdItem.ExpirationDate > dateThreshold)
+                .Include(sdItem => sdItem.Product)
+                .GroupBy(sdItem => new { sdItem.ProductId })
+                .Select(group => new
                 {
-                    ProductId = item.Id,
-                    ProductName = item.Name,
-                    Specifications = item.Specifications,
-                    ProductImage = item.Image,
+                    ProductId = group.Key.ProductId,
+                    TotalSold = group.Sum(sale => sale.Sold) // tính tổng sản phẩm bán được
                 })
+                .Distinct()
+                .Where(group => group.TotalSold > 0)
                 .ToList();
 
-            var result = products.Select(item =>
+            // Thông tin bổ sung
+            var result = products.Select(itemProduct =>
             {
-                // Lấy chi tiết đơn nhập
+                // Lấy chi tiết đơn nhập mới nhất
                 var shipmentDetails = _context.ShipmentDetails
-                    .Where(sdItem => sdItem.ProductId == item.ProductId
-                        /*&& sdItem.ExpirationDate > DateTime.Now*/)
-                    .OrderByDescending(sdItem => sdItem.ExpirationDate)
+                    .Where(sdItem => sdItem.ProductId == itemProduct.ProductId && sdItem.ExpirationDate > dateThreshold)
+                    .Include(sdItem => sdItem.Shipment)
+                    .Include(sdItem => sdItem.Product)
+                    .OrderBy(sdItem => sdItem.Shipment.ImportDate)
                     .FirstOrDefault();
-
-                if (shipmentDetails == null)
-                    return null;
 
                 // Lấy đơn giá
                 var shipmentDetailsUnit = _context.ShipmentDetailsUnit
@@ -171,22 +126,170 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
                 // Lấy giảm giá 
                 var promotion = _context.PromotionProducts
-                    .Where(promItem => promItem.ProductId == item.ProductId)
+                    .Where(promItem => promItem.ProductId == itemProduct.ProductId)
                     .Include(promItem => promItem.Promotion)
-                    .FirstOrDefault(promItem => promItem.Promotion.EndDate > DateTime.Now);
+                    .FirstOrDefault(promItem => promItem.Promotion.EndDate >= DateTime.Now);
 
                 return new ItemProductDTO
                 {
-                    ProductId = item.ProductId,
-                    ProductName = item.ProductName,
-                    Specifications = item.Specifications,
-                    ProductImage = item.ProductImage,
+                    ProductId = itemProduct.ProductId,
+                    ProductName = shipmentDetails.Product.Name,
+                    Specifications = shipmentDetails.Product.Specifications,
+                    ProductImage = shipmentDetails.Product.Image,
+                    ShipmentDetailsId = shipmentDetails.Id,
+                    Discount = promotion?.Promotion?.DiscountValue ?? 0,
+                    ShipmentDetailsUnits = shipmentDetailsUnit,
+                };
+            })
+            .Take(12) // Giới hạn số lượng sản phẩm
+            .ToList();
+
+            return result;
+        }
+
+        public async Task<List<ItemProductDTO>> GetNewProducts()
+        {
+            var dateThreshold = DateTime.Now.AddDays(15);
+
+            // Lấy danh sách sản phẩm còn hạn trước 15 ngày
+            var products = _context.ShipmentDetails
+                .Where(sdItem => sdItem.ExpirationDate > dateThreshold)
+                .Include(sdItem => sdItem.Product)
+                .OrderByDescending(sdItem => sdItem.ExpirationDate)
+                .GroupBy(sdItem => new { sdItem.ProductId })
+                .Select(group => new
+                {
+                    ProductId = group.Key.ProductId,
+                    Count = group.Count(),
+                })
+                .Distinct()
+                .ToList();
+
+            // Tìm sản phẩm có số lần nhập ít nhất
+            var minEntryCount = products.Min(g => g.Count);
+
+            // Lọc các sản phẩm có số lần nhập ít nhất
+            var productsWithMinEntries = products
+                .Where(g => g.Count == minEntryCount)
+                .Select(g => new ItemProductDTO
+                {
+                    ProductId = g.ProductId,
+                })
+                .ToList();
+
+            // Thông tin bổ sung
+            var result = productsWithMinEntries.Select(itemProduct => 
+            {
+                // Lấy chi tiết đơn nhập mới nhất
+                var shipmentDetails = _context.ShipmentDetails
+                    .Where(sdItem => sdItem.ProductId == itemProduct.ProductId && sdItem.ExpirationDate > dateThreshold)
+                    .Include(sdItem => sdItem.Shipment)
+                    .Include(sdItem => sdItem.Product)
+                    .OrderBy(sdItem => sdItem.Shipment.ImportDate)
+                    .FirstOrDefault();
+
+                // Lấy đơn giá
+                var shipmentDetailsUnit = _context.ShipmentDetailsUnit
+                    .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
+                    .Select(sduItem => new ShipmentDetailsUnitDTO
+                    {
+                        UnitId = sduItem.Unit.Id,
+                        CodeUnit = sduItem.Unit.Name,
+                        UnitName = sduItem.Unit.NameDetails,
+                        SalePrice = sduItem.SalePrice,
+                        UnitCount = sduItem.UnitCount,
+                        Level = sduItem.Level
+                    })
+                    .OrderBy(sduItem => sduItem.Level)
+                    .ToList();
+
+                // Lấy giảm giá 
+                var promotion = _context.PromotionProducts
+                    .Where(promItem => promItem.ProductId == itemProduct.ProductId)
+                    .Include(promItem => promItem.Promotion)
+                    .FirstOrDefault(promItem => promItem.Promotion.EndDate >= DateTime.Now);
+
+                return new ItemProductDTO
+                {
+                    ProductId = itemProduct.ProductId,
+                    ProductName = shipmentDetails.Product.Name,
+                    Specifications = shipmentDetails.Product.Specifications,
+                    ProductImage = shipmentDetails.Product.Image,
+                    ShipmentDetailsId = shipmentDetails.Id,
+                    Discount = promotion?.Promotion?.DiscountValue ?? 0,
+                    ShipmentDetailsUnits = shipmentDetailsUnit,
+                };
+            })
+            .Take(12) // Giới hạn số lượng sản phẩm
+            .ToList();
+
+            return result;
+        }
+
+        public async Task<List<ItemProductDTO>> GetSaleProducts()
+        {
+            var dateThreshold = DateTime.Now.AddDays(15);
+
+            // Lấy danh sách sản phẩm còn hạn trước 15 ngày
+            var products = _context.ShipmentDetails
+                .Where(sdItem => sdItem.ExpirationDate > dateThreshold)
+                .Include(sdItem => sdItem.Product)
+                .GroupBy(sdItem => new { sdItem.ProductId })
+                .Select(group => new
+                {
+                    ProductId = group.Key.ProductId,
+                })
+                .Distinct()
+                .ToList();
+
+            // Thông tin bổ sung
+            var result = products.Select(itemProduct =>
+            {
+                // Lấy chi tiết đơn nhập mới nhất
+                var shipmentDetails = _context.ShipmentDetails
+                    .Where(sdItem => sdItem.ProductId == itemProduct.ProductId && sdItem.ExpirationDate > dateThreshold)
+                    .Include(sdItem => sdItem.Shipment)
+                    .Include(sdItem => sdItem.Product)
+                    .OrderBy(sdItem => sdItem.Shipment.ImportDate)
+                    .FirstOrDefault();
+
+                // Lấy đơn giá
+                var shipmentDetailsUnit = _context.ShipmentDetailsUnit
+                    .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
+                    .Select(sduItem => new ShipmentDetailsUnitDTO
+                    {
+                        UnitId = sduItem.Unit.Id,
+                        CodeUnit = sduItem.Unit.Name,
+                        UnitName = sduItem.Unit.NameDetails,
+                        SalePrice = sduItem.SalePrice,
+                        UnitCount = sduItem.UnitCount,
+                        Level = sduItem.Level
+                    })
+                    .OrderBy(sduItem => sduItem.Level)
+                    .ToList();
+
+                // Lấy giảm giá 
+                var promotion = _context.PromotionProducts
+                    .Where(promItem => promItem.ProductId == itemProduct.ProductId)
+                    .Include(promItem => promItem.Promotion)
+                    .FirstOrDefault(promItem => promItem.Promotion.EndDate >= DateTime.Now);
+
+                if (promotion == null)
+                    return null;
+
+                return new ItemProductDTO
+                {
+                    ProductId = itemProduct.ProductId,
+                    ProductName = shipmentDetails.Product.Name,
+                    Specifications = shipmentDetails.Product.Specifications,
+                    ProductImage = shipmentDetails.Product.Image,
                     ShipmentDetailsId = shipmentDetails.Id,
                     Discount = promotion?.Promotion?.DiscountValue ?? 0,
                     ShipmentDetailsUnits = shipmentDetailsUnit,
                 };
             })
             .Where(item => item != null)
+            .Take(12)
             .ToList();
 
             return result;

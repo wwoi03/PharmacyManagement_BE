@@ -65,5 +65,33 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetNewProducts")]
+        public async Task<IActionResult> GetNewProducts()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetNewProductsQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetSaleProducts")]
+        public async Task<IActionResult> GetSaleProducts()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSaleProductsQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
