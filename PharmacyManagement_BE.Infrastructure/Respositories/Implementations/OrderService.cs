@@ -21,6 +21,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
 
 namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
@@ -143,7 +144,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     // Tạo đối tượng StatisticDTO và thêm vào danh sách
                     var statistic = new StatisticOrderDTO
                     {
-                        Title = date.DayOfWeek.ToString(), // Lấy tên ngày trong tuần
+                        Title = Transfer.GetDayOfWeekInVietnamese(date), // Lấy tên ngày trong tuần
                         Order = order, // Số lượng đơn hàng cho ngày này
                         Cancellation = cancellation, // Số lượng đơn hủy cho ngày này
                         Payment = payment
@@ -193,7 +194,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     // Tạo đối tượng StatisticDTO và thêm vào danh sách
                     var statistic = new StatisticOrderDTO
                     {
-                        Title = date.ToString("MMM"), // Lấy tên tháng 
+                        Title = "Tháng " + date.Month, // Lấy tên tháng 
                         Order = order, // Số lượng đơn hàng cho tháng này
                         Cancellation = cancellation, // Số lượng đơn hủy cho tháng này
                         Payment = payment // Số lượng đơn hàng đã thanh toán cho tháng này
@@ -287,7 +288,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     // Tạo đối tượng StatisticDTO và thêm vào danh sách
                     var statistic = new StatisticRevenueDTO
                     {
-                        Title = date.DayOfWeek.ToString(), // Lấy tên ngày trong tuần
+                        Title = Transfer.GetDayOfWeekInVietnamese(date), // Lấy tên ngày trong tuần
                         Statistic = revenue // Doanh thu cho ngày này
                     };
                     listStatistic.Add(statistic);
@@ -319,7 +320,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     // Tạo đối tượng StatisticDTO và thêm vào danh sách
                     var statistic = new StatisticRevenueDTO
                     {
-                        Title = date.ToString("MMM"), // Lấy tên tháng
+                        Title = "Tháng " + date.Month, // Lấy tên tháng
                         Statistic = revenue // Doanh thu cho tháng này
                     };
                     listStatistic.Add(statistic);

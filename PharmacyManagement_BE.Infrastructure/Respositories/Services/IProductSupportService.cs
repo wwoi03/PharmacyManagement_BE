@@ -13,6 +13,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<bool> CreateRange(List<ProductSupport> productSupports);
         Task<List<ProductSupport>> GetAllBySupport(Guid supportId);
         Task<ProductSupport> GetProductSupport(Guid supportId, Guid productId);
-        Task<ResponseAPI<string>> CheckExit(Guid productId, Guid supportId);
+        Task<ResponseAPI<string>> CheckExit(Guid? productId, Guid? supportId);
     } 
 }

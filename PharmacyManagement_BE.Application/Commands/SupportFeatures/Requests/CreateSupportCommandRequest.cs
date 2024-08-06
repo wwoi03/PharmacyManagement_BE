@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Commands.SupportFeatures.Requests
 {
-    public class CreateSupportCommandRequest : IRequest<ResponseAPI<SupportDTO>>
+    public class CreateSupportCommandRequest : IRequest<ResponseAPI<string>>
     {
         public string Name { get; set; }
         public string? Description { get; set; }
         public string CodeSupport { get; set; }
+        public List<Guid?>? ProductId { get; set; }
 
         public ValidationNotify<string> IsValid()
         {

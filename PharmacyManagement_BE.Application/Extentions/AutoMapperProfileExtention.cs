@@ -38,6 +38,8 @@ using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers;
 using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
 using PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.PromotionFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.PromotionDTOs;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -121,6 +123,12 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Comment, CreateReplyCommentCommandRequest>().ReverseMap();
             #endregion Comment
 
+            #region Promotion
+            CreateMap<CreatePromotionCommandRequest, Promotion>().ReverseMap();
+            CreateMap<PromotionDTO, Promotion>().ReverseMap();
+            CreateMap<DetailsPromotionDTO, Promotion>().ReverseMap();
+            #endregion Promotion
+
             #region Order
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<Order, CreateOrderCommandRequest>().ReverseMap();
@@ -145,6 +153,7 @@ namespace PharmacyManagement_BE.Application.Extentions
             #region ProductSupport
             CreateMap<CreateProductSupportCommandRequest, ProductSupport>().ReverseMap();
             CreateMap<ProductSupportDTO, ProductSupport>().ReverseMap();
+            CreateMap<createProductSupport, ProductSupport>().ReverseMap();
             #endregion ProductSupport
 
             #region ProductEcommerce
@@ -152,6 +161,15 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<ProductDetailsEcommerceDTO, Product>().ReverseMap();
             #endregion ProductEcommerce 
 
+            #region PromotionProduct
+            CreateMap<createProductPromotion, PromotionProduct>().ReverseMap();
+            CreateMap<ProductPromotionDTO, PromotionProduct>().ReverseMap();
+            #endregion PromotionProduct
+
+            #region PromotionProgram
+            CreateMap<createPromotionProgram, PromotionProgram>().ReverseMap();
+            CreateMap<PromotionProgramDTO, PromotionProgram>().ReverseMap();
+            #endregion PromotionProgram
 
         }
     }
