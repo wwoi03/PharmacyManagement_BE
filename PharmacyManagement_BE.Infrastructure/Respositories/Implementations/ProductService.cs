@@ -294,6 +294,78 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             return result;
         }
+
+        public async Task<List<ItemProductDTO>> SearchProductEcommerce(string content, List<Guid> categories, List<Guid> diseases, List<Guid> symptoms, List<Guid> supports)
+        {
+            var dateThreshold = DateTime.Now.AddDays(15);
+
+            content = content.ToLower();
+
+            // Lấy danh sách sản phẩm còn hạn trước 15 ngày
+            var products = _context.ShipmentDetails
+                .Where(sdItem => sdItem.ExpirationDate > dateThreshold)
+                .Include(sdItem => sdItem.Product)
+                .GroupBy(sdItem => new { sdItem.ProductId })
+                .Select(group => new
+                {
+                    ProductId = group.Key.ProductId,
+                })
+                .Distinct()
+                .ToList();
+
+            // Thông tin bổ sung
+            var result = products.Select(itemProduct =>
+            {
+                // Lấy chi tiết đơn nhập mới nhất
+                var shipmentDetails = _context.ShipmentDetails
+                    .Where(sdItem => sdItem.ProductId == itemProduct.ProductId && sdItem.ExpirationDate > dateThreshold)
+                    .Include(sdItem => sdItem.Shipment)
+                    .Include(sdItem => sdItem.Product)
+                    .Where(sdItem => sdItem.Product.Name.ToLower().Contains(content) || content.Contains(sdItem.Product.Name.ToLower()))
+                    .OrderBy(sdItem => sdItem.Shipment.ImportDate)
+                    .FirstOrDefault();
+
+                if (shipmentDetails == null)
+                    return null;
+
+                // Lấy đơn giá
+                var shipmentDetailsUnit = _context.ShipmentDetailsUnit
+                    .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
+                    .Select(sduItem => new ShipmentDetailsUnitDTO
+                    {
+                        UnitId = sduItem.Unit.Id,
+                        CodeUnit = sduItem.Unit.Name,
+                        UnitName = sduItem.Unit.NameDetails,
+                        SalePrice = sduItem.SalePrice,
+                        UnitCount = sduItem.UnitCount,
+                        Level = sduItem.Level
+                    })
+                    .OrderBy(sduItem => sduItem.Level)
+                    .ToList();
+
+                // Lấy giảm giá 
+                var promotion = _context.PromotionProducts
+                    .Where(promItem => promItem.ProductId == itemProduct.ProductId)
+                    .Include(promItem => promItem.Promotion)
+                    .FirstOrDefault(promItem => promItem.Promotion.EndDate >= DateTime.Now);
+
+                return new ItemProductDTO
+                {
+                    ProductId = itemProduct.ProductId,
+                    ProductName = shipmentDetails.Product.Name,
+                    Specifications = shipmentDetails.Product.Specifications,
+                    ProductImage = shipmentDetails.Product.Image,
+                    ShipmentDetailsId = shipmentDetails.Id,
+                    Discount = promotion?.Promotion?.DiscountValue ?? 0,
+                    ShipmentDetailsUnits = shipmentDetailsUnit,
+                };
+            })
+            .Where(item => item != null)
+            .Take(12)
+            .ToList();
+
+            return result;
+        }
         #endregion EF & LinQ
     }
 }

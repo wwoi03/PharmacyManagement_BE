@@ -19,5 +19,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<List<ItemProductDTO>> GetNewProducts();
         Task<List<ItemProductDTO>> GetSaleProducts();
         Task<List<SelectProductDTO>> GetProductsSelect();
+        Task<List<ItemProductDTO>> SearchProductEcommerce(string content, List<Guid> categories, List<Guid> diseases, List<Guid> symptoms, List<Guid> supports);
     }
 }
