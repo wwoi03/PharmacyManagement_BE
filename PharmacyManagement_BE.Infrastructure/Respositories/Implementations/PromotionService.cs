@@ -90,12 +90,35 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             foreach (var item in promotionProduct)
             {
+                List<PromotionProgramDTO> promotionProgramDTOs = new List<PromotionProgramDTO>();
+
+                Product product = new Product();
+
                 // Lấy danh sách PromotionProgram theo PromotionProductId
                 var promotionPrograms = await Context.PromotionPrograms
                     .Where(r => r.PromotionProductId == item.Id)
                     .ToListAsync();
 
-                var promotionProgramDTOs = _mapper.Map<List<PromotionProgramDTO>>(promotionPrograms);
+
+                foreach (var program in promotionPrograms)
+                {
+                    product = await Context.Products.FirstOrDefaultAsync(r => r.Id == program.ProductId);
+
+                    var promotionProgramDTO = new PromotionProgramDTO
+                    {
+                        PromotionProductId = program.PromotionProductId,
+                        ProductId = program.ProductId,
+                        Quantity = program.Quantity,
+
+                        ProductName = product.Name,
+                        CodeProduct = product.CodeMedicine,
+                    };
+
+                    promotionProgramDTOs.Add(promotionProgramDTO);
+                }
+
+                //Lấy product khuyến mãi
+                 product = await Context.Products.FirstOrDefaultAsync(r => r.Id == item.ProductId);
 
                 // Tạo ProductPromotionDTO và thêm danh sách PromotionProgramDTO vào thuộc tính ProductPromotions
                 var productPromotionDTO = new ProductPromotionDTO
@@ -105,7 +128,11 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     PromotionId = item.PromotionId,
                     AdditionalInfo = item.AdditionalInfo,
                     Quantity = item.Quantity,
-                    PromotionPrograms = promotionProgramDTOs
+
+                    ProductName = product.Name,
+                    CodeProduct = product.CodeMedicine,
+
+                    PromotionPrograms = promotionProgramDTOs,
                 };
 
                 productPromotions.Add(productPromotionDTO);
