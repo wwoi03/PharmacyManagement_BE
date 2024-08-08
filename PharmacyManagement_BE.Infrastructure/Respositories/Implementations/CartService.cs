@@ -41,7 +41,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
                 var shipmentDetailsUnits = _context.ShipmentDetailsUnit
                     .Where(sdu => sdu.ShipmentDetailsId == shipmentDetailsId)
-                    .Select(sdu => new ShipmentDetailsUnitDTO
+                    .Select(sdu => new ShipmentDetailsUnitEDTO
                     {
                         UnitId = sdu.Unit.Id,
                         CodeUnit = sdu.Unit.Name,

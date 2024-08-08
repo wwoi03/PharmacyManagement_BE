@@ -112,7 +112,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 // Lấy đơn giá
                 var shipmentDetailsUnit = _context.ShipmentDetailsUnit
                     .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
-                    .Select(sduItem => new ShipmentDetailsUnitDTO
+                    .Select(sduItem => new ShipmentDetailsUnitEDTO
                     {
                         UnitId = sduItem.Unit.Id,
                         CodeUnit = sduItem.Unit.Name,
@@ -191,7 +191,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 // Lấy đơn giá
                 var shipmentDetailsUnit = _context.ShipmentDetailsUnit
                     .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
-                    .Select(sduItem => new ShipmentDetailsUnitDTO
+                    .Select(sduItem => new ShipmentDetailsUnitEDTO
                     {
                         UnitId = sduItem.Unit.Id,
                         CodeUnit = sduItem.Unit.Name,
@@ -256,7 +256,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 // Lấy đơn giá
                 var shipmentDetailsUnit = _context.ShipmentDetailsUnit
                     .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
-                    .Select(sduItem => new ShipmentDetailsUnitDTO
+                    .Select(sduItem => new ShipmentDetailsUnitEDTO
                     {
                         UnitId = sduItem.Unit.Id,
                         CodeUnit = sduItem.Unit.Name,
@@ -331,7 +331,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 // Lấy đơn giá
                 var shipmentDetailsUnit = _context.ShipmentDetailsUnit
                     .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
-                    .Select(sduItem => new ShipmentDetailsUnitDTO
+                    .Select(sduItem => new ShipmentDetailsUnitEDTO
                     {
                         UnitId = sduItem.Unit.Id,
                         CodeUnit = sduItem.Unit.Name,
@@ -365,6 +365,79 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             .ToList();
 
             return result;
+        }
+
+        public async Task<DetailsProductEcommerceDTO> GetProductDetailsEmcommerce(Guid productId)
+        {
+            var dateThreshold = DateTime.Now.AddDays(15);
+
+            // Lấy chi tiết đơn nhập mới nhất
+            var shipmentDetails = _context.ShipmentDetails
+                .Where(sdItem => sdItem.ProductId == productId && sdItem.ExpirationDate > dateThreshold)
+                .Include(sdItem => sdItem.Shipment)
+                .Include(sdItem => sdItem.Product)
+                .OrderBy(sdItem => sdItem.Shipment.ImportDate)
+                .FirstOrDefault();
+
+            // Lấy đơn giá
+            var shipmentDetailsUnit = _context.ShipmentDetailsUnit
+                .Where(sduItem => sduItem.ShipmentDetailsId == shipmentDetails.Id)
+                .Select(sduItem => new ShipmentDetailsUnitEDTO
+                {
+                    UnitId = sduItem.Unit.Id,
+                    CodeUnit = sduItem.Unit.Name,
+                    UnitName = sduItem.Unit.NameDetails,
+                    SalePrice = sduItem.SalePrice,
+                    UnitCount = sduItem.UnitCount,
+                    Level = sduItem.Level
+                })
+                .OrderBy(sduItem => sduItem.Level)
+                .ToList();
+
+            // Lấy giảm giá 
+            var promotion = _context.PromotionProducts
+                .Where(promItem => promItem.ProductId == productId)
+                .Include(promItem => promItem.Promotion)
+                .FirstOrDefault(promItem => promItem.Promotion.EndDate >= DateTime.Now);
+
+            // Lấy danh sách hình ảnh
+            var images = _context.ProductImages
+                .Where(item => item.ProductId == productId)
+                .Select(item => item.Image)
+                .ToList();
+
+            // Lấy thông tin sản phẩm
+            var product = _context.Products
+                .Where(item => item.Id == productId)
+                .Include(item => item.Category)
+                .Select(item => new DetailsProductEcommerceDTO
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    CodeMedicine = item.CodeMedicine,
+                    Specifications = item.Specifications,
+                    ShortDescription = item.ShortDescription,
+                    Description = item.Description,
+                    Uses = item.Uses,
+                    HowToUse = item.HowToUse,
+                    SideEffects = item.SideEffects,
+                    Warning = item.Warning,
+                    Preserve = item.Preserve,
+                    Dosage = item.Dosage,
+                    Contraindication = item.Contraindication,
+                    DosageForms = item.DosageForms,
+                    RegistrationNumber = item.RegistrationNumber,
+                    BrandOrigin = item.BrandOrigin,
+                    AgeOfUse = item.AgeOfUse,
+                    CategoryId = item.CategoryId,
+                    CategoryName = item.Category.Name,
+                    Image = item.Image,
+                    Images = images,
+                    ShipmentDetailsUnits = shipmentDetailsUnit
+                })
+                .FirstOrDefault();
+
+            return product;
         }
         #endregion EF & LinQ
     }
