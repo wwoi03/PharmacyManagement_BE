@@ -24,7 +24,7 @@ namespace PharmacyManagement_BE.Application.Commands.PromotionFeatures.Requests
         public string CodePromotion { get; set; }
 
         //Chọn product được giảm giá
-        public ProductPromotionRequestDTO? ProductPromotionRequest { get; set; } = null;
+        public List<ProductPromotionRequestDTO>? ProductPromotionRequest { get; set; } = null;
 
         public ValidationNotify<string> IsValid()
         {

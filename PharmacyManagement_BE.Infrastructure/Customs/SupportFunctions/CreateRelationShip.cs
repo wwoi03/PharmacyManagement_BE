@@ -240,42 +240,45 @@ namespace PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions
         }
 
 
-        public async Task<ResponseAPI<string>> CreateProductPromotion(ProductPromotionRequestDTO ProductPromotion, Guid Id)
+        public async Task<ResponseAPI<string>> CreateProductPromotion(List<ProductPromotionRequestDTO> ProductPromotions, Guid Id)
         {
             try
             {
-                foreach (var item in ProductPromotion.ProductId)
+                foreach(var ProductPromotion in ProductPromotions)
                 {
-                    createProductPromotion request = new createProductPromotion();
-
-                    request = new createProductPromotion
+                    foreach (var item in ProductPromotion.ProductId)
                     {
-                        PromotionId = Id,
-                        ProductId = item,
-                        AdditionalInfo = ProductPromotion.AdditionalInfo,
-                        Quantity = ProductPromotion.Quantity,
-                    };
+                        createProductPromotion request = new createProductPromotion();
 
-                    // Chuyển đổi request sang dữ liệu
-                    var create = _mapper.Map<PromotionProduct>(request);
-                    create.Id = Guid.NewGuid();
+                        request = new createProductPromotion
+                        {
+                            PromotionId = Id,
+                            ProductId = item,
+                            AdditionalInfo = ProductPromotion.AdditionalInfo,
+                            Quantity = ProductPromotion.Quantity,
+                        };
 
-                    // Tạo bệnh mới
-                    var status = _entities.PromotionProductService.Create(create);
+                        // Chuyển đổi request sang dữ liệu
+                        var create = _mapper.Map<PromotionProduct>(request);
+                        create.Id = Guid.NewGuid();
 
-                    //Kiểm tra trạng thái
-                    if (status == false)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm quan hệ liên quan thất bại, vui lòng thử lại sau.");
+                        // Tạo bệnh mới
+                        var status = _entities.PromotionProductService.Create(create);
 
-                    //Tạo quan hệ mua x tặng y
-                    if (ProductPromotion.promotionProgramRequest != null)
-                    {
-                        await CreatePromotionProgram(ProductPromotion.promotionProgramRequest, create.Id);
+                        //Kiểm tra trạng thái
+                        if (status == false)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm quan hệ liên quan thất bại, vui lòng thử lại sau.");
+
+                        //Tạo quan hệ mua x tặng y
+                        if (ProductPromotion.promotionProgramRequest != null)
+                        {
+                            await CreatePromotionProgram(ProductPromotion.promotionProgramRequest, create.Id);
+                        }
+
+                        //Lưu vào CSDL
+                        _entities.SaveChange();
+
                     }
-
-                    //Lưu vào CSDL
-                    _entities.SaveChange();
-
                 }
                 return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm quan hệ liên quan thành công.");
             }
@@ -286,33 +289,37 @@ namespace PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions
 
         }
 
-        public async Task<ResponseAPI<string>> CreatePromotionProgram(PromotionProgramRequestDTO promotionProgram, Guid Id)
+        public async Task<ResponseAPI<string>> CreatePromotionProgram(List<PromotionProgramRequestDTO> promotionPrograms, Guid Id)
         {
             try
             {
-                foreach (var item in promotionProgram.ProductId)
+                foreach(var promotionProgram in promotionPrograms)
                 {
-                    createPromotionProgram request = new createPromotionProgram();
-
-                    request = new createPromotionProgram
+                    foreach (var item in promotionProgram.ProductId)
                     {
-                        PromotionProductId = Id,
-                        ProductId = item,
-                    };
+                        createPromotionProgram request = new createPromotionProgram();
 
-                    // Chuyển đổi request sang dữ liệu
-                    var create = _mapper.Map<PromotionProgram>(request);
+                        request = new createPromotionProgram
+                        {
+                            PromotionProductId = Id,
+                            ProductId = item,
+                            Quantity = promotionProgram.Quantity,
+                        };
 
-                    // Tạo bệnh mới
-                    var status = _entities.PromotionProgramService.Create(create);
+                        // Chuyển đổi request sang dữ liệu
+                        var create = _mapper.Map<PromotionProgram>(request);
 
-                    //Kiểm tra trạng thái
-                    if (status == false)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm quan hệ liên quan thất bại, vui lòng thử lại sau.");
+                        // Tạo bệnh mới
+                        var status = _entities.PromotionProgramService.Create(create);
 
-                    //Lưu vào CSDL
-                    _entities.SaveChange();
+                        //Kiểm tra trạng thái
+                        if (status == false)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm quan hệ liên quan thất bại, vui lòng thử lại sau.");
 
+                        //Lưu vào CSDL
+                        _entities.SaveChange();
+
+                    }
                 }
                 return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm quan hệ liên quan thành công.");
             }

@@ -12,7 +12,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.PromotionDTOs
         public string AdditionalInfo { get; set; }
         public int Quantity { get; set; }
 
-        public PromotionProgramRequestDTO? promotionProgramRequest { get; set; }
+        public List<PromotionProgramRequestDTO>? promotionProgramRequest { get; set; }
 
     }
 }
