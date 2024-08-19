@@ -40,6 +40,7 @@ namespace PharmacyManagement_BE.Application.Commands.PromotionFeatures.Handlers
 
                 //Xóa quan hệ của khuyến mãi nếu có 
 
+                
                 var delete = await _entities.PromotionService.DeleteRelationShip(request.Id);
 
                 //Kiểm tra xóa quan hệ

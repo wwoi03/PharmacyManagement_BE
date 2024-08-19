@@ -60,6 +60,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 //Lấy danh sách của PromotionProduct
                 var promotionProduct = await Context.PromotionProducts.Where(r => r.PromotionId == Promotion).ToListAsync();
 
+                if(promotionProduct.Count == 0)
+                    return new ResponseSuccessAPI<string>(status, "Không có quan hệ ràng buộc");
+
                 foreach (var item in promotionProduct)
                 {
                     //Kiểm tra tồn PromotionProgram
