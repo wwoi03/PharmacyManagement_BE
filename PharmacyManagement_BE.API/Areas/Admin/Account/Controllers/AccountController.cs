@@ -60,12 +60,12 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Account.Controllers
             }
         }
 
-        [HttpPost("RevokeToken")]
-        public async Task<IActionResult> RevokeToken(RevokeTokenCommandRequest request)
+        [HttpPut("RevokeToken")]
+        public async Task<IActionResult> RevokeToken([FromQuery] Guid id)
         {
             try
             {
-                var result = await _mediator.Send(request);
+                var result = await _mediator.Send(new RevokeTokenCommandRequest { Id = id});
                 return Ok(result);
             }
             catch (Exception ex)
