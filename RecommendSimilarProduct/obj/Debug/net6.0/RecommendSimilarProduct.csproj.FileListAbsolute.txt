@@ -1,0 +1,12 @@
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\RecommendSimilarProduct.csproj.AssemblyReference.cache
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\RecommendSimilarProduct.GeneratedMSBuildEditorConfig.editorconfig
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\RecommendSimilarProduct.AssemblyInfoInputs.cache
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\RecommendSimilarProduct.AssemblyInfo.cs
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\RecommendSimilarProduct.csproj.CoreCompileInputs.cache
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\bin\Debug\net6.0\RecommendSimilarProduct.deps.json
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\bin\Debug\net6.0\RecommendSimilarProduct.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\bin\Debug\net6.0\RecommendSimilarProduct.pdb
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\RecommendSimilarProduct.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\refint\RecommendSimilarProduct.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\RecommendSimilarProduct.pdb
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\RecommendSimilarProduct\obj\Debug\net6.0\ref\RecommendSimilarProduct.dll

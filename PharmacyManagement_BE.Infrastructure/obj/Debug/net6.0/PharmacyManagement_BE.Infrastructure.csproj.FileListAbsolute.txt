@@ -49,3 +49,5 @@ H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Infr
 H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.pdb
 H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\PharmacyManagement_BE.Infrastructure.genruntimeconfig.cache
 H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\obj\Debug\net6.0\ref\PharmacyManagement_BE.Infrastructure.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\RecommendSimilarProduct.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Infrastructure\bin\Debug\net6.0\RecommendSimilarProduct.pdb
