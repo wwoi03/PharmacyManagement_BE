@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_BE.Application.Commands.PromotionFeatures.Requests;
+using PharmacyManagement_BE.Application.Commands.SupportFeatures.Requests;
 using PharmacyManagement_BE.Application.Queries.PromotionFeatures.Requests;
 
 namespace PharmacyManagement_BE.API.Areas.Admin.Promotion.Controllers
@@ -49,11 +50,25 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Promotion.Controllers
         }
 
         [HttpGet("DetailsPromotion")]
-        public async Task<IActionResult> Details([FromQuery] Guid request)
+        public async Task<IActionResult> Details([FromQuery] Guid Íd)
         {
             try
             {
-                var result = await _mediator.Send(new GetDetailsPromotionQueryRequest(request));
+                var result = await _mediator.Send(new GetDetailsPromotionQueryRequest(Íd));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("UpdatePromotion")]
+        public async Task<IActionResult> Update(UpdatePromotionCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
                 return Ok(result);
             }
             catch (Exception ex)

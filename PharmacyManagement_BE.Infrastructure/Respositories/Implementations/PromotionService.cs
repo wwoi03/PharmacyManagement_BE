@@ -63,14 +63,27 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 if(promotionProduct.Count == 0)
                     return new ResponseSuccessAPI<string>(status, "Không có quan hệ ràng buộc");
 
-                foreach (var item in promotionProduct)
+
+                foreach (var product in promotionProduct)
                 {
                     //Kiểm tra tồn PromotionProgram
-                    var promotionProgram = await Context.PromotionPrograms.Where(r => r.PromotionProductId == item.Id).ToListAsync();
-                    Context.Remove(promotionProgram);
+                    var promotionProgram = await Context.PromotionPrograms.Where(r => r.PromotionProductId == product.Id).ToListAsync();
+
+                    //Xóa product hiện tại
+                    Context.Remove(product);
+
+                    //Kiểm tra chiều dài promotion
+                    if (promotionProgram.Count == 0)
+                        continue;
+                    else
+                    {
+                        foreach (var program in promotionProgram)
+                        {
+                            Context.Remove(program);
+                        }
+                    }
                 }
 
-                Context.Remove(promotionProduct);
 
                 Context.SaveChanges();
 

@@ -24,7 +24,9 @@ namespace PharmacyManagement_BE.Application.Commands.PromotionFeatures.Requests
         public decimal DiscountValue { get; set; }
         public string CodePromotion { get; set; }
 
+
         //Chọn product được giảm giá
+        public List<ProductPromotionRequestDTO> ProductPromotionRequest { get; set; } = null;
 
         public ValidationNotify<string> IsValid()
         {
@@ -51,12 +53,16 @@ namespace PharmacyManagement_BE.Application.Commands.PromotionFeatures.Requests
             if (EndDate == default)
                 return new ValidationNotifyError<string>("Vui lòng nhập ngày kết thúc.", "endDate");
 
-            if (StartDate >= EndDate)
+            if (StartDate > EndDate)
                 return new ValidationNotifyError<string>("Ngày bắt đầu phải trước ngày kết thúc.", "startDate");
 
             // Validate DiscountValue field
             if (DiscountValue <= 0)
                 return new ValidationNotifyError<string>("Giá trị khuyến mãi phải lớn hơn 0.", "discountValue");
+
+            //Danh sách là bắt buộc í
+            if(ProductPromotionRequest.Count == 0)
+                return new ValidationNotifyError<string>("Vui lòng nhập sản phẩm giảm giá.", "productPromotionRequest");
 
             // Return success if all validations pass
             return new ValidationNotifySuccess<string>();

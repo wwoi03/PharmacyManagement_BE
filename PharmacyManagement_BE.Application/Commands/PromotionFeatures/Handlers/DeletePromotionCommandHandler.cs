@@ -39,11 +39,9 @@ namespace PharmacyManagement_BE.Application.Commands.PromotionFeatures.Handlers
                     return new ResponseSuccessAPI<string>(StatusCodes.Status400BadRequest, "Không thể xóa khuyến mãi đã được áp dụng.");
 
                 //Xóa quan hệ của khuyến mãi nếu có 
-
-                
                 var delete = await _entities.PromotionService.DeleteRelationShip(request.Id);
 
-                //Kiểm tra xóa quan hệ
+                //Kiểm tra xóa quan hệ, chỉ trả về khi lỗi 500
                 if (!delete.IsSuccessed)
                     return delete;
 

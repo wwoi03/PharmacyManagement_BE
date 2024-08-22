@@ -51,13 +51,9 @@ namespace PharmacyManagement_BE.Application.Commands.PromotionFeatures.Handlers
                 // Tạo khuyến mãi ban đầu
                 var status = _entities.PromotionService.Create(createPromotion);
 
-
                 //Kiểm tra trạng thái
                 if (status == false)
                     return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Thêm khuyến mãi thất bại, vui lòng thử lại sau.");
-
-                //Lưu vào CSDL
-                _entities.SaveChange();
 
                 //*************************************************************** Tạo PromotionProduct
 
@@ -68,6 +64,10 @@ namespace PharmacyManagement_BE.Application.Commands.PromotionFeatures.Handlers
                 {
                     await createRelationShip.CreateProductPromotion(request.ProductPromotionRequest, createPromotion.Id);
                 }
+
+                //Lưu vào CSDL
+                _entities.SaveChange();
+
                 return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, "Thêm khuyến mãi thành công.");
             }
             catch (Exception)
