@@ -19,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        policy => policy.WithOrigins("http://localhost:4200") // Thay đổi theo origin của bạn
+        policy => policy.WithOrigins("http://localhost:4200", "http://localhost:4201") // Thay đổi theo origin của bạn
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });

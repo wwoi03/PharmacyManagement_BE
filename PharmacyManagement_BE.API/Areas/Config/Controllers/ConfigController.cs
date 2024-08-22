@@ -19,8 +19,8 @@ namespace PharmacyManagement_BE.API.Areas.Config.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("RefreshToken")]
-        public async Task<IActionResult> Get()
+        [HttpPut("RefreshToken")]
+        public async Task<IActionResult> RefreshToken()
         {
             try
             {

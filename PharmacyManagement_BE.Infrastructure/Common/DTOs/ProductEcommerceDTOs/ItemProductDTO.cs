@@ -1,4 +1,4 @@
-﻿using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitDTOs;
+﻿using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitEcommerceDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs
         public string ProductName { get; set; }
         public string Specifications { get; set; }
         public string ProductImage { get; set; }
-        public List<ShipmentDetailsUnitDTO> ShipmentDetailsUnits { get; set; }
+        public List<ShipmentDetailsUnitEDTO> ShipmentDetailsUnits { get; set; }
         public decimal Discount { get; set; }
     }
 }

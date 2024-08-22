@@ -32,7 +32,7 @@ namespace PharmacyManagement_BE.Application.Commands.AccountFeatures.Handlers
                 var user = await _userManager.FindByIdAsync(request.Id.ToString());
 
                 if (user == null)
-                    return new ResponseErrorAPI<string>("Người dùng không tồn tại.");
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Người dùng không tồn tại.");
 
                 // B2: xóa Refresh Token
                 user.RefreshToken = null;

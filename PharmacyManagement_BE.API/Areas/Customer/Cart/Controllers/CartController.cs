@@ -61,5 +61,19 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Cart.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody] CreateCartCommandRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

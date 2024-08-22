@@ -89,7 +89,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     WHERE s.BranchId = @BranchId
                     GROUP BY s.Id, s.ImportDate, s.CodeShipment, s.Note, s.Status, sp.Name";
 
-            return (await _dapperContext.GetConnection.QueryAsync<ShipmentDTO>(sql, new { BranchId = branchId })).ToList();
+            return (await _dapperContext.GetConnection.QueryAsync<ShipmentDTO>(sql, new { BranchId = branchId })).OrderByDescending(item => item.ImportDate).ToList();
         }
 
         public async Task<List<ShipmentDTO>> SearchShipments(Guid branchId, DateTime fromDate, DateTime toDate, string supplierName)

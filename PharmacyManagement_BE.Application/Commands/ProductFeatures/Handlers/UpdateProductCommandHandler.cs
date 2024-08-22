@@ -49,92 +49,212 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
                     return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Loại sản phẩm không tồn tại");
 
                 // Kiểm tra thành phần sản phẩm tồn tại
-                foreach (var item in request.ProductIngredients)
+                if (request.ProductIngredients != null && request.ProductIngredients.Count > 0)
                 {
-                    var ingredient = await _entities.IngredientService.GetById(item);
+                    foreach (var item in request.ProductIngredients)
+                    {
+                        var ingredient = await _entities.IngredientService.GetById(item);
 
-                    if (ingredient == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Thành phần có mã {item} không tồn tại");
+                        if (ingredient == null)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Thành phần có mã {item} không tồn tại");
+                    }
                 }
 
                 // Kiểm tra hỗ trợ sản phẩm tồn tại
-                foreach (var item in request.ProductSupports)
+                if (request.ProductSupports != null && request.ProductSupports.Count > 0)
                 {
-                    var support = await _entities.SupportService.GetById(item);
+                    foreach (var item in request.ProductSupports)
+                    {
+                        var support = await _entities.SupportService.GetById(item);
 
-                    if (support == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Hỗ trợ có mã {item} không tồn tại");
+                        if (support == null)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Hỗ trợ có mã {item} không tồn tại");
+                    }
                 }
 
                 // Kiểm tra loại bệnh tồn tại
-                foreach (var item in request.ProductDiseases)
-                {
-                    var disease = await _entities.DiseaseService.GetById(item);
-
-                    if (disease == null)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Loại bệnh có mã {item} không tồn tại");
-                }
-
-                // Thêm sản phẩm
-                var product = _mapper.Map<Product>(request);
-                product.Id = Guid.NewGuid();
-                product.CreatedTime = DateTime.Now;
-                var result = _entities.ProductService.Create(product);
-
-                if (!result)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm sản phẩm.");
-
-                // Thêm thành phần sản phẩm
-                if (request.ProductIngredients != null && request.ProductIngredients.Count > 0)
-                {
-                    var productIngredients = request.ProductIngredients.Select(item => new ProductIngredient
-                    {
-                        ProductId = product.Id,
-                        IngredientId = item
-                    }).ToList();
-
-                    var createProductIngredientsResult = await _entities.ProductIngredientService.CreateRange(productIngredients);
-
-                    if (!createProductIngredientsResult)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm thành phần sản phẩm.");
-                }
-
-                // Thêm hỗ trợ sản phẩm
-                if (request.ProductSupports != null && request.ProductSupports.Count > 0)
-                {
-                    var productSupports = request.ProductSupports.Select(item => new ProductSupport
-                    {
-                        ProductId = product.Id,
-                        SupportId = item
-                    }).ToList();
-
-                    var createProductSupportsResult = await _entities.ProductSupportService.CreateRange(productSupports);
-
-                    if (!createProductSupportsResult)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm hỗ trợ sản phẩm.");
-                }
-
-                // Thêm loại bệnh
                 if (request.ProductDiseases != null && request.ProductDiseases.Count > 0)
                 {
-                    var productDiseases = request.ProductDiseases.Select(item => new ProductDisease
+                    foreach (var item in request.ProductDiseases)
                     {
-                        ProductId = product.Id,
-                        DiseaseId = item
-                    }).ToList();
+                        var disease = await _entities.DiseaseService.GetById(item);
 
-                    var createProductDiseasesResult = await _entities.ProductDiseaseService.CreateRange(productDiseases);
-
-                    if (!createProductDiseasesResult)
-                        return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm loại bệnh sản phẩm.");
+                        if (disease == null)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, $"Loại bệnh có mã {item} không tồn tại");
+                    }
                 }
 
-                // Thêm hình ảnh sản phẩm
+                // Sửa sản phẩm
+                var product = await _entities.ProductService.GetById(request.Id);
+                _mapper.Map(request, product);
+                var updateProductResult = _entities.ProductService.Update(product);
 
+                if (!updateProductResult)
+                    return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình cập nhật sản phẩm.");
+
+                // Xử lý thành phần
+                {
+                    var productIngredientOld = (await _entities.ProductIngredientService.GetProductIngredientByProductId(product.Id))
+                        .Select(item => item.IngredientId)
+                        .ToList();
+
+                    // Tìm các phần tử cần thêm vào 
+                    var itemsToAdd = request.ProductIngredients.Except(productIngredientOld).ToList();
+
+                    // Tìm các phần tử cần xóa khỏi 
+                    var itemsToRemove = productIngredientOld.Except(request.ProductIngredients).ToList();
+
+                    // Thêm thành phần sản phẩm
+                    if (itemsToAdd != null && itemsToAdd.Count > 0)
+                    {
+                        var productIngredients = itemsToAdd.Select(item => new ProductIngredient
+                        {
+                            ProductId = product.Id,
+                            IngredientId = item,
+                            UnitId = Guid.Parse("4881154e-4715-485a-8c5c-c088295369c3"),
+                            Content = 20
+                        }).ToList();
+
+                        var createProductIngredientsResult = await _entities.ProductIngredientService.CreateRange(productIngredients);
+
+                        if (!createProductIngredientsResult)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm thành phần sản phẩm.");
+                    }
+
+                    // Xóa thành phần sản phẩm
+                    foreach (var id in itemsToRemove)
+                    {
+                        var item = await _entities.ProductIngredientService.GetById(id);
+                        _entities.ProductIngredientService.Delete(item);
+                    }
+                }
+
+                // Xử lý hỗ trợ
+                {
+                    var productSupportOlds = (await _entities.ProductSupportService.GetProductSupportsByProductId(product.Id))
+                        .Select(item => item.SupportId)
+                        .ToList();
+
+                    // Tìm các phần tử cần thêm vào 
+                    var itemsToAdd = request.ProductSupports.Except(productSupportOlds).ToList();
+
+                    // Tìm các phần tử cần xóa khỏi 
+                    var itemsToRemove = productSupportOlds.Except(request.ProductSupports).ToList();
+
+                    // Thêm
+                    if (itemsToAdd != null && itemsToAdd.Count > 0)
+                    {
+                        var productSupports = request.ProductSupports.Select(item => new ProductSupport
+                        {
+                            ProductId = product.Id,
+                            SupportId = item
+                        }).ToList();
+
+                        var createProductSupportsResult = await _entities.ProductSupportService.CreateRange(productSupports);
+
+                        if (!createProductSupportsResult)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm hỗ trợ sản phẩm.");
+                    }
+
+                    // Xóa 
+                    foreach (var id in itemsToRemove)
+                    {
+                        var item = await _entities.ProductSupportService.GetById(id);
+                        _entities.ProductSupportService.Delete(item);
+                    }
+                }
+
+                // Xử lý loại bệnh
+                {
+                    var productDiseaseOlds = (await _entities.ProductDiseaseService.GetProductDiseasesByProductId(product.Id))
+                        .Select(item => item.DiseaseId)
+                        .ToList();
+
+                    // Tìm các phần tử cần thêm vào 
+                    var itemsToAdd = request.ProductDiseases.Except(productDiseaseOlds).ToList();
+
+                    // Tìm các phần tử cần xóa khỏi 
+                    var itemsToRemove = productDiseaseOlds.Except(request.ProductDiseases).ToList();
+
+                    // Thêm
+                    if (itemsToAdd != null && itemsToAdd.Count > 0)
+                    {
+                        var productDiseases = request.ProductDiseases.Select(item => new ProductDisease
+                        {
+                            ProductId = product.Id,
+                            DiseaseId = item
+                        }).ToList();
+
+                        var createProductDiseasesResult = await _entities.ProductDiseaseService.CreateRange(productDiseases);
+
+                        if (!createProductDiseasesResult)
+                            return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, $"Lỗi trong quá trình thêm loại bệnh sản phẩm.");
+                    }
+
+                    // Xóa 
+                    foreach (var id in itemsToRemove)
+                    {
+                        var item = await _entities.ProductDiseaseService.GetById(id);
+                        _entities.ProductDiseaseService.Delete(item);
+                    }
+                }
+
+                {
+                    // Lấy danh sách hình ảnh
+                    var imageExists = await _entities.ProductImageService.GetProductImagesByProductId(product.Id);
+
+                    // Thêm hình ảnh sản phẩm
+                    if (request.Images.Count > 0)
+                    {
+                        foreach (var item in request.Images)
+                        {
+                            var productImage = new ProductImage
+                            {
+                                ProductId = product.Id,
+                                Image = item
+                            };
+
+                            _entities.ProductImageService.Create(productImage);
+                        }
+                    }
+
+                    var productImagesOlds = (await _entities.ProductImageService.GetProductImagesByProductId(product.Id))
+                        .Select(item => item.Image)
+                        .ToList();
+
+                    // Tìm các phần tử cần thêm vào 
+                    var itemsToAdd = request.Images.Except(productImagesOlds).ToList();
+
+                    // Tìm các phần tử cần xóa khỏi 
+                    var itemsToRemove = productImagesOlds.Except(request.Images).ToList();
+
+                    // Thêm
+                    if (itemsToAdd != null && itemsToAdd.Count > 0)
+                    {
+                        foreach (var item in itemsToAdd)
+                        {
+                            var productImage = new ProductImage
+                            {
+                                ProductId = product.Id,
+                                Image = item
+                            };
+
+                            _entities.ProductImageService.Create(productImage);
+                        }
+                    }
+
+                    // Xóa 
+                    foreach (var image in itemsToRemove)
+                    {
+                        var item = await _entities.ProductImageService.GetProductImagesByImage(image);
+                        _entities.ProductImageService.Delete(item);
+                    }
+                }                
+                
                 // SaveChange
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Thêm sản phẩm có mã {request.CodeMedicine} thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK, $"Cập nhật sản phẩm có mã {request.CodeMedicine} thành công.", product.Id.ToString());
             }
             catch (Exception ex)
             {

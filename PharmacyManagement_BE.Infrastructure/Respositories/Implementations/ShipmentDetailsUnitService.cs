@@ -32,6 +32,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             var sql = @"
                     SELECT 
+                        sdu.ShipmentDetailsId AS ShipmentDetailsId,
+                        (sd1.Quantity - sd1.Sold) AS QuantityInStock,
                         u.Id AS UnitId,
                         u.Name AS CodeUnit,
                         u.NameDetails AS UnitName,
@@ -41,6 +43,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     FROM 
 	                    ShipmentDetailsUnit sdu
 	                    LEFT JOIN Units u ON u.Id = sdu.UnitId
+	                    LEFT JOIN ShipmentDetails sd1 ON sd1.Id = sdu.ShipmentDetailsId
                     WHERE 
 	                    sdu.ShipmentDetailsId = 
 		                    (

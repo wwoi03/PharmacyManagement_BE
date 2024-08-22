@@ -103,5 +103,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Support.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetSupportSelect")]
+        public async Task<IActionResult> GetSupportSelect()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSupportSelectQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

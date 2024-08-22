@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupportDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
@@ -33,6 +34,18 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Tên hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại");
 
             return new ResponseSuccessAPI<string>();
+        }
+
+        public async Task<List<SelectSupportDTO>> GetSupportSelect()
+        {
+            return Context.Supports
+                 .Select(p => new SelectSupportDTO
+                 {
+                     Id = p.Id,
+                     Name = p.Name,
+                     CodeSupport = p.CodeSupport,
+                 })
+                 .ToList();
         }
 
         public async Task<List<Support>> Search(string KeyWord, CancellationToken cancellationToken)

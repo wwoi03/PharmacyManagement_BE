@@ -99,7 +99,9 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
                     var productIngredients = request.ProductIngredients.Select(item => new ProductIngredient
                     {
                         ProductId = product.Id,
-                        IngredientId = item
+                        IngredientId = item,
+                        UnitId = Guid.Parse("4881154e-4715-485a-8c5c-c088295369c3"),
+                        Content = 20
                     }).ToList();
 
                     var createProductIngredientsResult = await _entities.ProductIngredientService.CreateRange(productIngredients);
@@ -139,6 +141,19 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
                 }
 
                 // Thêm hình ảnh sản phẩm
+                if (request.Images.Count > 0)
+                {
+                    foreach (var item in request.Images)
+                    {
+                        var productImage = new ProductImage
+                        {
+                            ProductId = product.Id,
+                            Image = item
+                        };
+
+                        _entities.ProductImageService.Create(productImage);
+                    }
+                }
 
                 // SaveChange
                 _entities.SaveChange();
