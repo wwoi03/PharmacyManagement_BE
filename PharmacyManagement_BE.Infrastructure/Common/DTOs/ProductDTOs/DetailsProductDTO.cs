@@ -29,7 +29,7 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs
         public Guid? CategoryId { get; set; }
         public string Image { get; set; }
         public List<string> Images { get; set; }
-        public List<DetailsProductIngredientDTO>? ProductIngredients { get; set; }
+        public List<Guid>? ProductIngredients { get; set; }
         public List<Guid>? ProductSupports { get; set; }
         public List<Guid>? ProductDiseases { get; set; }
     }

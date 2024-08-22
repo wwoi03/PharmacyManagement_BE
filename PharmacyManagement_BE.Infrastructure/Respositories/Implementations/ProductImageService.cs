@@ -12,9 +12,24 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
     public class ProductImageService : RepositoryService<ProductImage>, IProductImageService
     {
+        private readonly PharmacyManagementContext _context;
+
         public ProductImageService(PharmacyManagementContext context) : base(context)
         {
+            this._context = context;
+        }
 
+        public async Task<ProductImage?> GetProductImagesByImage(string image)
+        {
+            return _context.ProductImages
+                .FirstOrDefault(x => x.Image.Equals(image));
+        }
+
+        public async Task<List<ProductImage>> GetProductImagesByProductId(Guid productId)
+        {
+            return _context.ProductImages
+                .Where(x => x.ProductId == productId)
+                .ToList();
         }
     }
 }

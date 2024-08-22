@@ -10,6 +10,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IProductImageService : IRepositoryService<ProductImage>
     {
-
+        Task<List<ProductImage>> GetProductImagesByProductId(Guid productId);
+        Task<ProductImage?> GetProductImagesByImage(string image);
     }
 }
