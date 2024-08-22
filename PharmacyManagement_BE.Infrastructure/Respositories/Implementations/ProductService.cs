@@ -59,6 +59,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                     BrandOrigin = i.BrandOrigin,
                     ShortDescription = i.ShortDescription,
                 })
+                .OrderByDescending(item => item.CodeMedicine)
                 .ToList();
         }
 
