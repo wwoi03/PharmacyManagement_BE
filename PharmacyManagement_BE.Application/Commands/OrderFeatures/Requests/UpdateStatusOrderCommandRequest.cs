@@ -13,12 +13,12 @@ namespace PharmacyManagement_BE.Application.Commands.OrderFeatures.Requests
     public class UpdateStatusOrderCommandRequest : IRequest<ResponseAPI<string>>
     {
         public Guid Id { get; set; }
-        public OrderType type { get; set; }
+        public int type { get; set; }
 
         public ValidationNotify<string> IsValid()
         {
             if (!Enum.IsDefined(typeof(OrderType), type))
-                return new ValidationNotifyError<string>("Vui lòng chọn trạng thái đơn hàng.");
+                return new ValidationNotifyError<string>("Vui lòng chọn trạng thái đơn hàng.", "status");
 
             return new ValidationNotifySuccess<string>();
 

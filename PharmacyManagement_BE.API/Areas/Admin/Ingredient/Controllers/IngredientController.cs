@@ -51,7 +51,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Ingredient.Controller
         }
 
         [HttpDelete("DeleteIngredient")]
-        public async Task<IActionResult> Delete(DeleteIngredientCommandRequest request)
+        public async Task<IActionResult> Delete([FromQuery] DeleteIngredientCommandRequest request)
         {
             try
             {

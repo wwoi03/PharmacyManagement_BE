@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.DBContext;

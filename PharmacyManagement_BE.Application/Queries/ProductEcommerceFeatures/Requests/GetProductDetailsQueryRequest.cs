@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using System;

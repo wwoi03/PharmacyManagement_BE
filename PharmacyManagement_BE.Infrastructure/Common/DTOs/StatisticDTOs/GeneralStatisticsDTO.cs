@@ -11,10 +11,11 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.StatisticDTOs
 {
     public class GeneralStatisticsDTO
     {
-        public List<StatisticDTO> StatisticRevenue { get; set; }
-        public List<StatisticDTO> StatisticOrder { get; set; }
-        public List<CommentDTO> GetCustomerCommentQAs { get; set; }
-        public List<CommentDTO> GetCustomerCommentEvaluates { get; set; }
-        public List<OrderDTO> GetCancellations { get;set; }
+        // Số sản phẩm được đặt trong ngày
+        public int NumOrder { get; set; }
+        //Số tiền bán được tròn 1 ngày
+        public decimal SalePrice { get; set; }
+        //// sản phẩm hết hạn
+        //public int NumProductOutOfDate { get; set; }
     }
 }

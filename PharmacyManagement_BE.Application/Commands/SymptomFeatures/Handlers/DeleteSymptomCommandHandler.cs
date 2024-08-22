@@ -29,19 +29,19 @@ namespace PharmacyManagement_BE.Application.Commands.SymptomFeatures.Handlers
                 var symptom = await _entities.SymptomService.GetById(request.Id);
 
                 if (symptom == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Không tìm thấy triệu chứng.");
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Không tìm thấy triệu chứng.");
 
                 //Xóa triệu chứng
                 var deleteSymptom = _entities.SymptomService.Delete(symptom);
 
                 //Kiểm tra trạng thái xóa
-                if (!deleteSymptom == false)
+                if (deleteSymptom == false)
                     return new ResponseErrorAPI<string>(StatusCodes.Status500InternalServerError, "Xóa triệu chứng thất bại, vui lòng thử lại sau.");
 
                 // lưu vào database
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Xóa triệu chứng thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK,"Xóa triệu chứng thành công.");
             }
             catch (Exception)
             {

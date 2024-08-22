@@ -13,8 +13,8 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs
     public class OrderDTO
     {
         public Guid Id { get; set; }
+        public List<OrderDetailsDTO> OrderDetails{get;set;}
         public Guid CustomerId { get; set; }
-        public Customer Customer { get; set; }
         public string OrdererName { get; set; }
         public string ReceiverName { get; set; }
         public string RecipientPhone { get; set; }

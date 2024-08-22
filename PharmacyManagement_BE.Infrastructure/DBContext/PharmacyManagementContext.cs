@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +31,8 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
                 optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement2;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
                 //optionsBuilder.UseSqlServer("Data Source=MATINCUAANSHAFO\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
                 //optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Data Source=MATINCUAANSHAFO\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
+                //optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTHPHUSK\\SQLEXPRESS;Initial Catalog=PharmacyManagement;Integrated Security=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;TrustServerCertificate=True");
             }
         }
 
@@ -58,6 +60,7 @@ namespace PharmacyManagement_BE.Infrastructure.DBContext
                .HasKey(o => new { o.OrderId, o.ShipmentDetailsId, o.UnitId });
             modelBuilder.Entity<ShipmentDetailsUnit>()
                .HasKey(o => new { o.ShipmentDetailsId, o.UnitId });
+
         }
 
         #region DbSet

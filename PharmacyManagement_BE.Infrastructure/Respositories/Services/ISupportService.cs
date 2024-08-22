@@ -1,4 +1,4 @@
-﻿using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupportDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using System;
@@ -13,6 +13,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     {
         Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid? Id = null);
         Task<List<Support>> Search(string KeyWord, CancellationToken cancellationToken);
+        Task<Support> FindByCode(string code);
         Task<List<SelectSupportDTO>> GetSupportSelect();
     }
 }

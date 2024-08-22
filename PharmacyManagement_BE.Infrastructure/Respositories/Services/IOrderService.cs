@@ -15,9 +15,14 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface IOrderService : IRepositoryService<Order>
     {
         Task<List<Order>> GetAllOrderByStaffId(Guid id);
-        Task<List<StatisticDTO>> StatisticOrder(TimeType type);
-        Task<List<StatisticDTO>> StatisticRevenue(TimeType type);
-        Task<List<OrderDTO>> GetRequestCancellations();
+        Task<List<StatisticOrderDTO>> StatisticOrder(TimeType type, DateTime dateTime);
+        Task<List<StatisticRevenueDTO>> StatisticRevenue(TimeType type, DateTime dateTime);
+        //Task<List<OrderDTO>> GetCanceledOrder();
+        Task<OrderDTO> GetOrderByBranch(Guid OrderId, Guid BranchId);
+        Task<List<OrderDTO>> GetOrdersByBranch(Guid BranchId, OrderType type);
+        Task<GeneralStatisticsDTO> RealTimeStatistc();
+        bool CheckUpdateStatus(Order order, OrderType status);
+        //Task<List<OrderDTO>> GetRequestCancellations();
         Task<Order?> GetOrderByCode(string codeOrder);
         Task<List<ItemOrderDTO>> GetMyOrders(Guid customerId);
     }

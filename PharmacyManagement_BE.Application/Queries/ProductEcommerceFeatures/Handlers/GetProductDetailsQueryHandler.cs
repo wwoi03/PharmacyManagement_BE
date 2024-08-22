@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Queries.ProductEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
