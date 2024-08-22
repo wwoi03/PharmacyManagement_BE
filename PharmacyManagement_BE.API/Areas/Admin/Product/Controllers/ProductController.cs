@@ -23,7 +23,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
         }
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete([FromBody] Guid productId)
+        public async Task<IActionResult> Delete([FromQuery] Guid productId)
         {
             try
             {
