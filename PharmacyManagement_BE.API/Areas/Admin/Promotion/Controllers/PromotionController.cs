@@ -50,11 +50,11 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Promotion.Controllers
         }
 
         [HttpGet("DetailsPromotion")]
-        public async Task<IActionResult> Details([FromQuery] Guid Íd)
+        public async Task<IActionResult> Details([FromQuery] Guid Id)
         {
             try
             {
-                var result = await _mediator.Send(new GetDetailsPromotionQueryRequest(Íd));
+                var result = await _mediator.Send(new GetDetailsPromotionQueryRequest(Id));
                 return Ok(result);
             }
             catch (Exception ex)
