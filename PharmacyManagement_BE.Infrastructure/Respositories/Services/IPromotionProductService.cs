@@ -10,6 +10,5 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
 {
     public interface IPromotionProductService : IRepositoryService<PromotionProduct>
     {
-
     }
 }

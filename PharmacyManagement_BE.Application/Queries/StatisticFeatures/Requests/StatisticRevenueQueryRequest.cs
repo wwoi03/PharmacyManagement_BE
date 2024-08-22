@@ -11,17 +11,22 @@ using System.Threading.Tasks;
 
 namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests
 {
-    public class StatisticQueryRequest : IRequest<ResponseAPI<GeneralStatisticsDTO>>
+    public class StatisticRevenueQueryRequest : IRequest<ResponseAPI<List<StatisticRevenueDTO>>>
     {
-        public TimeType Order { get; set; } = TimeType.week;
-        public TimeType Revenue { get; set; } = TimeType.week;
+        public StatisticRevenueQueryRequest(string TimeType, DateTime dateTime)
+        {
+            this.TimeType = TimeType;
+            this.DateTime = dateTime;
+        }
+
+        public StatisticRevenueQueryRequest() { }
+
+        public DateTime DateTime { get; set; } = DateTime.Now;
+        public string TimeType { get; set; }
 
         public ValidationNotify<string> IsValid()
         {
-            if (!Enum.IsDefined(typeof(TimeType), Order))
-                return new ValidationNotifyError<string>("Vui lòng chọn thống kê đơn hàng.");
-
-            if (!Enum.IsDefined(typeof(TimeType), Revenue))
+            if (!Enum.TryParse(typeof(TimeType), TimeType, out _))
                 return new ValidationNotifyError<string>("Vui lòng chọn thống kê doanh thu.");
 
             return new ValidationNotifySuccess<string>();
@@ -29,3 +34,4 @@ namespace PharmacyManagement_BE.Application.Queries.StatisticFeatures.Requests
         }
     }
 }
+

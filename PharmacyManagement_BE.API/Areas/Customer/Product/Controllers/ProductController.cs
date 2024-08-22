@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -85,6 +85,20 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
             try
             {
                 var result = await _mediator.Send(new GetProductDetailsQueryRequest { ProductId = productId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetProductDetails")]
+        public async Task<IActionResult> GetProductDetails([FromQuery] GetProductDetailsQueryRequest request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
                 return Ok(result);
             }
             catch (Exception ex)

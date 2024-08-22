@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Queries.OrderFeatures.Requests;
+using PharmacyManagement_BE.Domain.Types;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
@@ -29,14 +30,21 @@ namespace PharmacyManagement_BE.Application.Queries.OrderFeatures.Handlers
         {
             try
             {
-                //Lấy danh sách đơn hàng
-                var listOrder = await _entities.OrderService.GetAll();
+                //Kiểm tra giá trị đầu vào
+                var validation = request.IsValid();
 
-                //Gán danh sách đơn hàng thành response
-                var response = _mapper.Map<List<OrderDTO>>(listOrder);
+                if (!validation.IsSuccessed)
+                    return new ResponseSuccessAPI<List<OrderDTO>>(StatusCodes.Status400BadRequest, validation.Message);
+
+                //Lấy Branch của nhân viên
+                var branch = await _entities.AccountService.GetBranchId();
+                
+
+                //Lấy danh sách đơn hàng
+                var listOrder = await _entities.OrderService.GetOrdersByBranch(branch, (OrderType)request.Type);
 
                 //Trả về danh sách
-                return new ResponseSuccessAPI<List<OrderDTO>>(StatusCodes.Status200OK, "Danh sách đơn hàng", response);
+                return new ResponseSuccessAPI<List<OrderDTO>>(StatusCodes.Status200OK, "Danh sách đơn hàng", listOrder);
             }
             catch (Exception)
             {

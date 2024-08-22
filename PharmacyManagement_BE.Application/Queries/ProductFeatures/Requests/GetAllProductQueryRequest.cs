@@ -12,6 +12,5 @@ namespace PharmacyManagement_BE.Application.DTOs.Requests
 {
     public class GetAllProductQueryRequest : IRequest<ResponseAPI<List<ListProductDTO>>>
     {
-
     }
 }

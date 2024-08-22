@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Queries.ProductFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseSymptomDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;

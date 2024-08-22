@@ -32,7 +32,7 @@ namespace PharmacyManagement_BE.Application.Queries.SupportFeatures.Handlers
                 var validation = await _entities.SupportService.GetById(request.Id);
 
                 if (validation == null)
-                    return new ResponseErrorAPI<SupportDTO>(StatusCodes.Status404NotFound, "Hỗ trợ của thuốc không tồn tại.");
+                    return new ResponseSuccessAPI<SupportDTO>(StatusCodes.Status404NotFound, "Hỗ trợ của thuốc không tồn tại.");
 
                 var Support = _mapper.Map<SupportDTO>(validation);
 

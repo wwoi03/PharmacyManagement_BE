@@ -11,5 +11,6 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.AccountDTOs
         public string Name { get; set; }
         public string Token { get; set; }
         public List<string> Roles { get; set; }
+        public Guid BrandId { get; set; }
     }
 }

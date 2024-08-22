@@ -12,8 +12,8 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductIngredientDTOs
         public Guid IngredientId { get; set; }
         public string IngredientName { get; set; }
         public string CodeIngredient { get; set; }
-        public string Content { get; set; }
-        public string UnitId { get; set; }
+        public decimal Content { get; set; }
+        public Guid UnitId { get; set; }
         public string UnitName { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using PharmacyManagement_BE.Application.Commands.CategoryFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Requests;
@@ -27,9 +27,21 @@ using System.Threading.Tasks;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.CommentDTOs;
 using PharmacyManagement_BE.Application.Commands.CommentFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
+using PharmacyManagement_BE.Application.Commands.ProductDiseaseFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDiseaseDTOs;
+using PharmacyManagement_BE.Application.Commands.DiseaseSymptomFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductSupportDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseSymptomDTOs;
+using PharmacyManagement_BE.Application.Commands.ProductSupportFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
+using PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers;
+using PharmacyManagement_BE.Infrastructure.Customs.SupportFunctions;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductEcommerceDTOs;
 using PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.AccountEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
+using PharmacyManagement_BE.Application.Commands.PromotionFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.PromotionDTOs;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -42,6 +54,8 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Product, CreateProductCommandRequest>().ReverseMap();
             CreateMap<Product, UpdateProductCommandRequest>().ReverseMap();
             CreateMap<Product, DetailsProductDTO>().ReverseMap();
+            CreateMap<Product, DetailsProductDTO>().ReverseMap();
+            CreateMap<Product, ProductOrderDTO>().ReverseMap();
             #endregion Product 
 
             #region Customer
@@ -80,6 +94,7 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<ShipmentDetails, UpdateShipmentDetailsCommandRequest>().ReverseMap();
             CreateMap<ShipmentDetails, CreateShipmentDetailsCommandRequest>().ReverseMap();
             CreateMap<ShipmentDetails, ShipmentDetailsRequest>().ReverseMap();
+            CreateMap<ShipmentDetails, ShipmentDetailsOrderDTO>().ReverseMap();
             #endregion ShipmentDetails
 
             #region Disease 
@@ -112,10 +127,54 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Comment, CreateReplyCommentCommandRequest>().ReverseMap();
             #endregion Comment
 
+            #region Promotion
+            CreateMap<CreatePromotionCommandRequest, Promotion>().ReverseMap();
+            CreateMap<PromotionDTO, Promotion>().ReverseMap();
+            CreateMap<DetailsPromotionDTO, Promotion>().ReverseMap();
+            #endregion Promotion
+
             #region Order
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<Order, CreateOrderCommandRequest>().ReverseMap();
             #endregion Order
+
+            #region OrderDetails
+            CreateMap<OrderDetails, OrderDetailsDTO>().ReverseMap();
+            #endregion OrderDetails
+
+            #region ProductDisease
+            CreateMap<CreateProductDiseaseCommandRequest, ProductDisease>().ReverseMap();
+            CreateMap<ProductDiseaseDTO, ProductDisease>().ReverseMap();
+            CreateMap<createProductDisease, ProductDisease>().ReverseMap();
+            #endregion ProductDisease
+
+            #region DiseaseSymptom
+            CreateMap<CreateDiseaseSymptomCommandRequest, DiseaseSymptom>().ReverseMap();
+            CreateMap<DiseaseSymptomDTO, DiseaseSymptom>().ReverseMap();
+            CreateMap<createDiseaseSymptom, DiseaseSymptom>().ReverseMap();
+            #endregion DiseaseSymptom
+
+            #region ProductSupport
+            CreateMap<CreateProductSupportCommandRequest, ProductSupport>().ReverseMap();
+            CreateMap<ProductSupportDTO, ProductSupport>().ReverseMap();
+            CreateMap<createProductSupport, ProductSupport>().ReverseMap();
+            #endregion ProductSupport
+
+            #region ProductEcommerce
+            CreateMap<ProductEcommerceDTO, Product>().ReverseMap();
+            CreateMap<ProductDetailsEcommerceDTO, Product>().ReverseMap();
+            #endregion ProductEcommerce 
+
+            #region PromotionProduct
+            CreateMap<createProductPromotion, PromotionProduct>().ReverseMap();
+            CreateMap<ProductPromotionDTO, PromotionProduct>().ReverseMap();
+            #endregion PromotionProduct
+
+            #region PromotionProgram
+            CreateMap<createPromotionProgram, PromotionProgram>().ReverseMap();
+            CreateMap<PromotionProgramDTO, PromotionProgram>().ReverseMap();
+            #endregion PromotionProgram
+
         }
     }
 }

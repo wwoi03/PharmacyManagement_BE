@@ -14,5 +14,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         //Kiểm tra tồn tại triệu chứng chưa: giống cả tên và mô tả
         Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid? Id = null);
         Task<List<Symptom>> Search(string KeyWord, CancellationToken cancellationToken);
+        Task<Symptom> FindByCode(string code);
     }
 }

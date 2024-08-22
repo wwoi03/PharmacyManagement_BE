@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.SupportDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
 using System;
@@ -21,19 +22,33 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         }
         public async Task<ResponseAPI<string>> CheckExit(string Code, string Name, Guid? Id )
         {
+            ValidationNotify<string> validation = new ValidationNotifySuccess<string>();
+            int status = StatusCodes.Status200OK;
+
             //Kiểm tra tồn tại mã code 
             var checkCode = await Context.Supports.AnyAsync(r => r.CodeSupport.ToUpper() == Code.ToUpper() && (Id == null || r.Id != Id));
 
             if (checkCode)
-                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Mã hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại");
+            {
+                validation = new ValidationNotifyError<string>();
+                validation.Obj = "codeSupport";
+                validation.Message = "Mã hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại";
+                status = StatusCodes.Status409Conflict;
+            }
 
             //Kiểm tra tồn tại tên
             var checkName = await Context.Supports.AnyAsync(r => r.Name.ToUpper() == Name.ToUpper() && (Id == null || r.Id != Id));
 
             if (checkName)
-                return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Tên hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại");
+            {
+                validation = new ValidationNotifyError<string>();
+                validation.Obj = "name";
+                validation.Message = "Tên hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại";
+                status = StatusCodes.Status409Conflict;
+            }
 
-            return new ResponseSuccessAPI<string>();
+            return new ResponseErrorAPI<string>(status, validation);
+
         }
 
         public async Task<List<SelectSupportDTO>> GetSupportSelect()
@@ -56,7 +71,10 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
              EF.Functions.Like(d.Description.ToUpper().Trim(), $"%{KeyWord.ToUpper().Trim()}%"))
              .ToListAsync(cancellationToken);
         }
+        public async Task<Support> FindByCode(string code)
+        {
+            return await Context.Supports.FirstOrDefaultAsync(r => r.CodeSupport == code);
+        }
 
-       
     }
 }

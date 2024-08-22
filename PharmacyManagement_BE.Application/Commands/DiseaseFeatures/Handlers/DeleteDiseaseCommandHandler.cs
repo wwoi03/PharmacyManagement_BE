@@ -28,8 +28,8 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 //Kiểm tra tồn tại
                 var disease = await _entities.DiseaseService.GetById(request.Id);
 
-                if (disease == null)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
+                if (disease == null) 
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status404NotFound, "Bệnh không tồn tại.");
 
                 // Cập nhật lại bệnh
                 var status = _entities.DiseaseService.Delete(disease);
@@ -41,7 +41,7 @@ namespace PharmacyManagement_BE.Application.Commands.DiseaseFeatures.Handlers
                 //Lưu vào CSDL
                 _entities.SaveChange();
 
-                return new ResponseSuccessAPI<string>("Xóa loại bệnh thành công.");
+                return new ResponseSuccessAPI<string>(StatusCodes.Status200OK ,"Xóa loại bệnh thành công.");
             }
             catch (Exception)
             {

@@ -33,10 +33,6 @@ namespace PharmacyManagement_BE.Application.Queries.DiseaseFeatures.Handlers
                 //Lấy danh sách bệnh
                 var listDisease = await _entities.DiseaseService.GetAll();
 
-                //Kiểm tra danh sách
-                //if (listDisease == null || listDisease.Count == 0)
-                //    return new ResponseErrorAPI<List<DiseaseDTO>>(StatusCodes.Status404NotFound, "Không tìm thấy danh sách bệnh");
-
                 //Gán danh sách bệnh thành response
                 var response = _mapper.Map<List<DiseaseDTO>>(listDisease);
 
