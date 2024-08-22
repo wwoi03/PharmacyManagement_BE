@@ -19,6 +19,7 @@ using PharmacyManagement_BE.Infrastructure.Common.DTOs.CategoryDTOs;
 using System.Data;
 using System.Data.Common;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.ShipmentDetailsUnitEcommerceDTOs;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductIngredientDTOs;
 
 namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 {
@@ -562,7 +563,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             return product;
         }
-        #endregion EF & LinQ
 
         //lấy danh sách top 10 sản phẩm được ưa chuộn tính = View
         public async Task<List<StatisticProductDTO>> GetTopView()
@@ -723,6 +723,5 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return listFilter;
         }
 
-        #endregion Dapper
     }
 }
