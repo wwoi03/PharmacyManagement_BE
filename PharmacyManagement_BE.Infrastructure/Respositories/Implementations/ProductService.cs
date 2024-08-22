@@ -45,6 +45,39 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 .ToList();
         }
 
+        public async Task<List<ListProductDTO>> FilterProducts(string contentStr)
+        {
+            contentStr = contentStr.ToLower();
+
+            return _context.Products
+                .Include(i => i.Category)
+                .Where(item => item.Category.Name.ToLower().Contains(contentStr)
+                    || item.Id == (_context.ProductIngredients
+                        .Include(piItem => piItem.Ingredient)
+                        .FirstOrDefault(piItem => piItem.ProductId == item.Id && piItem.Ingredient.Name.ToLower().Contains(contentStr))
+                        .ProductId)
+                    || item.Id == (_context.ProductSupports
+                        .Include(piItem => piItem.Support)
+                        .FirstOrDefault(piItem => piItem.ProductId == item.Id && piItem.Support.Name.ToLower().Contains(contentStr))
+                        .ProductId)
+                    || item.Id == (_context.ProductDiseases
+                        .Include(piItem => piItem.Disease)
+                        .FirstOrDefault(piItem => piItem.ProductId == item.Id && piItem.Disease.Name.ToLower().Contains(contentStr))
+                        .ProductId)
+                )
+                .Select(i => new ListProductDTO
+                {
+                    Id = i.Id,
+                    CodeMedicine = i.CodeMedicine,
+                    ProductName = i.Name,
+                    Image = i.Image,
+                    CategoryName = i.Category.Name,
+                    BrandOrigin = i.BrandOrigin,
+                    ShortDescription = i.ShortDescription,
+                })
+                .ToList();
+        }
+
         public async Task<List<ListProductDTO>> GetProducts()
         {
             return _context.Products

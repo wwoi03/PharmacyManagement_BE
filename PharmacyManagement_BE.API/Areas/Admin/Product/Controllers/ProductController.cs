@@ -50,6 +50,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
             }
         }
 
+        [HttpGet("FilterProduct")]
+        public async Task<IActionResult> FilterProduct([FromQuery] string contentStr)
+        {
+            try
+            {
+                var result = await _mediator.Send(new FilterProductQueryRequest { ContentStr = contentStr });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("GetProducts")]
         public async Task<IActionResult> GetProducts()
         {
