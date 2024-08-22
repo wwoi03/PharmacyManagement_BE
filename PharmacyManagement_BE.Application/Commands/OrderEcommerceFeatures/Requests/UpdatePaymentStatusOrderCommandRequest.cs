@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.PaymentEcommerceDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using System;
@@ -11,6 +12,6 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requ
 {
     public class UpdatePaymentStatusOrderCommandRequest : IRequest<ResponseAPI<string>>
     {
-        public PaymentResponseDTO PaymentResponse { get; set; } 
+        public PaymentResponseDTO PaymentResponse { get; set; }
     }
 }

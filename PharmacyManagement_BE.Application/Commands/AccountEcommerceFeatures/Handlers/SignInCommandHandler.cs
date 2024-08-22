@@ -57,7 +57,15 @@ namespace PharmacyManagement_BE.Application.Commands.AccountEcommerceFeatures.Ha
                 // Cập nhật RefeshToken vào Database
                 user.RefreshToken = refreshToken;
                 user.RefreshTokenExpiryTime = refreshTokenExpiredTime;
-                _entities.CustomerService.Update((Customer)user);
+
+                if (user.Discriminator.Equals("Customer"))
+                {
+                    _entities.CustomerService.Update((Customer)user);
+                }
+                else if (user.Discriminator.Equals("Staff"))
+                {
+                    _entities.StaffService.Update((Staff)user);
+                }
 
                 _entities.SaveChange();
 

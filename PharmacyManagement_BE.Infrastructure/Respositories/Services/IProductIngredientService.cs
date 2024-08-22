@@ -11,5 +11,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
     public interface IProductIngredientService : IRepositoryService<ProductIngredient>
     {
         Task<bool> CreateRange(List<ProductIngredient> productIngredients);
+        Task<List<ProductIngredient>> GetProductIngredientByProductId(Guid productId);
+       /* Task<bool> UpdateProductIngredientOldNew(Guid productId, List<Guid> ingredientOlds, List<Guid> ingredientIdNews);*/
     }
 }

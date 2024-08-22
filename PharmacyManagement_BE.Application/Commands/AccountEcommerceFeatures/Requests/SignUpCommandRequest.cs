@@ -11,17 +11,19 @@ namespace PharmacyManagement_BE.Application.Commands.AccountEcommerceFeatures.Re
 {
     public class SignUpCommandRequest : IRequest<ResponseAPI<string>>
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
+        public string? UserName { get; set; }
+        public string? Password { get; set; }
+        public string? ConfirmPassword { get; set; }
+        public string? Email { get; set; }
         /*public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string PIN { get; set; }
-*/
+        public string PIN { get; set; }*/
+
         public ValidationNotify<string> IsValid()
         {
             if (string.IsNullOrEmpty(UserName))
                 return new ValidationNotifyError<string>("Vui lòng nhập tên đăng nhập.", "userName");
+            if (string.IsNullOrEmpty(Email))
+                return new ValidationNotifyError<string>("Vui lòng nhập tên email.", "email");
             if (string.IsNullOrEmpty(Password))
                 return new ValidationNotifyError<string>("Vui lòng nhập mật khẩu.", "password");
             if (string.IsNullOrEmpty(ConfirmPassword))

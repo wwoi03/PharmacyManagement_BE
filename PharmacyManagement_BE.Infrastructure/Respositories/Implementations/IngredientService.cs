@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.IngredientDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
@@ -34,6 +35,18 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 return new ResponseErrorAPI<string>(StatusCodes.Status400BadRequest, "Tên hỗ trợ của thuốc đã tồn tại, vui lòng kiểm tra lại");
 
             return new ResponseSuccessAPI<string>();
+        }
+
+        public async Task<List<SelectIngredientDTO>> GetIngredientSelect()
+        {
+            return Context.Ingredients
+                .Select(p => new SelectIngredientDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    CodeIngredient = p.CodeIngredient,
+                })
+                .ToList();
         }
 
         public async Task<List<Ingredient>> Search(string KeyWord, CancellationToken cancellationToken)

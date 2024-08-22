@@ -23,21 +23,6 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetProducts")]
-        [AuthorizeOr("ADMIN,CUSTOMER")]
-        public async Task<IActionResult> Get()
-        {
-            try
-            {
-                //var result = await _mediator.Send(new GetAllProductQueryRequest());
-                return Ok("Thành công");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpPost("GetProductById")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -58,6 +43,48 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Product.Controllers
             try
             {
                 var result = await _mediator.Send(new GetSellingProductByMonthQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetNewProducts")]
+        public async Task<IActionResult> GetNewProducts()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetNewProductsQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetSaleProducts")]
+        public async Task<IActionResult> GetSaleProducts()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSaleProductsQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetProductDetails")]
+        public async Task<IActionResult> GetProductDetails([FromQuery] Guid productId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetProductDetailsQueryRequest { ProductId = productId });
                 return Ok(result);
             }
             catch (Exception ex)

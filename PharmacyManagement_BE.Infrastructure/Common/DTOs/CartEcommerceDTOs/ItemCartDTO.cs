@@ -17,6 +17,6 @@ namespace PharmacyManagement_BE.Infrastructure.Common.DTOs.CartEcommerceDTOs
         public string ProductImage { get; set; }
         public string UnitName { get; set; }
         public int Quantity { get; set; }
-        public List<ShipmentDetailsUnitDTO> ShipmentDetailsUnits { get; set; }
+        public List<ShipmentDetailsUnitEDTO> ShipmentDetailsUnits { get; set; }
     }
 }

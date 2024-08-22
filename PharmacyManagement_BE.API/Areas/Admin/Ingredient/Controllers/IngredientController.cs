@@ -105,5 +105,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Ingredient.Controller
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetIngredientSelect")]
+        public async Task<IActionResult> GetIngredientSelect()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetIngredientSelectQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

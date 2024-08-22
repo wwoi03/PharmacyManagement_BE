@@ -23,7 +23,7 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
         }
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete([FromBody] Guid productId)
+        public async Task<IActionResult> Delete([FromQuery] Guid productId)
         {
             try
             {
@@ -42,6 +42,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
             try
             {
                 var result = await _mediator.Send(new DeleteProductCommandRequest { ProductId = productId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("FilterProduct")]
+        public async Task<IActionResult> FilterProduct([FromQuery] string contentStr)
+        {
+            try
+            {
+                var result = await _mediator.Send(new FilterProductQueryRequest { ContentStr = contentStr });
                 return Ok(result);
             }
             catch (Exception ex)
@@ -98,6 +112,20 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Product.Controllers
             try
             {
                 var result = await _mediator.Send(new GetProductSelectQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("Details")]
+        public async Task<IActionResult> Details([FromQuery] Guid productId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetProductDetailsQueryRequest { ProductId = productId });
                 return Ok(result);
             }
             catch (Exception ex)

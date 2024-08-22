@@ -14,7 +14,7 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Req
     public class CreateShipmentDetailsCommandRequest : IRequest<ResponseAPI<string>>
     {
         public Guid ShipmentId { get; set; }
-        public Guid ProductId { get; set; }
+        public Guid? ProductId { get; set; }
         public Guid? UnitId { get; set; }
         public DateTime ManufactureDate { get; set; }
         public DateTime ExpirationDate { get; set; }
@@ -29,6 +29,16 @@ namespace PharmacyManagement_BE.Application.Commands.ShipmentDetailsFeatures.Req
         {
             if (string.IsNullOrEmpty(ProductionBatch))
                 return new ValidationNotifyError<string>("Vui lòng nhập mã lô sản xuất.", "productionBatch");
+            if (ProductId == Guid.Empty || ProductId == null)
+                return new ValidationNotifyError<string>("Vui lòng thêm sản phẩm.", "productId");
+            if (ImportPrice <= 0)
+                return new ValidationNotifyError<string>("Giá sản phẩm phải lớn hơn 0.", "importPrice");
+            if (Quantity <= 0)
+                return new ValidationNotifyError<string>("Số lượng sản phẩm phải lớn hơn 0.", "quantity");
+            if (UnitId == null || UnitId == Guid.Empty)
+                return new ValidationNotifyError<string>("Vui lòng nhập giá bán sản phẩm.", "unitId");
+            if (ManufactureDate > ExpirationDate)
+                return new ValidationNotifyError<string>("Ngày sản xuất phải bé hơn ngày hết hạn.", "manufactureDate");
             if (ShipmentDetailsUnits == null || ShipmentDetailsUnits.Count == 0)
                 return new ValidationNotifyError<string>("Vui lòng nhập đơn vị bán và giá bán cho sản phẩm.", "ShipmentDetailsUnits");
 

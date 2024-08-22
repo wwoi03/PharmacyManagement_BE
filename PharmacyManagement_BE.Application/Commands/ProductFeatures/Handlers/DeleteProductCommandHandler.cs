@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using PharmacyManagement_BE.Application.Commands.ProductFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
+using PharmacyManagement_BE.Infrastructure.Common.ValidationNotifies;
 using PharmacyManagement_BE.Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -24,17 +25,33 @@ namespace PharmacyManagement_BE.Application.Commands.ProductFeatures.Handlers
         {
             try
             {
+                var validation = new ValidationNotify<string>();
+
                 // kiểm tra chi nhánh tồn tại
                 var product = await _entities.ProductService.GetById(request.ProductId);
 
                 if (product == null)
                     return new ResponseErrorAPI<string>(StatusCodes.Status404NotFound, "Sản phẩm không tồn tại.");
 
+                // Kiểm tra sản phẩm đã tồn tại trong kho
+                var shipmentDetails = await _entities.ShipmentDetailsService.GetShipmentDetailsByProductId(request.ProductId);
+
+                if (shipmentDetails != null)
+                {
+                    validation.Obj = "default";
+                    validation.Message = $"Sản phẩm đã tồn tại trong kho";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, validation);
+                }
+
                 // Xóa sản phẩm
                 var result = _entities.ProductService.Delete(product);
 
                 if (!result)
-                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, "Hiện tại không thể xóa sản phẩm này.");
+                {
+                    validation.Obj = "default";
+                    validation.Message = $"Hiện tại không thể xóa sản phẩm này.";
+                    return new ResponseErrorAPI<string>(StatusCodes.Status409Conflict, validation);
+                }
 
                 // SaveChange
                 _entities.SaveChange(); 

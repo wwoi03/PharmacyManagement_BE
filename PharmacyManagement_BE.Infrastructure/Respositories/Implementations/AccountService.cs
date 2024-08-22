@@ -33,7 +33,9 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 if (username != null)
                 {
                     _user = await _userManager.FindByNameAsync(username);
-                    // _staff = (Staff)_user;
+                    
+                    if (_user.Discriminator.Equals("Staff"))
+                        _staff = (Staff)_user;
                 }
             }
         }
@@ -47,7 +49,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<Guid> GetBranchId()
         {
             await GetUserAsync();
-            _staff = (Staff)_user;
             return (Guid)(_staff != null ? _staff.BranchId : Guid.Empty);
         }
     }

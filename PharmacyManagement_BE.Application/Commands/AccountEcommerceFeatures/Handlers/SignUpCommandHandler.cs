@@ -39,7 +39,7 @@ namespace PharmacyManagement_BE.Application.Commands.AccountEcommerceFeatures.Ha
                 var validation = request.IsValid();
 
                 if (validation.IsSuccessed == false)
-                    return new ResponseSuccessAPI<string>(validation.Message);
+                    return new ResponseSuccessAPI<string>(StatusCodes.Status409Conflict, validation);
 
                 // Kiểm tra người dùng tồn tại
                 var userExists = await _entities.CustomerService.GetCustomerByUsername(request.UserName);
@@ -55,6 +55,8 @@ namespace PharmacyManagement_BE.Application.Commands.AccountEcommerceFeatures.Ha
                 var user = new Customer
                 {
                     UserName = request.UserName,
+                    FullName = request.UserName,
+                    Email = request.Email
                 };
 
                 var result = await _userManager.CreateAsync(user, request.Password);

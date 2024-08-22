@@ -16,5 +16,6 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Services
         Task<DetailsShipmentDetailsDTO> GetDetailsShipmentDetails(Guid shipmentDetailsId);
         Task<List<ListShipmentDetailsDTO>> SearchShipmentDetailsByProduct(Guid shipmentId,string NameOrCodeMedicine);
         Task<bool> CreateRangeShipmentDetails(List<ShipmentDetails> shipmentDetails);
+        Task<ShipmentDetails?> GetShipmentDetailsByProductId(Guid productId);
     }
 }

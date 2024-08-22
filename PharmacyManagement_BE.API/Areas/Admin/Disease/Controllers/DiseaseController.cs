@@ -105,5 +105,19 @@ namespace PharmacyManagement_BE.API.Areas.Admin.Disease.Controller
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetDiseaseSelect")]
+        public async Task<IActionResult> GetDiseaseSelect()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetDiseaseSelectQueryRequest());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

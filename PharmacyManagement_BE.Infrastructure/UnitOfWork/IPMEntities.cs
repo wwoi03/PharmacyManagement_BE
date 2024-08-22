@@ -43,6 +43,7 @@ namespace PharmacyManagement_BE.Infrastructure.UnitOfWork
         IProductService ProductService { get; set; }
         ITokenService TokenService { get; set; }
         IVnPayService VnPayService { get; set; }
+        IPredictionService PredictionService { get; set; }
         int SaveChange();
     }
 }

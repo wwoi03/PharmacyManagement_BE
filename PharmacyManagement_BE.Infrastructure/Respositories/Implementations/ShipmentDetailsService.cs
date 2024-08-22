@@ -131,6 +131,12 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 .ToList();
         }
 
+        public async Task<ShipmentDetails?> GetShipmentDetailsByProductId(Guid productId)
+        {
+            return _context.ShipmentDetails
+                .FirstOrDefault(item => item.ProductId == productId);
+        }
+
         #endregion EntityFramework & LinQ
     }
 }

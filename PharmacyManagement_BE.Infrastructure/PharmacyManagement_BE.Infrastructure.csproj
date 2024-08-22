@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PharmacyManagement_BE.Domain\PharmacyManagement_BE.Domain.csproj" />
+    <ProjectReference Include="..\RecommendSimilarProduct\RecommendSimilarProduct.csproj" />
   </ItemGroup>
 
 </Project>

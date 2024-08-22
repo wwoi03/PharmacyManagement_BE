@@ -52,7 +52,7 @@ namespace PharmacyManagement_BE.API.Areas.Customer.Order.Controllers
                     queryString[property.Name] = property.GetValue(result.Obj)?.ToString();
                 }
 
-                var url = "http://localhost:4200/ecommerce/checkout?" + queryString.ToString();
+                var url = "http://localhost:4201/ecommerce/checkout?" + queryString.ToString();
                 HttpContext.Response.Redirect(url);
                 return new EmptyResult();
             }

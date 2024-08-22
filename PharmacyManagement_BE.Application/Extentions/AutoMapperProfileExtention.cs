@@ -29,6 +29,7 @@ using PharmacyManagement_BE.Application.Commands.CommentFeatures.Requests;
 using PharmacyManagement_BE.Infrastructure.Common.DTOs.OrderDTOs;
 using PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Requests;
 using PharmacyManagement_BE.Application.Commands.AccountEcommerceFeatures.Requests;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.ProductDTOs;
 
 namespace PharmacyManagement_BE.Application.Extentions
 {
@@ -40,6 +41,7 @@ namespace PharmacyManagement_BE.Application.Extentions
             CreateMap<Product, AllProductQueryResponse>();
             CreateMap<Product, CreateProductCommandRequest>().ReverseMap();
             CreateMap<Product, UpdateProductCommandRequest>().ReverseMap();
+            CreateMap<Product, DetailsProductDTO>().ReverseMap();
             #endregion Product 
 
             #region Customer

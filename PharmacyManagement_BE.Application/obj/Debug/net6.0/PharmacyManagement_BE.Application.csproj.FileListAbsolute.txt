@@ -49,3 +49,5 @@ H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Appl
 H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\refint\PharmacyManagement_BE.Application.dll
 H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\PharmacyManagement_BE.Application.pdb
 H:\HK3nam3\Khoa_luan_tot_nghiep\PharmacyManagement_BE\PharmacyManagement_BE.Application\obj\Debug\net6.0\ref\PharmacyManagement_BE.Application.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\RecommendSimilarProduct.dll
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.Application\bin\Debug\net6.0\RecommendSimilarProduct.pdb

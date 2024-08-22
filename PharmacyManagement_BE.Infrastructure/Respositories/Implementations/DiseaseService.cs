@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PharmacyManagement_BE.Domain.Entities;
+using PharmacyManagement_BE.Infrastructure.Common.DTOs.DiseaseDTOs;
 using PharmacyManagement_BE.Infrastructure.Common.ResponseAPIs;
 using PharmacyManagement_BE.Infrastructure.DBContext;
 using PharmacyManagement_BE.Infrastructure.Respositories.Services;
@@ -43,6 +44,19 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             return new ResponseSuccessAPI<string>();
         }
+
+        public async Task<List<SelectDiseaseDTO>> GetDiseaseSelect()
+        {
+            return Context.Diseases
+                 .Select(p => new SelectDiseaseDTO
+                 {
+                     Id = p.Id,
+                     Name = p.Name,
+                     CodeDisease = p.CodeDisease,
+                 })
+                 .ToList();
+        }
+
         public async Task<List<Disease>> Search(string KeyWord, CancellationToken cancellationToken)
         {
             return await Context.Diseases.Where
