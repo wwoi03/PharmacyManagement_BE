@@ -268,3 +268,4 @@ C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_B
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.API\bin\Debug\net6.0\runtimes\win-x86\native\MatrixFactorizationNative.dll
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.API\bin\Debug\net6.0\RecommendSimilarProduct.dll
 C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.API\bin\Debug\net6.0\RecommendSimilarProduct.pdb
+C:\Huflit_Study_Material\Project\project\PharmacyManagement\PharmacyManagement_BE\PharmacyManagement_BE.API\obj\Debug\net6.0\PharmacyManagement_BE.API.MvcApplicationPartsAssemblyInfo.cs
