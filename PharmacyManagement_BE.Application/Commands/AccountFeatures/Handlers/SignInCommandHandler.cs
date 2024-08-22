@@ -35,7 +35,7 @@ namespace PharmacyManagement_BE.Application.Commands.AccountFeatures.Handlers
                 // Kiểm tra đăng nhập hợp lệ
                 var user = await _userManager.FindByNameAsync(request.UserName);
 
-                if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
+                if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password) || !user.Discriminator.Equals("Staff"))
                     return new ResponseErrorAPI<SignInDTO>(StatusCodes.Status401Unauthorized, "Thông tin tài khoản hoặc mật khẩu không chính xác.");
 
                 // Kiểm tra xem tài khoản có bị khóa không
