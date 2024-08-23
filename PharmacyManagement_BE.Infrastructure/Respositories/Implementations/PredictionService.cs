@@ -79,6 +79,17 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             return result;
         }
 
+        private static long GetFiveDigitNumberFromGuid(Guid guid)
+        {
+            byte[] bytes = guid.ToByteArray();
+            long longFromGuid = BitConverter.ToInt64(bytes, 0);
+
+            // Sử dụng modulo để thu được một số trong phạm vi 0 đến 99999
+            long fiveDigitNumber = Math.Abs(longFromGuid) % 100000;
+
+            return fiveDigitNumber;
+        }
+
         public async Task<List<ProductInteractive>> GetSimilarProductInteractive()
         {
             List<ProductInteractive> productInteractives = new List<ProductInteractive>();
@@ -87,8 +98,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             var carts = _context.Carts
                 .Select(item => new ProductInteractive
                 {
-                    CustomerId = item.CustomerId.ToString(),
-                    ProductId = item.ProductId.ToString(),
+                    CustomerId = GetFiveDigitNumberFromGuid(item.CustomerId),
+                    ProductId = GetFiveDigitNumberFromGuid(item.ProductId),
                     Label = 0.5f,
                 })
                 .ToList();
@@ -98,8 +109,8 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
                 .Include(item => item.ShipmentDetails)
                 .Select(item => new ProductInteractive
                 {
-                    CustomerId = _context.Orders.FirstOrDefault(orderItem => orderItem.Id == item.OrderId).CustomerId.ToString(),
-                    ProductId = item.ShipmentDetails.ProductId.ToString(),
+                    CustomerId = GetFiveDigitNumberFromGuid(_context.Orders.FirstOrDefault(orderItem => orderItem.Id == item.OrderId).CustomerId),
+                    ProductId = GetFiveDigitNumberFromGuid(item.ShipmentDetails.ProductId),
                     Label = 1f,
                 })
                 .ToList();
@@ -123,7 +134,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
 
             ITransformer model = ProductPrediction.BuildAndTrainModel(mlContext, trainingDataView);
 
-            //ProductPrediction.EvaluateModel(mlContext, testDataView, model);
+            ProductPrediction.EvaluateModel(mlContext, testDataView, model);
 
             var productIdPredictions = ProductPrediction.UseModelForMultiPrediction(mlContext, model, customerId, productIds);
 

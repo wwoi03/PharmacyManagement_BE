@@ -63,11 +63,11 @@ namespace RecommendSimilarProduct
 
             foreach (var productId in productIds)
             {
-                var testInput = new ProductInteractive { CustomerId = customerId.ToString(), ProductId = productId.ToString() };
+                var testInput = new ProductInteractive { CustomerId = GetFiveDigitNumberFromGuid(customerId), ProductId = GetFiveDigitNumberFromGuid(productId) };
 
                 var productPrediction = predictionEngine.Predict(testInput);
 
-                Console.WriteLine("Score " + Math.Round(productPrediction.Score, 1));
+                Console.WriteLine("Score " + productPrediction.Score + " -- " + Math.Round(productPrediction.Score, 1));
                 if (Math.Round(productPrediction.Score, 1) > 0.5)
                 {
                     result.Add(productId);
@@ -75,6 +75,17 @@ namespace RecommendSimilarProduct
             }
 
             return result;
+        }
+
+        public static long GetFiveDigitNumberFromGuid(Guid guid)
+        {
+            byte[] bytes = guid.ToByteArray();
+            long longFromGuid = BitConverter.ToInt64(bytes, 0);
+
+            // Sử dụng modulo để thu được một số trong phạm vi 0 đến 99999
+            long fiveDigitNumber = Math.Abs(longFromGuid) % 100000;
+
+            return fiveDigitNumber;
         }
     }
 }
