@@ -421,7 +421,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         public async Task<OrderDTO> GetOrderByBranch(Guid Id, Guid BranchId)
         {
             //Lấy danh sách chi tiết đơn hàng
-            List<OrderDetailsDTO> orderDetails =  _mapper.Map<List<OrderDetailsDTO>>(await _context.OrderDetails
+            List<OrderDetailsDTO> orderDetails = _mapper.Map<List<OrderDetailsDTO>>(await _context.OrderDetails
                 .Include(r => r.ShipmentDetails)
                     .ThenInclude(s => s.Product)
                 .Where(x => x.OrderId == Id).ToListAsync());
@@ -429,7 +429,7 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
             //Lấy thông tin order
             OrderDTO order = _mapper.Map<OrderDTO>(await _context.Orders
                 .Include(r => r.PaymentMethod)
-                .FirstOrDefaultAsync(x => x.Id == Id && x.BranchId == BranchId));
+                .FirstOrDefaultAsync(x => x.Id == Id));
 
             //Gán OrderDetails
             order.OrderDetails = orderDetails;
@@ -439,22 +439,21 @@ namespace PharmacyManagement_BE.Infrastructure.Respositories.Implementations
         }
 
         //Lấy danh sách Order dựa trên branch và status
-        public async Task<List<OrderDTO>> GetOrdersByBranch(Guid BranchId,OrderType type)
+        public async Task<List<OrderDTO>> GetOrdersByBranch(Guid BranchId, OrderType type)
         {
 
             List<Order> listOrder = new List<Order>();
 
             //Lấy toàn bộ danh sách
-            if(type == OrderType.GetAll)
+            if (type == OrderType.GetAll)
             {
-                listOrder = await _context.Orders.Where(r => r.BranchId == BranchId)
-                    .Include(r=> r.Customer).Include(r=> r.PaymentMethod)
+                listOrder = await _context.Orders.Include(r => r.Customer).Include(r => r.PaymentMethod)
                     .OrderByDescending(x => x.OrderDate)
                     .ToListAsync();
             }
             else
             {
-                listOrder = await _context.Orders.Where(r => r.BranchId == BranchId && r.Status == type.ToString())
+                listOrder = await _context.Orders.Where(r => r.Status == type.ToString())
                     .Include(r => r.Customer).Include(r => r.PaymentMethod)
                     .OrderByDescending(x => x.OrderDate)
                     .ToListAsync();

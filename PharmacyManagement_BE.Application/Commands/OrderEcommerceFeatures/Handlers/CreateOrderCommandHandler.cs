@@ -100,7 +100,7 @@ namespace PharmacyManagement_BE.Application.Commands.OrderEcommerceFeatures.Hand
                         Quantity = item.Quantity,
                         PricePerUnit = shipmentDetailsUnit.SalePrice,
                         TotalPrice = shipmentDetailsUnit.SalePrice * item.Quantity,
-                        Status = null
+                        Status = "OrderWaitingConfirmation"
                     };
 
                     totalPrice += orderDetails.TotalPrice;

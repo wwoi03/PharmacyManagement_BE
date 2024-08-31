@@ -12,6 +12,7 @@ namespace RecommendSimilarProduct
 {
     public static class ProductPrediction
     {
+        // Chuẩn bị dự liệu
         public static (IDataView training, IDataView test) LoadData(MLContext mlContext, List<ProductInteractive> trainingData, List<ProductInteractive> testData)
         {
             IDataView trainingDataView = mlContext.Data.LoadFromEnumerable<ProductInteractive>(trainingData);
@@ -20,6 +21,7 @@ namespace RecommendSimilarProduct
             return (trainingDataView, testDataView);
         }
 
+        // Huấn luyện mô hình
         public static ITransformer BuildAndTrainModel(MLContext mlContext, IDataView trainingDataView)
         {
             IEstimator<ITransformer> estimator = mlContext.Transforms.Conversion
@@ -43,6 +45,7 @@ namespace RecommendSimilarProduct
             return model;
         }
 
+        // Đánh giá mô hình
         public static void EvaluateModel(MLContext mlContext, IDataView testDataView, ITransformer model)
         {
             Console.WriteLine("=============== Evaluating the model ===============");
@@ -63,18 +66,29 @@ namespace RecommendSimilarProduct
 
             foreach (var productId in productIds)
             {
-                var testInput = new ProductInteractive { CustomerId = customerId.ToString(), ProductId = productId.ToString() };
+                var testInput = new ProductInteractive { CustomerId = GetFiveDigitNumberFromGuid(customerId), ProductId = GetFiveDigitNumberFromGuid(productId) };
 
                 var productPrediction = predictionEngine.Predict(testInput);
 
-                Console.WriteLine("Score " + Math.Round(productPrediction.Score, 1));
-                if (Math.Round(productPrediction.Score, 1) > 0.5)
+                Console.WriteLine("Score " + productPrediction.Score + " -- " + Math.Round(productPrediction.Score, 1));
+                if (Math.Round(productPrediction.Score, 1) >= 0.5)
                 {
                     result.Add(productId);
                 }
             }
 
             return result;
+        }
+
+        public static long GetFiveDigitNumberFromGuid(Guid guid)
+        {
+            byte[] bytes = guid.ToByteArray();
+            long longFromGuid = BitConverter.ToInt64(bytes, 0);
+
+            // Sử dụng modulo để thu được một số trong phạm vi 0 đến 99999
+            long fiveDigitNumber = Math.Abs(longFromGuid) % 100000;
+
+            return fiveDigitNumber;
         }
     }
 }

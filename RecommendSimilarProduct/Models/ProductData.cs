@@ -8,8 +8,8 @@ namespace RecommendSimilarProduct.Models
 {
     public class ProductInteractive
     {
-        public string CustomerId { get; set; }
-        public string ProductId { get; set; }
+        public long CustomerId { get; set; }
+        public long ProductId { get; set; }
         public float Label { get; set; } // 1.0 nếu sản phẩm đã mua, 0.5 nếu chỉ thêm vào giỏ hàng
     }
 
