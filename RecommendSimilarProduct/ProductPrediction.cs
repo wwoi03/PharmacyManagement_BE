@@ -12,6 +12,7 @@ namespace RecommendSimilarProduct
 {
     public static class ProductPrediction
     {
+        // Chuẩn bị dự liệu
         public static (IDataView training, IDataView test) LoadData(MLContext mlContext, List<ProductInteractive> trainingData, List<ProductInteractive> testData)
         {
             IDataView trainingDataView = mlContext.Data.LoadFromEnumerable<ProductInteractive>(trainingData);
@@ -20,6 +21,7 @@ namespace RecommendSimilarProduct
             return (trainingDataView, testDataView);
         }
 
+        // Huấn luyện mô hình
         public static ITransformer BuildAndTrainModel(MLContext mlContext, IDataView trainingDataView)
         {
             IEstimator<ITransformer> estimator = mlContext.Transforms.Conversion
@@ -43,6 +45,7 @@ namespace RecommendSimilarProduct
             return model;
         }
 
+        // Đánh giá mô hình
         public static void EvaluateModel(MLContext mlContext, IDataView testDataView, ITransformer model)
         {
             Console.WriteLine("=============== Evaluating the model ===============");
@@ -68,7 +71,7 @@ namespace RecommendSimilarProduct
                 var productPrediction = predictionEngine.Predict(testInput);
 
                 Console.WriteLine("Score " + productPrediction.Score + " -- " + Math.Round(productPrediction.Score, 1));
-                if (Math.Round(productPrediction.Score, 1) > 0.5)
+                if (Math.Round(productPrediction.Score, 1) >= 0.5)
                 {
                     result.Add(productId);
                 }

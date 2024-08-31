@@ -11,13 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyManagement_BE.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmacyManagement_BE.Infrastructure", "PharmacyManagement_BE.Infrastructure\PharmacyManagement_BE.Infrastructure.csproj", "{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filter.ContentBase", "Filter.ContentBase\Filter.ContentBase.csproj", "{78FA12D8-C39B-4F2E-BC01-EBAABBF81F1D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filter.Hybrid", "Filter.Hybrid\Filter.Hybrid.csproj", "{D7C1E65F-6C04-4C7C-BB8B-786599AA600D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filter.Collaborative", "Filter.Collaborative\Filter.Collaborative.csproj", "{19B1B265-45D0-4EA2-B39E-B8E3BE36CC8D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecommendSimilarProduct", "RecommendSimilarProduct\RecommendSimilarProduct.csproj", "{A414C9A5-C777-4125-9E87-B9D9D3DF1609}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecommendSimilarProduct", "RecommendSimilarProduct\RecommendSimilarProduct.csproj", "{A414C9A5-C777-4125-9E87-B9D9D3DF1609}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,18 +35,6 @@ Global
 		{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8DC964C-C49E-4EFB-9729-8C5A32AC71F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78FA12D8-C39B-4F2E-BC01-EBAABBF81F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78FA12D8-C39B-4F2E-BC01-EBAABBF81F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78FA12D8-C39B-4F2E-BC01-EBAABBF81F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78FA12D8-C39B-4F2E-BC01-EBAABBF81F1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7C1E65F-6C04-4C7C-BB8B-786599AA600D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7C1E65F-6C04-4C7C-BB8B-786599AA600D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7C1E65F-6C04-4C7C-BB8B-786599AA600D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7C1E65F-6C04-4C7C-BB8B-786599AA600D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19B1B265-45D0-4EA2-B39E-B8E3BE36CC8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19B1B265-45D0-4EA2-B39E-B8E3BE36CC8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19B1B265-45D0-4EA2-B39E-B8E3BE36CC8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19B1B265-45D0-4EA2-B39E-B8E3BE36CC8D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A414C9A5-C777-4125-9E87-B9D9D3DF1609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A414C9A5-C777-4125-9E87-B9D9D3DF1609}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A414C9A5-C777-4125-9E87-B9D9D3DF1609}.Release|Any CPU.ActiveCfg = Release|Any CPU
